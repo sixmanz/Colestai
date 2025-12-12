@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FLIPS ID - Your gateway to exclusive travel privileges">
+    <title>FLIPS ID - Explore Exclusive Travel Privileges</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    colors: {
+                        'purple-primary': '#A855F7',
+                        'pink-primary': '#EC4899',
+                        'blue-primary': '#3B82F6',
+                        'dark-bg': '#0A0A0A',
+                        'dark-card': '#111111',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+        }
+
+        .glass-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-glow:hover {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 60px rgba(236, 72, 153, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            border-radius: 4px;
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body class="bg-black font-inter text-white antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
+        <nav class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="images/logo_v4.png" alt="Flips id"
+                        class="h-20 w-auto group-hover:scale-105 transition-transform duration-300">
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#" class="nav-item text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_home">Home</a>
+                    <a href="#packages" class="nav-item text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_packages">Packages</a>
+                    <a href="#" class="nav-item text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_privilege">My Privilege</a>
+                    <a href="#contact" class="nav-item text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_contact">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleLanguage()"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300 text-sm font-medium">
+                        <i class="fas fa-globe text-purple-primary"></i>
+                        <span id="currentLang">EN</span>
+                    </button>
+
+                    <!-- Wallet Button -->
+                    <button onclick="openWallet()"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300">
+                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
+                        <span class="text-sm font-bold" id="headerPoints">0</span>
+                        <span class="text-white/50 text-xs">RDS</span>
+                    </button>
+
+                    <!-- Profile Button -->
+                    <button onclick="openProfile()"
+                        class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5">
+                        <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </button>
+
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-white/70 hover:text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-card border-t border-white/10">
+            <div class="px-6 py-4 space-y-4">
+                <a href="#packages" class="block text-white/70 hover:text-purple-primary">Packages</a>
+                <a href="#" onclick="openMyVouchers()" class="block text-white/70 hover:text-purple-primary">My
+                    Vouchers</a>
+                <a href="#" onclick="openWallet()" class="block text-white/70 hover:text-purple-primary">My Wallet</a>
+                <a href="#" onclick="openSupport()" class="block text-white/70 hover:text-purple-primary">Support</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 pb-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-primary/10 via-transparent to-pink-primary/10"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-primary/20 rounded-full blur-3xl animate-pulse">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6 animate-float">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    <span class="text-sm font-medium tracking-wide" data-i18n="hero_welcome">Welcome to FLIPS ID</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Unlocking <span class="gradient-text">Premium</span><br />
+                    Lifestyle Privileges
+                </h1>
+                <p class="text-xl text-white/60 mb-10 max-w-2xl" data-i18n="hero_subtitle">
+                    Exclusive rewards and premium lifestyle privileges
+                </p>
+            </div>
+
+            <!-- Wallet Summary -->
+            <div onclick="openWallet()"
+                class="inline-flex items-center gap-6 px-8 py-4 rounded-2xl glass-card cursor-pointer hover:border-purple-primary transition-all mb-12">
+                <div class="text-left">
+                    <p class="text-white/60 text-sm mb-1" data-i18n="hero_points_balance">Your Balance</p>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold gradient-text" id="heroPoints">5,000</span>
+                        <span class="text-sm font-medium text-white/50">RDS</span>
+                    </div>
+                </div>
+                <div class="w-px h-12 bg-white/10"></div>
+                <div class="text-left">
+                    <p class="text-white/60 text-sm mb-1" data-i18n="hero_expiring">Expiring Soon</p>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-xl font-bold text-yellow-400" id="heroExpiring">500</span>
+                        <span class="text-sm font-medium text-white/50">RDS</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-white/30"></i>
+            </div>
+
+            <!-- Search Box -->
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="flex gap-2 p-2 rounded-2xl bg-white/5 border border-white/10">
+                    <input type="text" id="searchInput" placeholder="Search privileges..."
+                        data-i18n="search_placeholder" autocomplete="off"
+                        class="flex-1 px-4 py-3 bg-transparent outline-none text-white placeholder-white/40">
+                    <button onclick="searchPackages()"
+                        class="px-6 py-3 btn-gradient rounded-xl font-semibold hover:scale-105 transition-transform">
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3" id="filterTabs"></div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold gradient-text mb-2">
+                        <span data-i18n="featured_privileges">Featured Privileges</span>
+                    </h2>
+                    <p class="text-white/60">Showing <span id="packageCount">0</span> packages</p>
+                </div>
+                <div class="flex gap-2">
+                    <select id="sortSelect" onchange="sortPackages()"
+                        class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white outline-none">
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="packagesGrid"></div>
+
+            <div class="text-center mt-12">
+                <button onclick="loadMore()" id="loadMoreBtn"
+                    class="px-8 py-3 rounded-xl bg-white/5 hover:bg-purple-primary/20 border border-white/20 hover:border-purple-primary text-white font-medium transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i>Load more
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8" id="statsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-bg"></div>
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4">Get FLIPS ID !</h2>
+            <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">Subscribe to our newsletter to get the latest news
+                and updates</p>
+            <form onsubmit="subscribeNewsletter(event)" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                <input type="email" id="newsletterEmail"
+                    class="flex-1 px-6 py-4 rounded-xl bg-white/10 border border-white/20 focus:border-white/50 outline-none placeholder-white/50 text-white"
+                    placeholder="Email address" required>
+                <button type="submit"
+                    class="px-8 py-4 rounded-xl bg-white text-purple-primary font-semibold hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-lg">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12" id="footerGrid"></div>
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-white/40 text-sm">© 2024 FLIPS ID Corporation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- MODALS -->
+    <!-- ============================================ -->
+
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('walletModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('walletModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
+                    <i class="fas fa-wallet"></i> <span data-i18n="wallet_modal_title">My Wallet</span>
+                </h2>
+
+                <div class="gradient-bg rounded-2xl p-6 mb-8 text-center relative overflow-hidden group">
+                    <div
+                        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+                    </div>
+                    <p class="text-white/80 mb-2 text-lg">Total Balance</p>
+                    <h3 class="text-5xl font-bold mb-2 tracking-tight" id="walletTotalPoints">0</h3>
+                    <p class="text-white/60 text-sm">RDS Points Available</p>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold text-lg" data-i18n="wallet_history">Points Breakdown</h3>
+                    </div>
+                    <div id="pointsBreakdown" class="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Points batches will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Expiry Summary -->
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-yellow-400">Expiring Soon</p>
+                            <p class="text-white/70 text-sm" id="expiryWarning">0 points expiring in the next 30 days
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <h3 class="font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-history text-purple-primary"></i> Recent Transactions
+                </h3>
+                <div id="transactionsList" class="space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Vouchers Modal -->
+    <div id="vouchersModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('vouchersModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('vouchersModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <h2 class="text-2xl font-bold mb-6 gradient-text">My Vouchers</h2>
+                <div id="vouchersList" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('qrModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-6">
+            <div class="glass-card rounded-2xl p-8 text-center">
+                <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <h2 class="text-xl font-bold mb-2">Your Voucher QR Code</h2>
+                <p class="text-white/50 text-sm mb-6" id="qrVoucherName"></p>
+                <div id="qrcode" class="flex justify-center mb-6 bg-white p-4 rounded-xl inline-block mx-auto"></div>
+                <p class="text-white/50 text-sm mb-4">Scan this code at the venue</p>
+                <p class="text-xs text-white/30" id="qrVoucherCode"></p>
+                <button onclick="downloadQR()"
+                    class="mt-4 px-6 py-2 rounded-xl border border-purple-primary text-purple-primary hover:bg-purple-primary hover:text-white transition-all">
+                    <i class="fas fa-download mr-2"></i>Download QR
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('bookingModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('bookingModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Booking Confirmed!</h2>
+                    <p class="text-white/60 mb-6" id="bookingMessage"></p>
+                    <div class="space-y-3">
+                        <button onclick="showQRCode(currentBooking)"
+                            class="w-full py-3 btn-gradient rounded-xl font-semibold">
+                            <i class="fas fa-qrcode mr-2"></i>View QR Code
+                        </button>
+                        <button onclick="closeModal('bookingModal')"
+                            class="w-full py-3 rounded-xl border border-white/20 hover:border-purple-primary transition-colors">
+                            Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div id="supportModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('supportModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('supportModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <h2 class="text-2xl font-bold mb-6 gradient-text">Contact Support</h2>
+                <form onsubmit="submitSupport(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm">Subject</label>
+                            <select
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white">
+                                <option value="general">General Inquiry</option>
+                                <option value="booking">Booking Issue</option>
+                                <option value="refund">Refund Request</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm">Message</label>
+                            <textarea
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white h-32 resize-none"
+                                placeholder="Describe your issue..." required></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-3 btn-gradient rounded-xl font-semibold hover:scale-105 transition-transform">Send
+                            Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipping Form Modal -->
+    <div id="shippingModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('shippingModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('shippingModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-2 gradient-text flex items-center gap-3">
+                    <i class="fas fa-truck"></i> Shipping Information
+                </h2>
+                <p class="text-white/60 mb-6">Please enter your shipping address to receive your item</p>
+
+                <!-- Product Info -->
+                <div class="glass-card rounded-xl p-4 mb-6 flex items-center gap-4">
+                    <img id="shippingProductImage" src="" alt="Product" class="w-20 h-20 object-cover rounded-lg">
+                    <div>
+                        <h4 id="shippingProductName" class="font-semibold"></h4>
+                        <p id="shippingProductPrice" class="text-purple-primary"></p>
+                    </div>
+                </div>
+
+                <form onsubmit="submitShipping(event)">
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">First Name *</label>
+                                <input type="text" id="shipFirstName" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">Last Name *</label>
+                                <input type="text" id="shipLastName" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm">Phone Number *</label>
+                            <input type="tel" id="shipPhone" required
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                placeholder="0812345678">
+                        </div>
+
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm">Address *</label>
+                            <input type="text" id="shipAddress" required
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                placeholder="123 Main Street, Building A">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">District *</label>
+                                <input type="text" id="shipDistrict" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="Chatuchak">
+                            </div>
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">Province *</label>
+                                <input type="text" id="shipProvince" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="Bangkok">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">Postal Code *</label>
+                                <input type="text" id="shipPostal" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="10900">
+                            </div>
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm">Country</label>
+                                <select id="shipCountry"
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white">
+                                    <option value="Thailand">Thailand</option>
+                                    <option value="Malaysia">Malaysia</option>
+                                    <option value="Singapore">Singapore</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm">Additional Notes</label>
+                            <textarea id="shipNotes"
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white h-20 resize-none"
+                                placeholder="Delivery instructions, landmark, etc."></textarea>
+                        </div>
+
+                        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-info-circle text-yellow-400 mt-1"></i>
+                                <div>
+                                    <p class="font-medium text-yellow-400">Delivery Time</p>
+                                    <p class="text-white/70 text-sm">Expected delivery within 7-14 business days</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 btn-gradient rounded-xl font-semibold hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                            <i class="fas fa-check"></i> Confirm Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipping Success Modal -->
+    <div id="shippingSuccessModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('shippingSuccessModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('shippingSuccessModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 rounded-full btn-gradient flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-3xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">Order Confirmed!</h2>
+                    <p class="text-white/60">Your order has been placed successfully</p>
+                </div>
+
+                <!-- Order Details -->
+                <div class="glass-card rounded-xl p-4 mb-6">
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-white/10">
+                        <span class="text-white/50">Order ID</span>
+                        <span class="font-mono text-purple-primary font-bold" id="shipOrderId">-</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-white/10">
+                        <span class="text-white/50">Item</span>
+                        <span class="font-medium" id="shipOrderItem">-</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-white/10">
+                        <span class="text-white/50">Order Date</span>
+                        <span id="shipOrderDate">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-white/50">Points Used</span>
+                        <span class="text-pink-primary font-bold" id="shipPointsUsed">-</span>
+                    </div>
+                </div>
+
+                <!-- Delivery Timeline -->
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-truck text-purple-primary"></i> Delivery Timeline
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-check text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-green-400">Order Placed</p>
+                                <p class="text-white/50 text-sm" id="shipTimelineOrdered">-</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-blue-500/30 border-2 border-blue-500 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-box text-blue-400 text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-blue-400">Processing & Packing</p>
+                                <p class="text-white/50 text-sm" id="shipTimelinePacking">-</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-white/10 border border-white/30 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-shipping-fast text-white/50 text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-white/50">Shipped</p>
+                                <p class="text-white/40 text-sm" id="shipTimelineShipped">-</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-white/10 border border-white/30 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-home text-white/50 text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-white/50">Delivered</p>
+                                <p class="text-white/40 text-sm" id="shipTimelineDelivered">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expected Delivery -->
+                <div class="gradient-bg rounded-xl p-4 mb-6 text-center">
+                    <p class="text-white/80 text-sm mb-1">Expected Delivery Date</p>
+                    <p class="text-2xl font-bold" id="shipExpectedDate">-</p>
+                    <p class="text-white/70 text-sm" id="shipCountdown">-</p>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="glass-card rounded-xl p-4 mb-6">
+                    <h4 class="font-medium mb-3 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-purple-primary"></i> Shipping To
+                    </h4>
+                    <p class="font-medium" id="shipToName">-</p>
+                    <p class="text-white/60 text-sm" id="shipToAddress">-</p>
+                    <p class="text-white/60 text-sm" id="shipToPhone">-</p>
+                </div>
+
+                <p class="text-white/50 text-sm text-center mb-6">
+                    <i class="fas fa-envelope mr-2"></i>Order details have been sent to your email
+                </p>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="viewOrderDetails()"
+                        class="py-3 rounded-xl border border-purple-primary text-purple-primary hover:bg-purple-primary hover:text-white transition-all font-medium">
+                        <i class="fas fa-list mr-2"></i>My Orders
+                    </button>
+                    <button onclick="closeModal('shippingSuccessModal')"
+                        class="py-3 btn-gradient rounded-xl font-semibold">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('profileModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('profileModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
+                    <i class="fas fa-user-circle"></i> <span data-i18n="profile_modal_title">My Profile</span>
+                </h2>
+
+                <!-- User Info -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center text-2xl font-bold">
+                            U
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">FLIPS ID User</h3>
+                            <p class="text-white/50">Member since Jan 2024</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span
+                                    class="px-2 py-1 rounded-full bg-purple-primary/20 text-purple-primary text-xs">Premium
+                                    Member</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Summary -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="glass-card rounded-xl p-4 text-center">
+                        <p class="text-white/50 text-sm">Total Balance</p>
+                        <p class="text-2xl font-bold gradient-text" id="profileBalance">0 RDS</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 text-center">
+                        <p class="text-white/50 text-sm">Total Vouchers</p>
+                        <p class="text-2xl font-bold text-white" id="profileVouchers">0</p>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="flex gap-2 mb-6 flex-wrap">
+                    <button onclick="switchProfileTab('orders')"
+                        class="profile-tab flex-1 py-3 rounded-xl btn-gradient font-medium" data-tab="orders">
+                        <i class="fas fa-truck mr-2"></i>My Orders
+                    </button>
+                    <button onclick="switchProfileTab('earned')"
+                        class="profile-tab flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium"
+                        data-tab="earned">
+                        <i class="fas fa-arrow-down mr-2"></i>Earned
+                    </button>
+                    <button onclick="switchProfileTab('spent')"
+                        class="profile-tab flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium"
+                        data-tab="spent">
+                        <i class="fas fa-arrow-up mr-2"></i>Spent
+                    </button>
+                </div>
+
+                <!-- My Orders Tab -->
+                <div id="profile-tab-orders" class="profile-tab-content">
+                    <h3 class="font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-box text-purple-primary"></i> Order Tracking
+                    </h3>
+                    <div id="ordersHistory" class="space-y-4"></div>
+                </div>
+
+                <!-- Earned Points Tab -->
+                <div id="profile-tab-earned" class="profile-tab-content hidden">
+                    <h3 class="font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-coins text-green-400"></i> Points Earned History
+                    </h3>
+                    <div id="earnedHistory" class="space-y-3"></div>
+                </div>
+
+                <!-- Spent Points Tab -->
+                <div id="profile-tab-spent" class="profile-tab-content hidden">
+                    <h3 class="font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-shopping-cart text-red-400"></i> Points Spent History
+                    </h3>
+                    <div id="spentHistory" class="space-y-3"></div>
+                </div>
+
+                <!-- Summary Stats -->
+                <div class="mt-6 pt-6 border-t border-white/10">
+                    <div class="grid grid-cols-4 gap-4 text-center">
+                        <div>
+                            <p class="text-2xl font-bold text-blue-400" id="totalOrders">0</p>
+                            <p class="text-white/50 text-xs">Orders</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-green-400" id="totalEarned">0</p>
+                            <p class="text-white/50 text-xs">Earned</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-red-400" id="totalSpent">0</p>
+                            <p class="text-white/50 text-xs">Spent</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-purple-primary" id="totalTransactions">0</p>
+                            <p class="text-white/50 text-xs">Transactions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 z-[200] hidden">
+        <div class="glass-card rounded-xl px-6 py-4 flex items-center gap-3">
+            <i id="toastIcon" class="fas fa-check-circle text-green-400 text-xl"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- JavaScript -->
+    <script>
+        // ============================================
+        // APP STATE (No Login Required)
+        // ============================================
+        // Inline scripts removed to use external files in js/ folder
+    </script>
+    <script src="js/translations.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js?v=999"></script>
+</body>
+
+</html>
