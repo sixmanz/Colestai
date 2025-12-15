@@ -7,12 +7,23 @@ const translations = {
         nav_profile: 'Profile',
         nav_privilege: 'My Privilege',
         nav_contact: 'Contact',
-        
+
         hero_welcome: 'Welcome to FLIPS ID',
         hero_subtitle: 'Exclusive Rewards & Premium Privileges',
         hero_points_balance: 'Your Points Balance',
         hero_expiring: 'Expiring Soon',
-        
+
+        // Profile Page
+        stat_balance: 'Current Balance',
+        stat_earned: 'Total Earned',
+        stat_spent: 'Total Spent',
+        stat_lifetime: 'Lifetime earnings',
+        tab_digital: 'Digital Rewards (QR)',
+        tab_physical: 'Physical Orders',
+        empty_rewards_title: 'No rewards yet',
+        empty_rewards_desc: 'You haven\'t redeemed any rewards in this category.',
+        btn_browse_rewards: 'Browse Rewards',
+
         filter_all: 'All',
         filter_travel: 'Travel',
         filter_hospitality: 'Hospitality',
@@ -20,15 +31,15 @@ const translations = {
         filter_shopping: 'Shopping',
         filter_healthcare: 'Healthcare',
         filter_dining: 'Dining',
-        
+
         featured_privileges: 'Featured Privileges',
         search_placeholder: 'Search for privileges...',
-        
+
         sort_price_low: 'Price: Low to High',
         sort_price_high: 'Price: High to Low',
         sort_newest: 'Newest Arrivals',
         sort_popular: 'Most Popular',
-        
+
         footer_rights: '© 2024 FLIPS ID. All rights reserved.',
         footer_links_quick: 'Quick Links',
         footer_links_support: 'Support',
@@ -41,17 +52,39 @@ const translations = {
         vouchers_modal_title: 'My Vouchers',
         profile_modal_title: 'My Profile',
         support_modal_title: 'Contact Support',
+        shipping_modal_title: 'Shipping Information',
+        booking_success_title: 'Redemption Successful!',
+        qr_modal_title: 'Voucher QR Code',
 
         // Buttons & Labels
         btn_view_details: 'View Details',
         btn_redeem: 'Redeem',
         btn_book: 'Get Voucher',
         btn_not_enough: 'Insufficient Points',
-        
+        btn_profile: 'Profile',
+        btn_wallet: 'Wallet',
+        btn_back_home: 'Back to Privileges',
+        btn_confirm_shipping: 'Confirm Shipping',
+        btn_view_qr: 'View QR Code',
+
         status_active: 'Active',
         status_used: 'Used',
         status_expired: 'Expired',
-        
+        status_processing: 'Processing',
+        status_shipped: 'Shipped',
+        status_delivered: 'Delivered',
+        status_confirmed: 'Confirmed',
+        status_locked: 'Locked',
+        status_physical: 'Physical Item',
+
+        // User Profile & Wallet
+        member_since: 'Member since',
+        premium_member: 'Premium Member',
+        redeemed_privileges: 'Redeemed Privileges',
+        no_redeemed_privileges: 'No privileges redeemed yet',
+        total_points: 'Total Points',
+        privileges_count: 'Privileges Redeemed',
+
         no_vouchers: 'No vouchers yet. Start booking to get your first voucher!',
         order_date: 'Order Date',
         expected_delivery: 'Expected Delivery',
@@ -60,52 +93,117 @@ const translations = {
         total_balance: 'Total Balance',
         points_available: 'RDS Points Available',
         points_breakdown: 'Points Breakdown',
+        recent_transactions: 'Recent Transactions',
+
+        // Shipping Form
+        form_name: 'First Name',
+        form_lastname: 'Last Name',
+        form_phone: 'Phone Number',
+        form_address: 'Address',
+        form_note: 'Shipping Note (7-14 days)',
 
         // Details Page
         breadcrumb_home: 'Home',
         breadcrumb_packages: 'Packages',
         breadcrumb_details: 'Package Details',
-        
-        section_details: 'Package Details',
+
+        section_details: 'Details',
         section_amenities: 'Included Amenities',
-        section_conditions: 'Terms & Conditions',
+        section_conditions: 'Conditions',
         section_redeem: 'How to Redeem',
         section_reviews: 'Guest Reviews',
-        
+        section_event_date: 'Event Date',
+        section_venue: 'Venue',
+        section_movie: 'Movie',
+        section_shipping: 'Shipping Information',
+        section_shipping_desc: 'This item will be shipped to your address within 7-14 business days.',
+
         label_quantity: 'Quantity',
         label_total_price: 'Total Price',
         label_balance_after: 'Balance after:',
-        
+        label_use_points: 'Use Points',
+
         msg_select_date: 'Please select a date',
         related_packages: 'You May Also Like',
         reviews_count: 'reviews',
-        
+
         instant_confirmation: 'Instant Confirmation',
         free_cancellation: 'Free Cancellation',
         best_price: 'Best Price Guarantee',
         share_package: 'Share this package:',
-        
+
         view_all_reviews: 'View All Reviews',
         visit_website: 'Visit',
         view_map: 'View Map',
         valid_until: 'Valid Until',
         category: 'Category',
-        your_balance: 'Your Balance'
+        your_balance: 'Your Balance',
+        gold_tier: 'Gold Tier',
+        silver_tier: 'Silver Tier',
+
+        // Admin Dashboard
+        admin_dashboard: 'Dashboard',
+        admin_privileges: 'Manage Privileges',
+        admin_orders: 'Redemptions',
+        admin_exit: 'Exit Admin',
+        admin_overview: 'Dashboard Overview',
+
+        stat_total_privileges: 'Total Privileges',
+        stat_active: 'Active',
+        stat_total_redemptions: 'Total Redemptions',
+        stat_lifetime_orders: 'Lifetime orders',
+        stat_pending: 'Pending Orders',
+        stat_needs_attention: 'Needs attention',
+        stat_recent_activity: 'Recent Activity',
+
+        table_id: 'ID',
+        table_privilege: 'Privilege',
+        table_category: 'Category',
+        table_price: 'Price',
+        table_type: 'Type',
+        table_actions: 'Actions',
+        table_order_id: 'Order ID',
+        table_item: 'Item',
+        table_user: 'User / Shipping',
+        table_date: 'Date',
+        table_status: 'Status',
+
+        btn_add_privilege: 'Add New Privilege',
+        search_admin_placeholder: 'Search privileges...',
+
+        modal_edit_title: 'Edit Privilege',
+        modal_add_title: 'Add New Privilege',
+        label_title_en: 'Title (EN)',
+        label_title_th: 'Title (TH)',
+        label_is_physical: 'Physical Item (Requires Shipping)',
+        btn_save: 'Save Privilege',
+        btn_cancel: 'Cancel'
     },
     th: {
         nav_home: 'หน้าหลัก',
         nav_packages: 'แพ็คเกจ',
         nav_vouchers: 'วอเชอร์ของฉัน',
-        nav_wallet: 'กระเป๋าเงินของฉัน',
+        nav_wallet: 'กระเป๋าเงิน',
         nav_profile: 'โปรไฟล์',
-        nav_privilege: 'สิทธิพิเศษของฉัน',
+        nav_privilege: 'สิทธิพิเศษ',
         nav_contact: 'ติดต่อเรา',
-        
+
         hero_welcome: 'ยินดีต้อนรับสู่ FLIPS ID',
-        hero_subtitle: 'รางวัลสุดพิเศษและสิทธิประโยชน์เหนือระดับ',
+        hero_subtitle: 'สิทธิพิเศษและรางวัลระดับพรีเมียมสำหรับนักลงทุนคนสำคัญ',
+
+        // Profile Page
+        stat_balance: 'คะแนนคงเหลือ',
+        stat_earned: 'คะแนนที่ได้รับทั้งหมด',
+        stat_spent: 'คะแนนที่ใช้ไปทั้งหมด',
+        stat_lifetime: 'ยอดรวมตลอดอายุสมาชิก',
+        tab_digital: 'รางวัลแบบดิจิทัล (QR)',
+        tab_physical: 'รายการสั่งของ',
+        empty_rewards_title: 'ยังไม่มีรางวัล',
+        empty_rewards_desc: 'คุณยังไม่ได้แลกรางวัลในหมวดหมู่นี้',
+        btn_browse_rewards: 'ดูของรางวัล',
         hero_points_balance: 'คะแนนของคุณ',
         hero_expiring: 'กำลังจะหมดอายุ',
-        
+
         filter_all: 'ทั้งหมด',
         filter_travel: 'ท่องเที่ยว',
         filter_hospitality: 'โรงแรม',
@@ -113,15 +211,15 @@ const translations = {
         filter_shopping: 'ช้อปปิ้ง',
         filter_healthcare: 'สุขภาพ',
         filter_dining: 'อาหาร',
-        
+
         featured_privileges: 'สิทธิพิเศษแนะนำ',
         search_placeholder: 'ค้นหาสิทธิพิเศษ...',
-        
+
         sort_price_low: 'ราคา: ต่ำไปสูง',
         sort_price_high: 'ราคา: สูงไปต่ำ',
         sort_newest: 'ใหม่ล่าสุด',
         sort_popular: 'ยอดนิยม',
-        
+
         footer_rights: '© 2024 FLIPS ID. สงวนลิขสิทธิ์.',
         footer_links_quick: 'ลิงก์ด่วน',
         footer_links_support: 'ช่วยเหลือ',
@@ -134,17 +232,39 @@ const translations = {
         vouchers_modal_title: 'วอเชอร์ของฉัน',
         profile_modal_title: 'โปรไฟล์ของฉัน',
         support_modal_title: 'ติดต่อฝ่ายสนับสนุน',
+        shipping_modal_title: 'ข้อมูลการจัดส่ง',
+        booking_success_title: 'แลกสำเร็จ!',
+        qr_modal_title: 'Voucher QR Code',
 
         // Buttons & Labels
         btn_view_details: 'ดูรายละเอียด',
         btn_redeem: 'แลกรับสิทธิ์',
         btn_book: 'รับวอเชอร์',
         btn_not_enough: 'คะแนนไม่พอ',
-        
+        btn_profile: 'โปรไฟล์',
+        btn_wallet: 'กระเป๋าเงิน',
+        btn_back_home: 'กลับหน้าสิทธิพิเศษ',
+        btn_confirm_shipping: 'ยืนยันการสั่งซื้อ',
+        btn_view_qr: 'ดู QR Code',
+
         status_active: 'ใช้งานได้',
         status_used: 'ใช้แล้ว',
         status_expired: 'หมดอายุ',
-        
+        status_processing: 'กำลังดำเนินการ',
+        status_shipped: 'กำลังจัดส่ง',
+        status_delivered: 'จัดส่งแล้ว',
+        status_confirmed: 'ยืนยันแล้ว',
+        status_locked: 'ล็อค',
+        status_physical: 'สินค้าทางกายภาพ',
+
+        // User Profile & Wallet
+        member_since: 'สมาชิกตั้งแต่',
+        premium_member: 'สมาชิกพรีเมียม',
+        redeemed_privileges: 'สิทธิพิเศษที่แลกแล้ว',
+        no_redeemed_privileges: 'ยังไม่มีสิทธิพิเศษที่แลก',
+        total_points: 'ยอดคะแนน',
+        privileges_count: 'สิทธิพิเศษที่แลก',
+
         no_vouchers: 'ยังไม่มีวอเชอร์ เริ่มจองเพื่อรับวอเชอร์แรกของคุณ!',
         order_date: 'วันที่สั่งซื้อ',
         expected_delivery: 'กำหนดส่งมอบ',
@@ -153,22 +273,36 @@ const translations = {
         total_balance: 'ยอดคงเหลือ',
         points_available: 'คะแนน RDS ที่ใช้ได้',
         points_breakdown: 'รายละเอียดคะแนน',
+        recent_transactions: 'ธุรกรรมล่าสุด',
+
+        // Shipping Form
+        form_name: 'ชื่อ',
+        form_lastname: 'นามสกุล',
+        form_phone: 'เบอร์โทรศัพท์',
+        form_address: 'ที่อยู่',
+        form_note: 'จัดส่งภายใน 7-14 วันทำการ',
 
         // Details Page
         breadcrumb_home: 'หน้าหลัก',
         breadcrumb_packages: 'แพ็คเกจ',
         breadcrumb_details: 'รายละเอียดแพ็คเกจ',
-        
-        section_details: 'รายละเอียดแพ็คเกจ',
+
+        section_details: 'รายละเอียด',
         section_amenities: 'สิ่งอำนวยความสะดวก',
-        section_conditions: 'ข้อกำหนดและเงื่อนไข',
+        section_conditions: 'เงื่อนไขการใช้งาน',
         section_redeem: 'วิธีการแลกรับสิทธิ์',
         section_reviews: 'รีวิวจากผู้ใช้',
-        
+        section_event_date: 'วันที่จัดงาน',
+        section_venue: 'สถานที่',
+        section_movie: 'ภาพยนตร์',
+        section_shipping: 'ข้อมูลการจัดส่ง',
+        section_shipping_desc: 'สินค้านี้จะถูกจัดส่งถึงที่อยู่ของท่านภายใน 7-14 วันทำการหลังจากแลกสิทธิ์',
+
         label_quantity: 'จำนวน',
         label_total_price: 'ราคารวม',
         label_balance_after: 'ยอดคงเหลือหลังทำรายการ:',
-        
+        label_use_points: 'ใช้คะแนนแลก',
+
         msg_select_date: 'กรุณาเลือกวันที่',
         related_packages: 'คุณอาจจะชอบสิ่งนี้',
         reviews_count: 'รีวิว',
@@ -177,12 +311,52 @@ const translations = {
         free_cancellation: 'ยกเลิกฟรี',
         best_price: 'การันตีราคาดีที่สุด',
         share_package: 'แชร์แพ็คเกจนี้:',
-        
+
         view_all_reviews: 'ดูรีวิวทั้งหมด',
         visit_website: 'เยี่ยมชมเว็บไซต์',
         view_map: 'ดูแผนที่',
         valid_until: 'ใช้ได้ถึง',
         category: 'หมวดหมู่',
-        your_balance: 'ยอดเงินของคุณ'
+        your_balance: 'ยอดเงินของคุณ',
+        gold_tier: 'Gold Tier',
+        silver_tier: 'Silver Tier',
+
+        // Admin Dashboard
+        admin_dashboard: 'แดชบอร์ด',
+        admin_privileges: 'จัดการสิทธิพิเศษ',
+        admin_orders: 'รายการแลกสิทธิ์',
+        admin_exit: 'ออกจากระบบแอดมิน',
+        admin_overview: 'ภาพรวมแดชบอร์ด',
+
+        stat_total_privileges: 'สิทธิพิเศษทั้งหมด',
+        stat_active: 'ใช้งานอยู่',
+        stat_total_redemptions: 'ยอดยืนยันการแลก',
+        stat_lifetime_orders: 'รายการตลอดชีพ',
+        stat_pending: 'รายการรอดำเนินการ',
+        stat_needs_attention: 'ที่ต้องจัดการ',
+        stat_recent_activity: 'กิจกรรมล่าสุด',
+
+        table_id: 'รหัส',
+        table_privilege: 'สิทธิพิเศษ',
+        table_category: 'หมวดหมู่',
+        table_price: 'ราคา',
+        table_type: 'ประเภท',
+        table_actions: 'จัดการ',
+        table_order_id: 'รหัสคำสั่ง',
+        table_item: 'รายการ',
+        table_user: 'ผู้ใช้ / จัดส่ง',
+        table_date: 'วันที่',
+        table_status: 'สถานะ',
+
+        btn_add_privilege: 'เพิ่มสิทธิพิเศษใหม่',
+        search_admin_placeholder: 'ค้นหาสิทธิพิเศษ...',
+
+        modal_edit_title: 'แก้ไขสิทธิพิเศษ',
+        modal_add_title: 'เพิ่มสิทธิพิเศษใหม่',
+        label_title_en: 'ชื่อ (EN)',
+        label_title_th: 'ชื่อ (TH)',
+        label_is_physical: 'สินค้าต้องจัดส่ง (Physical)',
+        btn_save: 'บันทึก',
+        btn_cancel: 'ยกเลิก'
     }
 };

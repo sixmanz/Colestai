@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLIPS Admin Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0A0A0A',
+                            card: '#171717',
+                            border: '#262626'
+                        },
+                        purple: {
+                            primary: '#A855F7',
+                            secondary: '#EC4899'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Comfortaa', 'Noto Sans Thai', 'sans-serif'],
+                        thai: ['Comfortaa', 'Noto Sans Thai', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', 'Prompt', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(23, 23, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .sidebar-link.active {
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 3px solid #A855F7;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-bg text-white overflow-hidden">
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-dark-card border-r border-dark-border flex flex-col z-20">
+            <div class="p-6 border-b border-dark-border">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo_v4.png" alt="Logo" class="h-8">
+                    <span class="font-bold text-lg tracking-wider">ADMIN</span>
+                </div>
+            </div>
+
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard"
+                    class="sidebar-link active w-full text-left px-4 py-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3">
+                    <i class="fas fa-chart-line w-5"></i> <span data-i18n="admin_dashboard">Dashboard</span>
+                </button>
+                <button onclick="switchTab('privileges')" id="nav-privileges"
+                    class="sidebar-link w-full text-left px-4 py-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3">
+                    <i class="fas fa-gift w-5"></i> <span data-i18n="admin_privileges">Manage Privileges</span>
+                </button>
+                <button onclick="switchTab('orders')" id="nav-orders"
+                    class="sidebar-link w-full text-left px-4 py-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3">
+                    <i class="fas fa-shopping-bag w-5"></i> <span data-i18n="admin_orders">Redemptions</span> <span
+                        id="pendingCount"
+                        class="ml-auto bg-purple-primary text-white text-xs px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-dark-border">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg transition-all w-full">
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="admin_exit">Exit Admin</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-dark-bg relative">
+            <!-- Topbar -->
+            <header
+                class="h-16 bg-dark-card/50 backdrop-blur-xl border-b border-dark-border flex items-center justify-between px-8 sticky top-0 z-10">
+                <h2 id="pageTitle" class="text-xl font-bold" data-i18n="admin_overview">Dashboard Overview</h2>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleAdminLanguage()"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 hover:border-purple-primary hover:bg-purple-primary/10 transition-all text-sm font-medium">
+                        <i class="fas fa-globe text-purple-primary"></i>
+                        <span id="currentLang">EN</span>
+                    </button>
+                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                        <img src="images/profile_v1.jpg" class="w-8 h-8 rounded-full border border-white/20">
+                        <span class="text-sm font-medium">Admin User</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-8 pb-32">
+                <!-- VIEW: DASHBOARD -->
+                <div id="view-dashboard" class="space-y-6">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-white/50 text-sm" data-i18n="stat_total_privileges">Total Privileges
+                                    </p>
+                                    <h3 class="text-3xl font-bold mt-1" id="statTotalPrivileges">0</h3>
+                                </div>
+                                <div
+                                    class="w-12 h-12 bg-purple-primary/20 rounded-xl flex items-center justify-center text-purple-primary">
+                                    <i class="fas fa-gift text-xl"></i>
+                                </div>
+                            </div>
+                            <span class="text-green-400 text-sm"><i class="fas fa-arrow-up"></i> <span
+                                    data-i18n="stat_active">Active</span></span>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-white/50 text-sm" data-i18n="stat_total_redemptions">Total
+                                        Redemptions</p>
+                                    <h3 class="text-3xl font-bold mt-1" id="statTotalRedemptions">0</h3>
+                                </div>
+                                <div
+                                    class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center text-pink-500">
+                                    <i class="fas fa-ticket-alt text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-white/40 text-xs" data-i18n="stat_lifetime_orders">Lifetime orders</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-white/50 text-sm" data-i18n="stat_pending">Pending Orders</p>
+                                    <h3 class="text-3xl font-bold mt-1" id="statPendingOrders">0</h3>
+                                </div>
+                                <div
+                                    class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center text-yellow-500">
+                                    <i class="fas fa-clock text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-yellow-400/60 text-xs" data-i18n="stat_needs_attention">Needs attention</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="font-bold mb-4" data-i18n="stat_recent_activity">Recent Activity</h3>
+                        <div id="recentActivityList" class="space-y-4">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW: PRIVILEGES -->
+                <div id="view-privileges" class="hidden space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div class="bg-white/5 rounded-xl flex items-center px-4 py-2 border border-white/10 w-96">
+                            <i class="fas fa-search text-white/30 mr-3"></i>
+                            <input data-i18n="search_admin_placeholder" oninput="searchAdminPrivileges(this.value)"
+                                type="text" placeholder="Search privileges..."
+                                class="bg-transparent outline-none text-white w-full placeholder-white/30">
+                        </div>
+                        <button onclick="openEditModal()"
+                            class="px-6 py-2 bg-purple-primary hover:bg-purple-600 rounded-xl font-semibold transition-colors flex items-center gap-2">
+                            <i class="fas fa-plus"></i> <span data-i18n="btn_add_privilege">Add New Privilege</span>
+                        </button>
+                    </div>
+
+                    <div class="glass-card rounded-2xl overflow-hidden border border-white/5">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-white/5 text-white/50 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-6 font-medium" data-i18n="table_id">ID</th>
+                                    <th class="p-6 font-medium" data-i18n="table_privilege">Privilege</th>
+                                    <th class="p-6 font-medium" data-i18n="table_category">Category</th>
+                                    <th class="p-6 font-medium" data-i18n="table_price">Price (RDS)</th>
+                                    <th class="p-6 font-medium" data-i18n="table_type">Type</th>
+                                    <th class="p-6 font-medium text-right" data-i18n="table_actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPrivilegesTable" class="divide-y divide-white/5 text-sm">
+                                <!-- JS Injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- VIEW: ORDERS -->
+                <div id="view-orders" class="hidden space-y-6">
+                    <div class="glass-card rounded-2xl overflow-hidden border border-white/5">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-white/5 text-white/50 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="p-6 font-medium" data-i18n="table_order_id">Order ID</th>
+                                    <th class="p-6 font-medium" data-i18n="table_item">Item</th>
+                                    <th class="p-6 font-medium" data-i18n="table_user">User / Shipping</th>
+                                    <th class="p-6 font-medium" data-i18n="table_date">Date</th>
+                                    <th class="p-6 font-medium" data-i18n="table_status">Status</th>
+                                    <th class="p-6 font-medium text-right" data-i18n="table_actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminOrdersTable" class="divide-y divide-white/5 text-sm">
+                                <!-- JS Injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Privilege Modal -->
+    <div id="editModal"
+        class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            class="bg-dark-card border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center sticky top-0 bg-dark-card z-10">
+                <h3 class="font-bold text-xl" id="editModalTitle">Add Privilege</h3>
+                <button onclick="closeEditModal()" class="text-white/50 hover:text-white"><i
+                        class="fas fa-times text-xl"></i></button>
+            </div>
+
+            <form onsubmit="savePrivilege(event)" class="p-6 space-y-6">
+                <input type="hidden" id="editId">
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/50 text-xs mb-1" data-i18n="label_title_en">Title (EN)</label>
+                        <input type="text" id="editTitle" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-primary text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white/50 text-xs mb-1" data-i18n="label_title_th">Title (TH)</label>
+                        <input type="text" id="editTitleTh" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-primary text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white/50 text-xs mb-1" data-i18n="table_category">Category</label>
+                        <select id="editCategory"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-primary text-white [&>option]:text-black">
+                            <option value="goods">Goods</option>
+                            <option value="travel">Travel</option>
+                            <option value="hospitality">Hospitality</option>
+                            <option value="movie-tickets">Movie Tickets</option>
+                            <option value="meet-greet">Meet & Greet</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-white/50 text-xs mb-1" data-i18n="table_price">Price (RDS)</label>
+                        <input type="number" id="editPrice" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-primary text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-white/50 text-xs mb-1">Image URL</label>
+                    <input type="text" id="editImage" placeholder="images/..."
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-purple-primary text-white">
+                </div>
+
+                <div class="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <input type="checkbox" id="editIsPhysical"
+                        class="w-5 h-5 rounded border-white/20 bg-white/10 text-purple-primary focus:ring-purple-primary">
+                    <label for="editIsPhysical" class="select-none cursor-pointer"
+                        data-i18n="label_is_physical">Physical Item (Requires
+                        Shipping)</label>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                    <button type="button" onclick="closeEditModal()"
+                        class="py-3 rounded-xl border border-white/10 hover:bg-white/5 transition-colors"
+                        data-i18n="btn_cancel">Cancel</button>
+                    <button type="submit"
+                        class="py-3 rounded-xl bg-purple-primary hover:bg-purple-600 font-bold transition-colors"
+                        data-i18n="btn_save">Save
+                        Privilege</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/translations.js?v=1.2"></script>
+    <script src="js/data.js?v=1.0"></script>
+    <script src="js/privileges-data.js?v=1.0"></script>
+    <script src="js/utils.js?v=1.2"></script>
+    <script src="js/admin.js?v=1.2"></script>
+</body>
+
+</html>

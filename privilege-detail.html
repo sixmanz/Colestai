@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FLIPS ID - รายละเอียดสิทธิพิเศษ">
+    <title>รายละเอียดสิทธิพิเศษ - FLIPS ID</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Comfortaa', 'Noto Sans Thai', 'sans-serif'],
+                        'thai': ['Comfortaa', 'Noto Sans Thai', 'sans-serif']
+                    },
+                    colors: {
+                        'purple-primary': '#A855F7',
+                        'pink-primary': '#EC4899',
+                        'blue-primary': '#3B82F6',
+                        'dark-bg': '#0A0A0A',
+                        'dark-card': '#111111',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+        }
+
+        .glass-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #A855F7, #EC4899);
+            border-radius: 4px;
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body class="bg-black font-thai text-white antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
+        <nav class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="images/logo_v4.png" alt="Flips id"
+                        class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_privilege">Privileges</a>
+                    <a href="wallet.html"
+                        class="text-white/70 hover:text-white font-medium transition-colors cursor-pointer"
+                        data-i18n="nav_wallet">Wallet</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Notification Bell -->
+                    <div class="relative">
+                        <button onclick="toggleNotifications()"
+                            class="w-10 h-10 rounded-xl flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors">
+                            <i class="fas fa-bell text-white/70"></i>
+                            <span
+                                class="notif-badge hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold">0</span>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div id="notificationModal"
+                            class="hidden absolute top-12 right-0 w-80 md:w-96 bg-dark-bg/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-[60] overflow-hidden transform origin-top-right transition-all">
+                            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+                                <h3 class="font-bold flex items-center gap-2">
+                                    <i class="fas fa-bell text-purple-primary"></i>
+                                    Notifications
+                                </h3>
+                                <button onclick="markAllAsRead()"
+                                    class="text-xs text-white/50 hover:text-white transition-colors">Mark all
+                                    read</button>
+                            </div>
+                            <div id="notificationList"
+                                class="max-h-[60vh] overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                                <!-- Items injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="toggleLanguage()"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300 text-sm font-medium">
+                        <i class="fas fa-globe text-purple-primary"></i>
+                        <span id="currentLang">EN</span>
+                    </button>
+
+                    <!-- Wallet Button -->
+                    <a href="wallet.html"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300">
+                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
+                        <span class="text-sm font-bold" id="headerPoints">0</span>
+                        <span class="text-white/50 text-xs">RDS</span>
+                    </a>
+
+                    <!-- Profile Button -->
+                    <a href="profile.html"
+                        class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 transform">
+                        <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="max-w-5xl mx-auto px-6">
+
+            <!-- Back Button -->
+            <a href="index.html"
+                class="inline-flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors">
+                <i class="fas fa-arrow-left"></i>
+                <span data-i18n="btn_back_home">Back to Privileges</span>
+            </a>
+
+            <!-- Privilege Header -->
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Image/Icon Section -->
+                <div id="privilegeImageSection" class="relative rounded-2xl overflow-hidden h-80">
+                    <img id="privilegeImage" src="" alt="" class="w-full h-full object-cover"
+                        onerror="this.style.display='none'; document.getElementById('privilegeImageFallback').style.display='flex';">
+                    <div id="privilegeImageFallback"
+                        class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 items-center justify-center"
+                        style="display: none;">
+                        <i id="privilegeIcon" class="fas fa-gift text-8xl text-white/30"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div id="privilegeTierBadge" class="absolute top-4 left-4"></div>
+                    <div id="privilegePhysicalBadge" class="absolute bottom-4 left-4"></div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="flex flex-col justify-center">
+                    <span id="privilegeCategory"
+                        class="text-purple-primary text-sm font-medium uppercase tracking-wider mb-2"></span>
+                    <h1 id="privilegeTitle" class="text-3xl md:text-4xl font-bold mb-3"></h1>
+                    <p id="privilegeSubtitle" class="text-white/60 text-lg mb-6"></p>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex items-center gap-1 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <span id="privilegeRating" class="font-medium">0</span>
+                        </div>
+                        <span id="privilegeReviews" class="text-white/50 text-sm"></span>
+                    </div>
+
+                    <!-- Price Card -->
+                    <div class="gradient-bg rounded-2xl p-6 text-center mb-6">
+                        <p class="text-white/80 text-sm mb-2" data-i18n="label_use_points">Use Points</p>
+                        <div class="flex items-baseline justify-center gap-2">
+                            <span id="privilegePrice" class="text-4xl font-bold">0</span>
+                            <span class="text-lg font-medium">RDS</span>
+                        </div>
+                    </div>
+
+                    <button id="redeemBtn" onclick="redeemCurrentPrivilege()"
+                        class="w-full py-4 btn-gradient rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-105 transition-all">
+                        <i class="fas fa-gift"></i>
+                        <span data-i18n="btn_redeem">Redeem</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Details Sections -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <!-- Event Date -->
+                <div id="eventDateSection" class="glass-card rounded-xl p-6" style="display: none;">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-purple-primary/20 flex items-center justify-center">
+                            <i class="fas fa-calendar text-purple-primary"></i>
+                        </div>
+                        <span class="text-white/60 text-sm" data-i18n="section_event_date">Event Date</span>
+                    </div>
+                    <p id="eventDateValue" class="font-semibold text-lg"></p>
+                </div>
+
+                <!-- Venue -->
+                <div id="venueSection" class="glass-card rounded-xl p-6" style="display: none;">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-pink-primary/20 flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-pink-primary"></i>
+                        </div>
+                        <span class="text-white/60 text-sm" data-i18n="section_venue">Venue</span>
+                    </div>
+                    <p id="venueValue" class="font-semibold text-lg"></p>
+                </div>
+
+                <!-- Movie Name -->
+                <div id="movieSection" class="glass-card rounded-xl p-6" style="display: none;">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-primary/20 flex items-center justify-center">
+                            <i class="fas fa-film text-blue-primary"></i>
+                        </div>
+                        <span class="text-white/60 text-sm" data-i18n="section_movie">Movie</span>
+                    </div>
+                    <p id="movieValue" class="font-semibold text-lg"></p>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="glass-card rounded-2xl p-8 mb-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-info-circle text-purple-primary"></i>
+                    <span data-i18n="section_details">Details</span>
+                </h3>
+                <p id="privilegeDescription" class="text-white/80 leading-relaxed"></p>
+            </div>
+
+            <!-- Conditions -->
+            <div class="glass-card rounded-2xl p-8 mb-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-clipboard-check text-purple-primary"></i>
+                    <span data-i18n="section_conditions">Conditions</span>
+                </h3>
+                <ul id="privilegeConditions" class="space-y-3">
+                    <!-- Conditions will be inserted here -->
+                </ul>
+            </div>
+
+            <!-- Shipping Info (for physical items) -->
+            <div id="shippingInfoSection" class="glass-card rounded-2xl p-8 mb-8" style="display: none;">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-truck text-purple-primary"></i>
+                    <span data-i18n="section_shipping">Shipping Information</span>
+                </h3>
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-box text-blue-400 mt-1"></i>
+                        <div>
+                            <p class="font-medium text-blue-400" data-i18n="status_physical">Physical Item</p>
+                            <p class="text-white/70 text-sm" data-i18n="section_shipping_desc">This item will be shipped
+                                to your address within 7-14 business days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo_v4.png" alt="Flips id" class="h-12 w-auto">
+                </div>
+                <p class="text-white/50 text-sm" data-i18n="footer_rights">© 2024 FLIPS ID Corporation. All rights
+                    reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- MODALS -->
+    <!-- ============================================ -->
+
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('walletModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('walletModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
+                    <i class="fas fa-wallet"></i> <span data-i18n="wallet_modal_title">My Wallet</span>
+                </h2>
+
+                <div class="gradient-bg rounded-2xl p-6 mb-8 text-center relative overflow-hidden">
+                    <p class="text-white/80 mb-2 text-lg" data-i18n="total_points">Total Points</p>
+                    <h3 class="text-5xl font-bold mb-2 tracking-tight" id="walletTotalPoints">0</h3>
+                    <p class="text-white/60 text-sm" data-i18n="points_available">RDS Points Available</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-semibold text-lg mb-4" data-i18n="points_breakdown">Points Breakdown</h3>
+                    <div id="pointsBreakdown" class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+                    </div>
+                </div>
+
+                <h3 class="font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-history text-purple-primary"></i> <span data-i18n="wallet_history">Transaction
+                        History</span>
+                </h3>
+                <div id="transactionsList" class="space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('profileModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('profileModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
+                    <i class="fas fa-user-circle"></i> <span data-i18n="profile_modal_title">My Profile</span>
+                </h2>
+
+                <!-- User Info -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center overflow-hidden">
+                            <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">FLIPS ID User</h3>
+                            <p class="text-white/50"><span data-i18n="member_since">Member since</span> Jan 2024</p>
+                            <span
+                                class="px-2 py-1 rounded-full bg-purple-primary/20 text-purple-primary text-xs mt-2 inline-block"
+                                data-i18n="premium_member">Premium
+                                Member</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance & Vouchers Summary -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="glass-card rounded-xl p-4 text-center">
+                        <p class="text-white/50 text-sm" data-i18n="total_points">Total Points</p>
+                        <p class="text-2xl font-bold gradient-text" id="profileBalance">0 RDS</p>
+                    </div>
+                    <div class="glass-card rounded-xl p-4 text-center">
+                        <p class="text-white/50 text-sm" data-i18n="privileges_count">Privileges Redeemed</p>
+                        <p class="text-2xl font-bold text-white" id="profileVouchers">0</p>
+                    </div>
+                </div>
+
+                <!-- Redeemed Privileges with Shipping Status -->
+                <h3 class="font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-gift text-purple-primary"></i> <span data-i18n="redeemed_privileges">Redeemed
+                        Privileges</span>
+                </h3>
+                <div id="redeemedPrivilegesList" class="space-y-4 max-h-[300px] overflow-y-auto">
+                    <!-- Redeemed privileges will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('bookingModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('bookingModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2" data-i18n="booking_success_title">Redemption Successful!</h2>
+                    <p class="text-white/60 mb-6" id="bookingMessage"></p>
+                    <div class="space-y-3">
+                        <button onclick="showQRCodeFromDetail()"
+                            class="w-full py-3 btn-gradient rounded-xl font-semibold">
+                            <i class="fas fa-qrcode mr-2"></i><span data-i18n="btn_view_qr">View QR Code</span>
+                        </button>
+                        <a href="index.html"
+                            class="w-full py-3 rounded-xl border border-white/20 hover:border-purple-primary transition-colors block text-center"
+                            data-i18n="btn_back_home">
+                            Back to Privileges
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('qrModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-6">
+            <div class="glass-card rounded-2xl p-8 text-center">
+                <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <h2 class="text-xl font-bold mb-2" data-i18n="qr_modal_title">Voucher QR Code</h2>
+                <p class="text-white/50 text-sm mb-6" id="qrVoucherName"></p>
+                <div id="qrcode" class="flex justify-center mb-6 bg-white p-4 rounded-xl inline-block mx-auto"></div>
+                <p class="text-white/50 text-sm mb-4" data-i18n="qr_instruction">Show this QR Code to redeem</p>
+                <p class="text-xs text-white/30 font-mono" id="qrVoucherCode"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shipping Modal -->
+    <div id="shippingModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-overlay absolute inset-0" onclick="closeModal('shippingModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <button onclick="closeModal('shippingModal')"
+                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+
+                <h2 class="text-2xl font-bold mb-2 gradient-text flex items-center gap-3">
+                    <i class="fas fa-truck"></i> <span data-i18n="shipping_modal_title">Shipping Information</span>
+                </h2>
+                <p class="text-white/60 mb-6" data-i18n="section_shipping_desc">Please enter your shipping address</p>
+
+                <!-- Product Info -->
+                <div class="glass-card rounded-xl p-4 mb-6 flex items-center gap-4">
+                    <div
+                        class="w-20 h-20 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                        <i class="fas fa-gift text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <h4 id="shippingProductName" class="font-semibold"></h4>
+                        <p id="shippingProductPrice" class="text-purple-primary"></p>
+                    </div>
+                </div>
+
+                <form onsubmit="submitShippingFromDetail(event)">
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_name">First Name
+                                    *</label>
+                                <input type="text" id="shipFirstName" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="First Name" data-i18n="form_name">
+                            </div>
+                            <div>
+                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_lastname">Last Name
+                                    *</label>
+                                <input type="text" id="shipLastName" required
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    placeholder="Last Name" data-i18n="form_lastname">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm" data-i18n="form_phone">Phone Number
+                                *</label>
+                            <input type="tel" id="shipPhone" required
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                placeholder="0812345678">
+                        </div>
+
+                        <div>
+                            <label class="block text-white/70 mb-2 text-sm" data-i18n="form_address">Address *</label>
+                            <textarea id="shipAddress" required rows="3"
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white resize-none"
+                                placeholder="House No, Street, District, Province, Postal Code"></textarea>
+                        </div>
+
+                        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-info-circle text-yellow-400 mt-1"></i>
+                                <div>
+                                    <p class="font-medium text-yellow-400" data-i18n="section_shipping">Shipping
+                                        Information</p>
+                                    <p class="text-white/70 text-sm" data-i18n="form_note">Ships within 7-14 business
+                                        days</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 btn-gradient rounded-xl font-semibold hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                            <i class="fas fa-check"></i> <span data-i18n="btn_confirm_shipping">Confirm Shipping</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 z-[200] hidden">
+        <div class="glass-card rounded-xl px-6 py-4 flex items-center gap-3">
+            <i id="toastIcon" class="fas fa-check-circle text-green-400 text-xl"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/translations.js?v=2"></script>
+    <script src="js/data.js?v=2"></script>
+    <script src="js/privileges-data.js?v=2"></script>
+    <script src="js/utils.js?v=2"></script>
+    <script src="js/notifications.js?v=2"></script>
+    <!-- privilege-detail specific script below -->
+    <script>
+        let currentPrivilege = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            initWalletData();
+            updatePointsDisplay();
+            loadPrivilegeDetails();
+        });
+
+        function loadPrivilegeDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const privilegeId = parseInt(urlParams.get('id'));
+
+            if (!privilegeId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            currentPrivilege = privilegePackages.find(p => p.id === privilegeId);
+            if (!currentPrivilege) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            renderPrivilegeDetails();
+        }
+
+        function renderPrivilegeDetails() {
+            const p = currentPrivilege;
+            const category = privilegeCategories.find(c => c.id === p.category);
+            const canAfford = walletData.totalPoints >= p.price;
+
+            // Set image
+            const privilegeImage = document.getElementById('privilegeImage');
+            const privilegeFallback = document.getElementById('privilegeImageFallback');
+            privilegeImage.src = p.image;
+            privilegeImage.alt = currentLanguage === 'th' && p.titleTh ? p.titleTh : p.title;
+
+            // Set fallback gradient color and icon
+            if (category) {
+                privilegeFallback.className = `absolute inset-0 bg-gradient-to-br ${category.color} items-center justify-center`;
+                document.getElementById('privilegeIcon').className = `fas ${category.icon} text-8xl text-white/30`;
+            }
+
+            // Tier badge
+            const tierBadge = document.getElementById('privilegeTierBadge');
+            if (p.tier === 'gold') {
+                tierBadge.innerHTML = '<span class="px-3 py-1.5 rounded-full bg-yellow-500/20 text-yellow-400 text-sm font-medium"><i class="fas fa-crown mr-1"></i>Gold Tier</span>';
+            } else if (p.tier === 'silver') {
+                tierBadge.innerHTML = '<span class="px-3 py-1.5 rounded-full bg-gray-400/20 text-gray-300 text-sm font-medium"><i class="fas fa-gem mr-1"></i>Silver Tier</span>';
+            }
+
+            // Physical badge
+            const physicalBadge = document.getElementById('privilegePhysicalBadge');
+            if (p.isPhysical) {
+                physicalBadge.innerHTML = '<span class="px-3 py-1.5 rounded-full bg-blue-500/80 text-white text-sm font-medium"><i class="fas fa-truck mr-1"></i>สินค้าทางกายภาพ</span>';
+                document.getElementById('shippingInfoSection').style.display = 'block';
+            }
+
+            // Basic info
+            document.getElementById('privilegeCategory').textContent = currentLanguage === 'th' && p.categoryLabelTh ? p.categoryLabelTh : p.categoryLabel;
+            document.getElementById('privilegeTitle').textContent = currentLanguage === 'th' && p.titleTh ? p.titleTh : p.title;
+            document.getElementById('privilegeSubtitle').textContent = currentLanguage === 'th' && p.subtitleTh ? p.subtitleTh : p.subtitle;
+            document.getElementById('privilegeRating').textContent = p.rating;
+            document.getElementById('privilegeReviews').textContent = `(${p.reviews} ${currentLanguage === 'th' ? 'รีวิว' : 'reviews'})`;
+            document.getElementById('privilegePrice').textContent = p.price.toLocaleString();
+            document.getElementById('privilegeDescription').textContent = currentLanguage === 'th' && p.descriptionTh ? p.descriptionTh : p.description;
+
+            // Event date
+            if (p.eventDate) {
+                document.getElementById('eventDateSection').style.display = 'block';
+                document.getElementById('eventDateValue').textContent = new Date(p.eventDate).toLocaleDateString(currentLanguage === 'th' ? 'th-TH' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            // Venue
+            if (p.venue) {
+                document.getElementById('venueSection').style.display = 'block';
+                document.getElementById('venueValue').textContent = p.venue;
+            }
+
+            // Movie
+            if (p.movieName) {
+                document.getElementById('movieSection').style.display = 'block';
+                document.getElementById('movieValue').textContent = currentLanguage === 'th' && p.movieNameTh ? p.movieNameTh : p.movieName;
+            }
+
+            // Conditions
+            const conditions = currentLanguage === 'th' && p.conditionsTh ? p.conditionsTh : p.conditions;
+            const conditionsList = document.getElementById('privilegeConditions');
+            if (conditions) {
+                conditionsList.innerHTML = conditions.map(c => `
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-green-400 mt-1 flex-shrink-0"></i>
+                        <span class="text-white/80">${c}</span>
+                    </li>
+                `).join('');
+            }
+
+            // Redeem button
+            const redeemBtn = document.getElementById('redeemBtn');
+            if (canAfford) {
+                redeemBtn.className = 'w-full py-4 btn-gradient rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-105 transition-all';
+                redeemBtn.innerHTML = `<i class="fas fa-gift"></i><span>${translations[currentLanguage].btn_redeem}</span>`;
+                redeemBtn.disabled = false;
+            } else {
+                redeemBtn.className = 'w-full py-4 bg-white/10 text-white/40 rounded-xl font-semibold flex items-center justify-center gap-2 cursor-not-allowed';
+                redeemBtn.innerHTML = `<i class="fas fa-lock"></i><span>${translations[currentLanguage].btn_not_enough}</span>`;
+                redeemBtn.disabled = true;
+            }
+        }
+
+        function redeemCurrentPrivilege() {
+            if (!currentPrivilege) return;
+
+            if (walletData.totalPoints < currentPrivilege.price) {
+                showToast(translations[currentLanguage].btn_not_enough, 'error');
+                return;
+            }
+
+            if (currentPrivilege.isPhysical) {
+                // Show shipping modal
+                document.getElementById('shippingProductName').textContent = currentLanguage === 'th' ? currentPrivilege.titleTh : currentPrivilege.title;
+                document.getElementById('shippingProductPrice').textContent = currentPrivilege.price.toLocaleString() + ' RDS';
+                // Update modal title dynamically
+                const shippingTitle = document.querySelector('#shippingModal h2 span');
+                if (shippingTitle) shippingTitle.textContent = translations[currentLanguage].shipping_modal_title;
+                openModal('shippingModal');
+            } else {
+                completeRedemption();
+            }
+        }
+
+        function completeRedemption(shippingInfo = null) {
+            const p = currentPrivilege;
+            const voucherCode = 'PVL-' + Date.now().toString(36).toUpperCase();
+            const title = currentLanguage === 'th' ? p.titleTh : p.title;
+
+            // Calculate estimated delivery for physical items
+            const orderDate = new Date();
+            const estimatedDelivery = new Date(orderDate);
+            estimatedDelivery.setDate(estimatedDelivery.getDate() + 10); // 10 days from now
+
+            // Create voucher/order
+            const voucher = {
+                ...p,
+                code: voucherCode,
+                bookedAt: orderDate.toISOString(),
+                used: false,
+                type: 'privilege',
+                shippingInfo: shippingInfo,
+                isShipped: !!shippingInfo,
+                status: shippingInfo ? 'processing' : 'confirmed',
+                estimatedDelivery: shippingInfo ? estimatedDelivery.toISOString() : null
+            };
+
+            // Deduct points
+            walletData.totalPoints -= p.price;
+            walletData.transactions.unshift({
+                type: 'spend',
+                amount: -p.price,
+                description: title + (shippingInfo ? ' (จัดส่ง)' : ''),
+                date: new Date().toISOString().split('T')[0]
+            });
+
+            // Save
+            userVouchers.push(voucher);
+            localStorage.setItem('userVouchers', JSON.stringify(userVouchers));
+            localStorage.setItem('walletData', JSON.stringify(walletData));
+
+            // Update UI
+            updatePointsDisplay();
+            renderPrivilegeDetails();
+
+            // Store for QR
+            window.currentVoucherCode = voucherCode;
+            window.currentVoucherName = title;
+
+            // Show success
+            document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${p.price.toLocaleString()} RDS สำหรับ "${title}"`;
+            closeModal('shippingModal');
+            openModal('bookingModal');
+        }
+
+        function submitShippingFromDetail(e) {
+            e.preventDefault();
+
+            const shippingInfo = {
+                firstName: document.getElementById('shipFirstName').value,
+                lastName: document.getElementById('shipLastName').value,
+                phone: document.getElementById('shipPhone').value,
+                address: document.getElementById('shipAddress').value
+            };
+
+            completeRedemption(shippingInfo);
+        }
+
+        function showQRCodeFromDetail() {
+            if (!window.currentVoucherCode) return;
+
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+
+            new QRCode(qrContainer, {
+                text: window.currentVoucherCode,
+                width: 180,
+                height: 180,
+                colorDark: '#000000',
+                colorLight: '#ffffff'
+            });
+
+            document.getElementById('qrVoucherName').textContent = window.currentVoucherName;
+            document.getElementById('qrVoucherCode').textContent = window.currentVoucherCode;
+
+            closeModal('bookingModal');
+            openModal('qrModal');
+        }
+
+        // Override openProfile to show redeemed privileges with shipping info
+        function openProfile() {
+            document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' RDS';
+            document.getElementById('profileVouchers').textContent = userVouchers.length;
+
+            // Render redeemed privileges
+            const container = document.getElementById('redeemedPrivilegesList');
+            if (userVouchers.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-white/50">
+                        <i class="fas fa-gift text-3xl mb-3"></i>
+                        <p>ยังไม่มีสิทธิพิเศษที่แลก</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = userVouchers.map(v => {
+                    const title = currentLanguage === 'th' && v.titleTh ? v.titleTh : v.title;
+                    const category = privilegeCategories.find(c => c.id === v.category);
+
+                    let statusBadge = '';
+                    let shippingInfo = '';
+
+                    if (v.isShipped) {
+                        const estDate = v.estimatedDelivery ? new Date(v.estimatedDelivery).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }) : 'รอการจัดส่ง';
+
+                        if (v.status === 'processing') {
+                            statusBadge = '<span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs">กำลังดำเนินการ</span>';
+                        } else if (v.status === 'shipped') {
+                            statusBadge = '<span class="px-2 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs">กำลังจัดส่ง</span>';
+                        } else if (v.status === 'delivered') {
+                            statusBadge = '<span class="px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">จัดส่งแล้ว</span>';
+                        }
+
+                        shippingInfo = `
+                            <div class="mt-3 pt-3 border-t border-white/10">
+                                <div class="flex items-center gap-2 text-sm text-white/60 mb-1">
+                                    <i class="fas fa-truck text-blue-400"></i>
+                                    <span>คาดว่าจะได้รับ: ${estDate}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-white/60">
+                                    <i class="fas fa-map-marker-alt text-purple-primary"></i>
+                                    <span class="truncate">${v.shippingInfo?.address || 'รอยืนยันที่อยู่'}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        statusBadge = '<span class="px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">พร้อมใช้งาน</span>';
+                    }
+
+                    return `
+                        <div class="glass-card rounded-xl p-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-14 h-14 rounded-lg bg-gradient-to-br ${category ? category.color : 'from-purple-500 to-pink-500'} flex items-center justify-center flex-shrink-0">
+                                    <i class="fas ${category ? category.icon : 'fa-gift'} text-xl text-white"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-2 mb-1">
+                                        <h4 class="font-semibold truncate">${title}</h4>
+                                        ${statusBadge}
+                                    </div>
+                                    <p class="text-white/50 text-sm">${v.price.toLocaleString()} RDS</p>
+                                    <p class="text-white/40 text-xs mt-1">รหัส: ${v.code}</p>
+                                    ${shippingInfo}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            openModal('profileModal');
+        }
+    </script>
+
+</body>
+
+</html>

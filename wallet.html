@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My Wallet - FLIPS ID">
+    <title>My Wallet - FLIPS ID</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Comfortaa', 'Noto Sans Thai', 'sans-serif'],
+                        thai: ['Comfortaa', 'Noto Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        'dark-bg': '#0A0A0A',
+                        'purple-primary': '#A855F7',
+                        'pink-primary': '#EC4899',
+                        'blue-primary': '#3B82F6',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A0A0A;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+            color: white;
+        }
+
+        .wallet-card-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-black font-thai text-white antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <nav class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="images/logo_v4.png" alt="Flips id"
+                        class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-white/70 hover:text-white font-medium transition-colors"
+                        data-i18n="nav_privilege">Privileges</a>
+                    <!-- Active Wallet Link -->
+                    <a href="wallet.html" class="text-white font-medium transition-colors relative"
+                        data-i18n="nav_wallet">
+                        Wallet
+                        <span class="absolute bottom-[-24px] left-0 w-full h-1 bg-purple-primary rounded-t-full"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Notification Bell -->
+                    <div class="relative">
+                        <button onclick="toggleNotifications()"
+                            class="w-10 h-10 rounded-xl flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors">
+                            <i class="fas fa-bell text-white/70"></i>
+                            <span
+                                class="notif-badge hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold">0</span>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <div id="notificationModal"
+                            class="hidden absolute top-12 right-0 w-80 md:w-96 bg-dark-bg/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-[60] overflow-hidden transform origin-top-right transition-all">
+                            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+                                <h3 class="font-bold flex items-center gap-2">
+                                    <i class="fas fa-bell text-purple-primary"></i>
+                                    Notifications
+                                </h3>
+                                <button onclick="markAllAsRead()"
+                                    class="text-xs text-white/50 hover:text-white transition-colors">Mark all
+                                    read</button>
+                            </div>
+                            <div id="notificationList"
+                                class="max-h-[60vh] overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                                <!-- Items injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="toggleLanguage()"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300 text-sm font-medium">
+                        <i class="fas fa-globe text-purple-primary"></i>
+                        <span id="currentLang">EN</span>
+                    </button>
+
+                    <!-- Wallet Button (Active) -->
+                    <a href="wallet.html"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-primary/20 border border-purple-primary/50 text-white transition-all duration-300">
+                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
+                        <span class="text-sm font-bold" id="headerPoints">0</span>
+                        <span class="text-white/50 text-xs">RDS</span>
+                    </a>
+
+                    <!-- Profile Button -->
+                    <a href="profile.html"
+                        class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5">
+                        <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16 px-6">
+        <div class="max-w-4xl mx-auto">
+
+            <h1 class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fas fa-wallet text-purple-primary"></i>
+                <span data-i18n="wallet_modal_title">My Wallet</span>
+            </h1>
+
+            <!-- Wallet Card -->
+            <div class="wallet-card-bg rounded-3xl p-8 mb-12 relative overflow-hidden shadow-2xl shadow-purple-900/40">
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
+                </div>
+
+                <div
+                    class="relative text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8">
+                    <div>
+                        <p class="text-white/80 text-lg mb-2" data-i18n="points_available">RDS Points Available</p>
+                        <div class="flex items-baseline justify-center md:justify-start gap-3">
+                            <span class="text-6xl font-bold text-white tracking-tight"
+                                id="walletTotalPointsHero">0</span>
+                            <span class="text-2xl font-medium text-white/60">RDS</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3 w-full md:w-auto">
+                        <div
+                            class="bg-black/20 backdrop-blur-md rounded-xl p-4 flex items-center justify-between gap-6 border border-white/10">
+                            <div>
+                                <p class="text-xs text-white/50 mb-1" data-i18n="hero_expiring">Expiring Soon</p>
+                                <p class="font-bold">0 RDS</p>
+                            </div>
+                            <i class="fas fa-clock text-yellow-400 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="glass-card rounded-2xl p-6 md:p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-xl font-bold" data-i18n="wallet_history">Transaction History</h2>
+                    <div class="flex gap-2">
+                        <button
+                            class="px-4 py-2 rounded-lg bg-white/10 text-white text-sm hover:bg-white/20 transition-colors"
+                            data-i18n="filter_all">All</button>
+                    </div>
+                </div>
+
+                <div class="space-y-4" id="transactionsListFull">
+                    <!-- Transactions injected by JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyTransactions" class="hidden text-center py-12">
+                    <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-receipt text-2xl text-white/30"></i>
+                    </div>
+                    <p class="text-white/50" data-i18n="no_vouchers">No transactions yet</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg py-12 border-t border-white/10 mt-auto">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo_v4.png" alt="Flips id" class="h-12 w-auto">
+                </div>
+                <p class="text-white/50 text-sm">© 2024 FLIPS ID Corporation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/translations.js?v=2"></script>
+    <script src="js/data.js?v=2"></script>
+    <script src="js/utils.js?v=2"></script>
+    <script src="js/notifications.js?v=2"></script>
+    <script src="js/wallet.js?v=1"></script> <!-- New Wallet Logic -->
+
+</body>
+
+</html>

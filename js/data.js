@@ -272,14 +272,15 @@ const packagesData = {
 const defaultWalletData = {
     totalPoints: 50000,
     pointsBatches: [
-        { id: 1, amount: 2000, source: 'Welcome Bonus', earnedDate: '2024-01-15', expiryDate: '2024-06-15', status: 'active' },
-        { id: 2, amount: 1500, source: 'Purchase Reward', earnedDate: '2024-02-20', expiryDate: '2024-08-20', status: 'active' },
-        { id: 3, amount: 1000, source: 'Referral Bonus', earnedDate: '2024-03-10', expiryDate: '2024-09-10', status: 'active' },
-        { id: 4, amount: 500, source: 'Promotion', earnedDate: '2024-04-01', expiryDate: '2024-05-01', status: 'expiring_soon' },
+        { id: 1, amount: 20000, source: 'Investment Reward - Gold Tier', earnedDate: '2024-01-15', expiryDate: '2025-06-15', status: 'active' },
+        { id: 2, amount: 15000, source: 'Film Production Bonus', earnedDate: '2024-02-20', expiryDate: '2025-08-20', status: 'active' },
+        { id: 3, amount: 10000, source: 'Referral Bonus', earnedDate: '2024-03-10', expiryDate: '2025-09-10', status: 'active' },
+        { id: 4, amount: 5000, source: 'Limited Time Promotion', earnedDate: '2024-04-01', expiryDate: '2025-05-01', status: 'expiring_soon' },
     ],
     transactions: [
-        { type: 'earn', amount: 500, description: 'Promotion Bonus', date: '2024-04-01' },
-        { type: 'spend', amount: -300, description: 'Dining Voucher', date: '2024-03-28' },
-        { type: 'earn', amount: 1000, description: 'Referral Bonus', date: '2024-03-10' },
+        { type: 'earn', amount: 5000, description: 'Limited Time Promotion', date: '2024-04-01' },
+        { type: 'earn', amount: 10000, description: 'Referral Bonus', date: '2024-03-10' },
+        { type: 'earn', amount: 15000, description: 'Film Production Bonus', date: '2024-02-20' },
+        { type: 'earn', amount: 20000, description: 'Investment Reward - Gold Tier', date: '2024-01-15' },
     ]
 };
