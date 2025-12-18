@@ -96,7 +96,7 @@ function renderNotifications() {
 
     if (notificationsData.length === 0) {
         container.innerHTML = `
-            <div class="text-center py-8 text-white/50">
+            <div class="text-center py-8 text-slate-400">
                 <i class="fas fa-bell-slash text-2xl mb-2"></i>
                 <p>${isTh ? 'ไม่มีการแจ้งเตือน' : 'No notifications'}</p>
             </div>
@@ -114,23 +114,23 @@ function renderNotifications() {
 
         // Icon based on type
         let iconHtml = '';
-        if (item.type === 'points_in') iconHtml = '<div class="w-8 h-8 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center"><i class="fas fa-arrow-down"></i></div>';
-        else if (item.type === 'points_out') iconHtml = '<div class="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center"><i class="fas fa-arrow-up"></i></div>';
-        else iconHtml = '<div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fas fa-newspaper"></i></div>';
+        if (item.type === 'points_in') iconHtml = '<div class="w-8 h-8 rounded-full bg-green-500/20 text-green-600 flex items-center justify-center"><i class="fas fa-arrow-down"></i></div>';
+        else if (item.type === 'points_out') iconHtml = '<div class="w-8 h-8 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center"><i class="fas fa-arrow-up"></i></div>';
+        else iconHtml = '<div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-600 flex items-center justify-center"><i class="fas fa-newspaper"></i></div>';
 
         return `
-            <div class="flex gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer ${item.read ? 'opacity-60' : 'bg-white/5 border border-blue-primary/20'}">
+            <div class="flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer ${item.read ? 'opacity-60' : 'bg-blue-50 border border-blue-200'}">
                 <div class="shrink-0 pt-1">
                     ${iconHtml}
                 </div>
                 <div class="flex-grow">
                     <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-sm text-white">${title}</h4>
-                        <span class="text-xs text-white/40 whitespace-nowrap ml-2">${timeStr}</span>
+                        <h4 class="font-bold text-sm text-slate-800">${title}</h4>
+                        <span class="text-xs text-slate-400 whitespace-nowrap ml-2">${timeStr}</span>
                     </div>
-                    <p class="text-xs text-white/70 mt-1">${desc}</p>
+                    <p class="text-xs text-slate-600 mt-1">${desc}</p>
                 </div>
-                ${!item.read ? '<div class="w-2 h-2 rounded-full bg-blue-primary shrink-0 mt-2"></div>' : ''}
+                ${!item.read ? '<div class="w-2 h-2 rounded-full bg-blue-500 shrink-0 mt-2"></div>' : ''}
             </div>
         `;
     }).join('');
