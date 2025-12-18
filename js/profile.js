@@ -117,7 +117,7 @@ function createDigitalCard(item) {
     const category = privilegeCategories.find(c => c.id === item.category) || privilegeCategories[0];
 
     return `
-        <div class="glass-card rounded-2xl overflow-hidden group hover:border-purple-primary/50 transition-all cursor-pointer flex flex-col"
+        <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all cursor-pointer flex flex-col"
              onclick="openQRModal('${item.code}', '${title.replace(/'/g, "\\'")}', '${item.bookedAt}')">
             <div class="h-40 relative overflow-hidden">
                 <img src="${item.image || 'images/privilege_default.jpg'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -128,11 +128,11 @@ function createDigitalCard(item) {
                 </div>
             </div>
             <div class="p-5 flex-grow flex flex-col">
-                <h4 class="font-bold text-lg mb-1 leading-tight group-hover:text-purple-primary transition-colors">${title}</h4>
+                <h4 class="font-bold text-lg mb-1 leading-tight group-hover:text-blue-primary transition-colors">${title}</h4>
                 <p class="text-white/40 text-xs mb-4">Code: ${item.code}</p>
                 
                 <div class="mt-auto">
-                    <button class="w-full py-2 rounded-lg bg-white/5 group-hover:bg-purple-primary/20 text-white/70 group-hover:text-white text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                    <button class="w-full py-2 rounded-lg bg-white/5 group-hover:bg-blue-primary/20 text-white/70 group-hover:text-white text-sm font-medium transition-colors flex items-center justify-center gap-2">
                         <i class="fas fa-qrcode"></i>
                         <span data-i18n="btn_view_qr">${currentLanguage === 'th' ? 'ดู QR Code' : 'View QR Code'}</span>
                     </button>
@@ -176,12 +176,12 @@ function createPhysicalRow(item) {
                     <!-- Tracking Stepper -->
                     <div class="relative">
                         <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-white/10 rounded-full"></div>
-                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2/3 h-1 bg-gradient-to-r from-purple-primary to-blue-primary rounded-full"></div>
+                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2/3 h-1 bg-primary rounded-full"></div>
                         
                         <div class="relative flex justify-between text-xs font-medium">
                             <div class="flex flex-col items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-purple-primary ring-4 ring-black"></div>
-                                <span class="text-purple-primary">Order Placed</span>
+                                <div class="w-4 h-4 rounded-full bg-blue-primary ring-4 ring-black"></div>
+                                <span class="text-blue-primary">Order Placed</span>
                             </div>
                             <div class="flex flex-col items-center gap-2">
                                 <div class="w-4 h-4 rounded-full bg-blue-primary ring-4 ring-black"></div>
@@ -220,7 +220,7 @@ function switchTab(tabName) {
 
     // Active Tab Logic
     if (tabName === 'digital') {
-        tabDigital.className = 'tab-btn px-6 py-4 text-white font-medium border-b-2 border-purple-primary flex items-center gap-2';
+        tabDigital.className = 'tab-btn px-6 py-4 text-primary font-medium border-b-2 border-primary flex items-center gap-2';
 
         const hasItems = userVouchers.some(v => !v.isPhysical);
         if (hasItems) {
@@ -229,7 +229,7 @@ function switchTab(tabName) {
             emptyState.classList.remove('hidden');
         }
     } else {
-        tabPhysical.className = 'tab-btn px-6 py-4 text-white font-medium border-b-2 border-purple-primary flex items-center gap-2';
+        tabPhysical.className = 'tab-btn px-6 py-4 text-primary font-medium border-b-2 border-primary flex items-center gap-2';
 
         const hasItems = userVouchers.some(v => v.isPhysical);
         if (hasItems) {

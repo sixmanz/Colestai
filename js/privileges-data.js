@@ -8,7 +8,7 @@ const privilegeCategories = [
         label: 'All Privileges',
         labelTh: 'สิทธิพิเศษทั้งหมด',
         icon: 'fa-layer-group',
-        color: 'from-purple-500 to-pink-500',
+        color: 'from-primary to-secondary',
         description: 'View all available privileges',
         descriptionTh: 'ดูสิทธิพิเศษทั้งหมด'
     },
@@ -53,7 +53,7 @@ const privilegeCategories = [
         label: 'Behind the Scenes',
         labelTh: 'ชมเบื้องหลัง เยี่ยมกองถ่าย',
         icon: 'fa-camera',
-        color: 'from-indigo-500 to-purple-500',
+        color: 'from-primary to-primary-light',
         description: 'Set visits & behind the scenes access',
         descriptionTh: 'เข้าชมกองถ่ายและเบื้องหลัง'
     },
@@ -62,7 +62,7 @@ const privilegeCategories = [
         label: 'Other Privileges',
         labelTh: 'สิทธิพิเศษอื่นๆ',
         icon: 'fa-star',
-        color: 'from-pink-500 to-rose-500',
+        color: 'from-secondary to-secondary-light',
         description: 'More exclusive privileges',
         descriptionTh: 'สิทธิพิเศษอื่นๆ มากมาย'
     }

@@ -55,9 +55,9 @@ function renderFullTransactions() {
 
     listContainer.innerHTML = sorted.map(t => {
         const isPositive = parseInt(t.amount) > 0;
-        const colorClass = isPositive ? 'text-green-400' : 'text-red-400';
-        const iconClass = isPositive ? 'fa-arrow-down text-green-500' : 'fa-arrow-up text-red-500';
-        const bgClass = isPositive ? 'bg-green-500/10' : 'bg-red-500/10';
+        const colorClass = isPositive ? 'text-primary' : 'text-slate-700';
+        const iconClass = isPositive ? 'fa-arrow-down text-primary' : 'fa-arrow-up text-slate-600';
+        const bgClass = isPositive ? 'bg-primary/10' : 'bg-slate-100';
 
         // Date formatting based on current Language
         const dateObj = new Date(t.date);
@@ -72,21 +72,21 @@ function renderFullTransactions() {
         if (t.type === 'redeem' && currentLanguage === 'th') desc = 'แลกของรางวัล';
 
         return `
-            <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+            <div class="flex items-center justify-between p-4 rounded-xl bg-white border border-gray-100 hover:bg-gray-50 transition-colors shadow-sm">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-full ${bgClass} flex items-center justify-center shrink-0">
                         <i class="fas ${iconClass}"></i>
                     </div>
                     <div>
-                        <p class="font-bold text-white mb-1">${desc}</p>
-                        <p class="text-xs text-white/50">${dateStr}</p>
+                        <p class="font-bold text-slate-900 mb-1">${desc}</p>
+                        <p class="text-xs text-slate-500">${dateStr}</p>
                     </div>
                 </div>
                 <div class="text-right">
                     <p class="font-bold text-lg ${colorClass}">
                         ${isPositive ? '+' : ''}${parseInt(t.amount).toLocaleString()}
                     </p>
-                    <p class="text-xs text-white/30">RDS</p>
+                    <p class="text-xs text-slate-400">RDS</p>
                 </div>
             </div>
         `;

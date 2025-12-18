@@ -119,7 +119,7 @@ function renderNotifications() {
         else iconHtml = '<div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fas fa-newspaper"></i></div>';
 
         return `
-            <div class="flex gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer ${item.read ? 'opacity-60' : 'bg-white/5 border border-purple-primary/20'}">
+            <div class="flex gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer ${item.read ? 'opacity-60' : 'bg-white/5 border border-blue-primary/20'}">
                 <div class="shrink-0 pt-1">
                     ${iconHtml}
                 </div>
@@ -130,7 +130,7 @@ function renderNotifications() {
                     </div>
                     <p class="text-xs text-white/70 mt-1">${desc}</p>
                 </div>
-                ${!item.read ? '<div class="w-2 h-2 rounded-full bg-purple-primary shrink-0 mt-2"></div>' : ''}
+                ${!item.read ? '<div class="w-2 h-2 rounded-full bg-blue-primary shrink-0 mt-2"></div>' : ''}
             </div>
         `;
     }).join('');

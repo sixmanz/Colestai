@@ -227,7 +227,7 @@ function renderPrivilegesTable(items = allPrivileges) {
                     ${p.category}
                 </span>
             </td>
-            <td class="p-6 font-medium text-purple-400">
+            <td class="p-6 font-medium text-blue-400">
                 ${p.price.toLocaleString()}
             </td>
             <td class="p-6">
@@ -306,7 +306,7 @@ function renderOrdersTable() {
             </td>
             <td class="p-6 text-right">
                 ${isEditable ? `
-                    <select onchange="updateOrderStatus('${o.code}', this.value)" class="bg-dark-bg border border-white/20 rounded-lg text-xs px-2 py-1 outline-none focus:border-purple-primary text-white">
+                    <select onchange="updateOrderStatus('${o.code}', this.value)" class="bg-dark-bg border border-white/20 rounded-lg text-xs px-2 py-1 outline-none focus:border-blue-primary text-white">
                         <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>Processing</option>
                         <option value="shipped" ${o.status === 'shipped' ? 'selected' : ''}>Shipped</option>
                         <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Delivered</option>

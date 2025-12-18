@@ -19,15 +19,23 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        'inter': ['Comfortaa', 'Noto Sans Thai', 'sans-serif'],
-                        'thai': ['Comfortaa', 'Noto Sans Thai', 'sans-serif']
+                        'inter': ['Inter', 'Noto Sans Thai', 'sans-serif'],
+                        'thai': ['Noto Sans Thai', 'Inter', 'sans-serif'],
+                        'display': ['Comfortaa', 'cursive'],
                     },
                     colors: {
-                        'purple-primary': '#A855F7',
-                        'pink-primary': '#EC4899',
-                        'blue-primary': '#3B82F6',
-                        'dark-bg': '#0A0A0A',
-                        'dark-card': '#111111',
+                        'primary': '#003366',
+                        'primary-dark': '#002244',
+                        'primary-light': '#004488',
+                        'secondary': '#56C4E8',
+                        'secondary-dark': '#3BA8CC',
+                        'secondary-light': '#7DD4F0',
+                        'blue-primary': '#003366',
+                        'sky-primary': '#56C4E8',
+                        'purple-primary': '#003366',
+                        'pink-primary': '#56C4E8',
+                        'dark-bg': '#F8FAFC',
+                        'dark-card': '#FFFFFF',
                     },
                 }
             }
@@ -39,28 +47,31 @@
 
     <style>
         .gradient-text {
-            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
+            color: #002B5B;
         }
 
         .gradient-bg {
-            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+            background: #002B5B;
         }
 
         .btn-gradient {
-            background: linear-gradient(135deg, #A855F7 0%, #EC4899 50%, #3B82F6 100%);
+            background: #003366;
+            color: white;
         }
 
         .glass-card {
-            background: rgba(17, 17, 17, 0.8);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
         .card-glow:hover {
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 60px rgba(236, 72, 153, 0.2);
+            box-shadow: 0 0 30px rgba(0, 51, 102, 0.2), 0 0 60px rgba(86, 196, 232, 0.15);
         }
 
         ::-webkit-scrollbar {
@@ -73,17 +84,18 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #A855F7, #EC4899);
+            color: #003366;
             border-radius: 4px;
         }
 
         .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
         }
 
         .privilege-category-card {
-            background: linear-gradient(145deg, rgba(17, 17, 17, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+            background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .privilege-category-card::before {
@@ -92,7 +104,7 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.2), rgba(86, 196, 232, 0.2));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -111,7 +123,7 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.3), rgba(86, 196, 232, 0.3));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -156,29 +168,29 @@
 
         .hero-pattern {
             background-image:
-                radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+                radial-gradient(circle at 20% 80%, rgba(0, 51, 102, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(86, 196, 232, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 51, 102, 0.05) 0%, transparent 70%);
         }
     </style>
 </head>
 
-<body class="bg-black font-thai text-white antialiased">
+<body class="bg-gray-50 font-thai text-slate-900 antialiased">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/logo_v4.png" alt="Flips id"
+                    <img src="images/logo_new.png" alt="Flips id"
                         class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
                 </a>
 
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="index.html" class="text-white/70 hover:text-white font-medium transition-colors"
+                    <a href="index.html" class="text-gray-600 hover:text-primary font-medium transition-colors"
                         data-i18n="nav_privilege">Privileges</a>
                     <a href="wallet.html"
-                        class="text-white/70 hover:text-white font-medium transition-colors cursor-pointer"
+                        class="text-gray-600 hover:text-primary font-medium transition-colors cursor-pointer"
                         data-i18n="nav_wallet">Wallet</a>
                 </div>
 
@@ -186,22 +198,22 @@
                     <!-- Notification Bell -->
                     <div class="relative">
                         <button onclick="toggleNotifications()"
-                            class="w-10 h-10 rounded-xl flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors">
-                            <i class="fas fa-bell text-white/70"></i>
+                            class="w-10 h-10 rounded-xl flex items-center justify-center border border-gray-200 hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-bell text-gray-600"></i>
                             <span
                                 class="notif-badge hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold">0</span>
                         </button>
 
                         <!-- Notification Dropdown -->
                         <div id="notificationModal"
-                            class="hidden absolute top-12 right-0 w-80 md:w-96 bg-dark-bg/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl z-[60] overflow-hidden transform origin-top-right transition-all">
-                            <div class="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+                            class="hidden absolute top-12 right-0 w-80 md:w-96 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl z-[60] overflow-hidden transform origin-top-right transition-all">
+                            <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                                 <h3 class="font-bold flex items-center gap-2">
-                                    <i class="fas fa-bell text-purple-primary"></i>
+                                    <i class="fas fa-bell text-blue-primary"></i>
                                     Notifications
                                 </h3>
                                 <button onclick="markAllAsRead()"
-                                    class="text-xs text-white/50 hover:text-white transition-colors">Mark all
+                                    class="text-xs text-slate-500 hover:text-primary transition-colors">Mark all
                                     read</button>
                             </div>
                             <div id="notificationList"
@@ -212,17 +224,17 @@
                     </div>
 
                     <button onclick="toggleLanguage()"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300 text-sm font-medium">
-                        <i class="fas fa-globe text-purple-primary"></i>
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300 text-sm font-medium">
+                        <i class="fas fa-globe text-blue-primary"></i>
                         <span id="currentLang">EN</span>
                     </button>
 
                     <!-- Wallet Button -->
                     <a href="wallet.html"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-purple-primary hover:bg-purple-primary/10 transition-all duration-300">
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
                         <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
-                        <span class="text-sm font-bold" id="headerPoints">0</span>
-                        <span class="text-white/50 text-xs">RDS</span>
+                        <span class="text-sm font-bold text-slate-800" id="headerPoints">0</span>
+                        <span class="text-slate-600 text-xs">RDS</span>
                     </a>
 
                     <!-- Profile Button with Admin Badge -->
@@ -234,7 +246,7 @@
                         </a>
                         <!-- Admin Switch Badge -->
                         <a href="admin.html" title="Switch to Admin"
-                            class="absolute -bottom-1 -right-1 w-5 h-5 bg-purple-primary rounded-full border-2 border-dark-bg flex items-center justify-center text-[10px] text-white hover:bg-white hover:text-purple-primary transition-colors z-20 shadow-lg">
+                            class="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-primary rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white hover:bg-white hover:text-blue-primary transition-colors z-20 shadow-lg">
                             <i class="fas fa-user-shield"></i>
                         </a>
                     </div>
@@ -245,8 +257,8 @@
 
     <!-- Hero Section -->
     <section class="min-h-[70vh] flex items-center pt-24 pb-12 relative overflow-hidden hero-pattern">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-primary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-primary/20 rounded-full blur-3xl animate-pulse">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse">
         </div>
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -255,10 +267,11 @@
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                     <span class="text-sm font-medium tracking-wide">Exclusive for Investors</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight" data-i18n="hero_welcome">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-slate-900"
+                    data-i18n="hero_welcome">
                     Welcome to FLIPS ID
                 </h1>
-                <p class="text-xl md:text-2xl text-white/70 mb-10 max-w-2xl mx-auto" data-i18n="hero_subtitle">
+                <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto" data-i18n="hero_subtitle">
                     Exclusive Rewards & Premium Privileges
                 </p>
 
@@ -275,17 +288,47 @@
             <div class="relative group">
                 <!-- Left Fade -->
                 <div
-                    class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none hidden md:block">
+                    class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none hidden md:block">
                 </div>
 
                 <!-- Scroll Area -->
                 <div class="flex overflow-x-auto gap-3 pb-4 px-1 no-scrollbar scroll-smooth" id="categoriesGrid">
-                    <!-- Categories will be rendered here as pill buttons -->
+                    <!-- Hardcoded categories with visible colors -->
+                    <button onclick="filterPrivileges('all')"
+                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                        style="background:#003366; color:white; border-color:#003366;">
+                        <i class="fas fa-layer-group"></i>
+                        สิทธิพิเศษทั้งหมด
+                    </button>
+                    <button onclick="filterPrivileges('movie-tickets')"
+                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                        style="background:white; color:#334155; border-color:#e2e8f0;">
+                        <i class="fas fa-ticket-alt"></i>
+                        บัตรชมภาพยนตร์
+                    </button>
+                    <button onclick="filterPrivileges('meet-greet')"
+                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                        style="background:white; color:#334155; border-color:#e2e8f0;">
+                        <i class="fas fa-users"></i>
+                        พบทีมผู้สร้างสรรค์
+                    </button>
+                    <button onclick="filterPrivileges('credits')"
+                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                        style="background:white; color:#334155; border-color:#e2e8f0;">
+                        <i class="fas fa-film"></i>
+                        เครดิตท้ายภาพยนตร์
+                    </button>
+                    <button onclick="filterPrivileges('merchandise')"
+                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+                        style="background:white; color:#334155; border-color:#e2e8f0;">
+                        <i class="fas fa-gift"></i>
+                        สินค้าที่ระลึก
+                    </button>
                 </div>
 
                 <!-- Right Fade -->
                 <div
-                    class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none hidden md:block">
+                    class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none hidden md:block">
                 </div>
             </div>
         </div>
@@ -297,16 +340,16 @@
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-8">
                 <div>
                     <h2 class="text-3xl font-bold gradient-text mb-2">สิทธิพิเศษทั้งหมด</h2>
-                    <p class="text-white/60">แสดง <span id="privilegeCount">0</span> รายการ</p>
+                    <p class="text-slate-600">แสดง <span id="privilegeCount">0</span> รายการ</p>
                 </div>
 
                 <!-- Search -->
                 <div class="flex gap-3 w-full lg:w-auto">
                     <div class="relative flex-1 lg:w-80">
                         <input type="text" id="privilegeSearchInput" placeholder="ค้นหาสิทธิพิเศษ..."
-                            class="w-full px-4 py-3 pl-12 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white placeholder-white/40"
+                            class="w-full px-4 py-3 pl-12 rounded-xl bg-white border border-gray-200 focus:border-primary outline-none text-slate-800 placeholder-gray-400 shadow-sm"
                             oninput="searchPrivileges()">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-white/40"></i>
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
                     </div>
                 </div>
             </div>
@@ -319,7 +362,7 @@
             <!-- Load More -->
             <div class="text-center mt-12">
                 <button onclick="loadMorePrivileges()" id="loadMorePrivilegesBtn"
-                    class="px-8 py-3 rounded-xl bg-white/5 hover:bg-purple-primary/20 border border-white/20 hover:border-purple-primary text-white font-medium transition-all duration-300 hover:scale-105">
+                    class="px-8 py-3 rounded-xl bg-white hover:bg-primary/10 border border-gray-200 hover:border-primary text-gray-700 font-medium transition-all duration-300 hover:scale-105 shadow-sm">
                     <i class="fas fa-plus mr-2"></i>โหลดเพิ่มเติม
                 </button>
             </div>
@@ -327,13 +370,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark-bg py-12 border-t border-white/10">
+    <footer class="bg-white py-12 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="images/logo_v4.png" alt="Flips id" class="h-12 w-auto">
+                    <img src="images/logo_new.png" alt="Flips id" class="h-12 w-auto filter invert">
                 </div>
-                <p class="text-white/50 text-sm">© 2024 FLIPS ID Corporation. All rights reserved.</p>
+                <p class="text-slate-500 text-sm">© 2024 FLIPS ID Corporation. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -355,7 +398,7 @@
 
                 <div class="text-center mb-6">
                     <div id="detailCategoryIcon"
-                        class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4">
+                        class="w-16 h-16 rounded-xl bg-primary flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-gift text-2xl text-white"></i>
                     </div>
                     <span id="detailCategory"
@@ -430,7 +473,7 @@
                 </div>
 
                 <div class="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-                    <i class="fas fa-history text-purple-primary mb-2 text-xl"></i>
+                    <i class="fas fa-history text-blue-primary mb-2 text-xl"></i>
                     <p class="text-sm text-white/70" data-i18n="wallet_history">Transaction history available in app</p>
                 </div>
             </div>
@@ -459,7 +502,7 @@
                             <i class="fas fa-qrcode mr-2"></i><span data-i18n="btn_view_qr">View QR Code</span>
                         </button>
                         <a href="index.html"
-                            class="w-full py-3 rounded-xl border border-white/20 hover:border-purple-primary transition-colors block text-center"
+                            class="w-full py-3 rounded-xl border border-white/20 hover:border-primary transition-colors block text-center"
                             data-i18n="btn_back_home">
                             Back to Privileges
                         </a>
@@ -506,14 +549,14 @@
                                 <label class="block text-white/70 mb-2 text-sm" data-i18n="form_name">First Name
                                     *</label>
                                 <input type="text" id="shipFirstName" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
                                     placeholder="First Name" data-i18n="form_name">
                             </div>
                             <div>
                                 <label class="block text-white/70 mb-2 text-sm" data-i18n="form_lastname">Last Name
                                     *</label>
                                 <input type="text" id="shipLastName" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
                                     placeholder="Last Name" data-i18n="form_lastname">
                             </div>
                         </div>
@@ -521,7 +564,7 @@
                         <div>
                             <label class="block text-white/70 mb-2 text-sm" data-i18n="form_address">Address *</label>
                             <input type="text" id="shipAddress" required
-                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
                                 placeholder="Shipping Address" data-i18n="form_address">
                         </div>
 
@@ -529,13 +572,13 @@
                             <div>
                                 <label class="block text-white/70 mb-2 text-sm" data-i18n="form_phone">Phone *</label>
                                 <input type="tel" id="shipPhone" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
                                     placeholder="Phone Number" data-i18n="form_phone">
                             </div>
                             <div>
                                 <label class="block text-white/70 mb-2 text-sm" data-i18n="form_email">Email</label>
                                 <input type="email" id="shipEmail"
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white"
+                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
                                     placeholder="Email (Optional)" data-i18n="form_email">
                             </div>
                         </div>
@@ -543,7 +586,7 @@
                         <div>
                             <label class="block text-white/70 mb-2 text-sm">หมายเหตุเพิ่มเติม</label>
                             <textarea id="shipNotes"
-                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-purple-primary outline-none text-white h-20 resize-none"
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white h-20 resize-none"
                                 placeholder="คำแนะนำสำหรับการจัดส่ง"></textarea>
                         </div>
 
@@ -593,7 +636,7 @@
                             <h3 class="text-xl font-bold">FLIPS ID User</h3>
                             <p class="text-white/50"><span data-i18n="member_since">Member since</span> Jan 2024</p>
                             <span
-                                class="px-2 py-1 rounded-full bg-purple-primary/20 text-purple-primary text-xs mt-2 inline-block"
+                                class="px-2 py-1 rounded-full bg-blue-primary/20 text-blue-primary text-xs mt-2 inline-block"
                                 data-i18n="premium_member">Premium Member</span>
                         </div>
                     </div>
@@ -614,8 +657,7 @@
                 <!-- Redeemed Privileges List -->
                 <div class="mb-6">
                     <h3 class="font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-history text-purple-primary"></i> <span
-                            data-i18n="redemption_history">Redemption
+                        <i class="fas fa-history text-blue-primary"></i> <span data-i18n="redemption_history">Redemption
                             History</span>
                     </h3>
                     <div id="redeemedPrivilegesList" class="space-y-3 max-h-[300px] overflow-y-auto custom-scrollbar">
@@ -757,7 +799,7 @@
                                     <span>คาดว่าจะได้รับ: ${estDate}</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-sm text-white/60">
-                                    <i class="fas fa-map-marker-alt text-purple-primary"></i>
+                                    <i class="fas fa-map-marker-alt text-blue-primary"></i>
                                     <span class="truncate">${v.shippingInfo?.address || 'รอยืนยันที่อยู่'}</span>
                                 </div>
                             </div>
@@ -769,7 +811,7 @@
                     return `
                         <div class="glass-card rounded-xl p-4">
                             <div class="flex items-start gap-4">
-                                <div class="w-14 h-14 rounded-lg bg-gradient-to-br ${category ? category.color : 'from-purple-500 to-pink-500'} flex items-center justify-center flex-shrink-0">
+                                <div class="w-14 h-14 rounded-lg bg-gradient-to-br ${category ? category.color : 'from-primary to-secondary'} flex items-center justify-center flex-shrink-0">
                                     <i class="fas ${category ? category.icon : 'fa-gift'} text-xl text-white"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">

@@ -47,21 +47,22 @@ function renderPrivilegeCategories() {
     const container = document.getElementById('categoriesGrid');
     if (!container) return;
 
-    const counts = getCategoryCounts();
-
-    // Render all categories including 'all' as pill buttons
-    container.innerHTML = privilegeCategories.map(cat => `
-        <button 
-            onclick="filterPrivileges('${cat.id}')"
-            class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2
-            ${currentPrivilegeFilter === cat.id
-            ? 'bg-white text-black border-white'
-            : 'bg-transparent text-white/70 border-white/20 hover:border-white/50 hover:text-white'}"
-        >
-            <i class="fas ${cat.icon}"></i>
-            ${currentLanguage === 'th' ? cat.labelTh : cat.label}
-        </button>
-    `).join('');
+    // Update existing buttons' styles based on current filter
+    const buttons = container.querySelectorAll('button');
+    buttons.forEach(btn => {
+        const categoryId = btn.getAttribute('onclick')?.match(/filterPrivileges\('(.+?)'\)/)?.[1];
+        if (categoryId) {
+            if (categoryId === currentPrivilegeFilter) {
+                btn.style.background = '#003366';
+                btn.style.color = 'white';
+                btn.style.borderColor = '#003366';
+            } else {
+                btn.style.background = 'white';
+                btn.style.color = '#334155';
+                btn.style.borderColor = '#e2e8f0';
+            }
+        }
+    });
 }
 
 
@@ -74,14 +75,14 @@ function renderPrivilegeFilters() {
     container.innerHTML = privilegeCategories.map(cat => `
         <button 
             onclick="filterPrivileges('${cat.id}')"
-            class="privilege-filter-btn px-5 py-2.5 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2
-            ${currentPrivilegeFilter === cat.id
-            ? 'bg-gradient-to-r from-purple-primary to-pink-primary text-white border-transparent'
-            : 'bg-transparent text-white/70 border-white/20 hover:border-purple-primary hover:text-white'}"
+            class="privilege-filter-btn px-5 py-2.5 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
+            style="${currentPrivilegeFilter === cat.id
+            ? 'background:#003366; color:white; border-color:#003366;'
+            : 'background:white; color:#334155; border-color:#e2e8f0;'}"
         >
             <i class="fas ${cat.icon}"></i>
             <span>${currentLanguage === 'th' ? cat.labelTh : cat.label}</span>
-            <span class="px-2 py-0.5 rounded-full ${currentPrivilegeFilter === cat.id ? 'bg-white/20' : 'bg-white/10'} text-xs">${counts[cat.id]}</span>
+            <span class="px-2 py-0.5 rounded-full text-xs" style="${currentPrivilegeFilter === cat.id ? 'background:rgba(255,255,255,0.2);' : 'background:#f1f5f9;'}">${counts[cat.id]}</span>
         </button>
     `).join('');
 }
@@ -106,7 +107,7 @@ function renderPrivilegeCards() {
                 </div>
                 <h3 class="text-xl font-medium mb-2">${t.no_privileges_found || (currentLanguage === 'th' ? 'ไม่พบสิทธิพิเศษ' : 'No privileges found')}</h3>
                 <p class="text-white/50">${t.try_different_category || (currentLanguage === 'th' ? 'ลองเลือกหมวดหมู่อื่น' : 'Try selecting a different category')}</p>
-                <button onclick="filterPrivileges('all')" class="mt-4 text-purple-primary hover:text-white transition-colors">
+                <button onclick="filterPrivileges('all')" class="mt-4 text-blue-primary hover:text-white transition-colors">
                     ${t.view_all || (currentLanguage === 'th' ? 'ดูทั้งหมด' : 'View All')}
                 </button>
             </div>
@@ -147,10 +148,10 @@ function renderPrivilegeCard(p) {
 
     return `
         <div onclick="window.location.href='privilege-detail.html?id=${p.id}'" 
-             class="privilege-card glass-card rounded-2xl overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 border border-white/10 hover:border-purple-primary/50 relative">
+             class="privilege-card glass-card rounded-2xl overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 border border-white/10 hover:border-primary/50 relative">
             <div class="relative h-48 overflow-hidden">
                 <img src="${p.image}" alt="${title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="absolute inset-0 bg-gradient-to-br ${category ? category.color : 'from-purple-500 to-pink-500'} items-center justify-center" style="display: none;">
+                <div class="absolute inset-0 bg-primary items-center justify-center" style="display: none;">
                     <i class="fas ${category ? category.icon : 'fa-gift'} text-6xl text-white/30"></i>
                 </div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -161,14 +162,14 @@ function renderPrivilegeCard(p) {
             
             <div class="p-5">
                 <div class="flex justify-between items-start mb-2">
-                    <span class="text-xs font-medium text-purple-primary tracking-wider uppercase">${categoryLabel}</span>
+                    <span class="text-xs font-medium text-blue-primary tracking-wider uppercase">${categoryLabel}</span>
                     <div class="flex items-center gap-1 text-yellow-400 text-xs">
                         <i class="fas fa-star"></i>
                         <span>${p.rating}</span>
                     </div>
                 </div>
                 
-                <h3 class="font-semibold text-lg mb-1 group-hover:text-purple-primary transition-colors line-clamp-2">${title}</h3>
+                <h3 class="font-semibold text-lg mb-1 group-hover:text-blue-primary transition-colors line-clamp-2">${title}</h3>
                 <p class="text-white/50 text-sm mb-4 line-clamp-1">${subtitle}</p>
                 
                 <div class="flex items-center justify-between mt-auto">
@@ -180,7 +181,7 @@ function renderPrivilegeCard(p) {
                     
                     <button onclick="event.stopPropagation(); redeemPrivilege(${p.id})" 
                             class="px-4 py-2 rounded-xl ${canAfford
-            ? 'btn-gradient hover:scale-105'
+            ? 'btn-gradient text-white hover:scale-105'
             : 'bg-white/10 text-white/40 cursor-not-allowed'} transition-all duration-300 text-sm font-medium" 
                             ${!canAfford ? 'disabled' : ''}>
                         ${canAfford
