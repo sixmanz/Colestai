@@ -45,241 +45,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style>
-        .gradient-text {
-            background: none;
-            -webkit-background-clip: initial;
-            -webkit-text-fill-color: initial;
-            background-clip: initial;
-            color: #002B5B;
-        }
-
-        .gradient-bg {
-            background: #002B5B;
-        }
-
-        .btn-gradient {
-            background: #003366;
-            color: white;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .card-glow:hover {
-            box-shadow: 0 0 30px rgba(0, 51, 102, 0.2), 0 0 60px rgba(86, 196, 232, 0.15);
-        }
-
-        ::-webkit-scrollbar {
-            width: 3px;
-            height: 3px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            color: #003366;
-            border-radius: 4px;
-        }
-
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-        }
-
-        .privilege-category-card {
-            background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .privilege-category-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(0, 51, 102, 0.2), rgba(86, 196, 232, 0.2));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .privilege-category-card:hover::before {
-            opacity: 1;
-        }
-
-        .privilege-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(0, 51, 102, 0.3), rgba(86, 196, 232, 0.3));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .privilege-card:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .line-clamp-1 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .hero-pattern {
-            background-image:
-                radial-gradient(circle at 20% 80%, rgba(0, 51, 102, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(86, 196, 232, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(0, 51, 102, 0.05) 0%, transparent 70%);
-        }
-
-        /* ===== MOBILE RESPONSIVE STYLES ===== */
-        @media (max-width: 768px) {
-
-            /* Header */
-            header nav {
-                padding: 0.75rem 1rem;
-            }
-
-            header img {
-                height: 2.5rem;
-            }
-
-            /* Hero Section */
-            .hero-pattern {
-                min-height: 50vh !important;
-                padding-top: 5rem;
-            }
-
-            .hero-pattern h1 {
-                font-size: 1.75rem !important;
-                line-height: 1.2;
-            }
-
-            .hero-pattern p {
-                font-size: 1rem !important;
-            }
-
-            /* Category Filter Buttons */
-            #categoriesGrid button {
-                padding: 0.5rem 1rem;
-                font-size: 0.75rem;
-            }
-
-            /* Cards Grid */
-            .privilege-card {
-                margin-bottom: 1rem;
-            }
-
-            /* Buttons */
-            .btn-gradient {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.875rem;
-            }
-
-            /* Footer */
-            footer {
-                padding: 2rem 1rem;
-            }
-
-            /* Modals */
-            .modal-overlay+div {
-                width: 95% !important;
-                max-width: 95vw !important;
-                padding: 1rem !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-
-            /* Extra small screens */
-            header nav {
-                padding: 0.5rem 0.75rem;
-            }
-
-            header img {
-                height: 2rem;
-            }
-
-            /* Hide wallet text on mobile */
-            .wallet-text {
-                display: none;
-            }
-
-            /* Hero */
-            .hero-pattern h1 {
-                font-size: 1.5rem !important;
-            }
-
-            /* Touch-friendly buttons */
-            button,
-            a {
-                min-height: 44px;
-            }
-
-            /* Profile icon smaller */
-            header .w-10 {
-                width: 2rem;
-                height: 2rem;
-            }
-        }
-
-        /* Touch-friendly tap targets */
-        @media (hover: none) and (pointer: coarse) {
-
-            button,
-            a,
-            input,
-            select {
-                cursor: pointer;
-            }
-
-            .privilege-card:hover {
-                transform: none;
-            }
-        }
-    </style>
+    <!-- Organized CSS Files -->
+    <link rel="stylesheet" href="../css/main.css?v=23">
+    <link rel="stylesheet" href="../css/components.css?v=23">
+    <link rel="stylesheet" href="../css/responsive.css?v=23">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 
 <body class="bg-gray-50 font-thai text-slate-900 antialiased">
 
@@ -288,7 +60,7 @@
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/logo_new.png" alt="Flips id"
+                    <img src="../images/logo_new.png" alt="Flips id"
                         class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
                 </a>
 
@@ -338,7 +110,7 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="images/points_icon_v2.png?v=999" alt="Points"
+                        <img src="../images/points_icon_v2.png?v=23" alt="Points"
                             class="w-5 h-5 sm:w-6 sm:h-6 object-contain">
                         <span class="text-xs sm:text-sm font-bold text-slate-800" id="headerPoints">0</span>
                         <span class="text-slate-600 text-xs hidden sm:inline">RDS</span>
@@ -348,7 +120,7 @@
                     <div class="relative group">
                         <a href="profile.html"
                             class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 transform">
-                            <img src="images/profile_v1.jpg" alt="Profile"
+                            <img src="../images/profile_v1.jpg" alt="Profile"
                                 class="w-full h-full rounded-full object-cover">
                         </a>
                         <!-- Admin Switch Badge -->
@@ -363,22 +135,24 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="min-h-[70vh] flex items-center pt-24 pb-12 relative overflow-hidden hero-pattern">
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse">
-        </div>
+    <section class="min-h-[70vh] flex items-center pt-24 pb-12 relative overflow-hidden hero-animated-bg reveal">
+        <!-- Animated Blobs -->
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center mb-12">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6 animate-float">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-premium mb-6 animate-float">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    <span class="text-sm font-medium tracking-wide">Exclusive for Investors</span>
+                    <span class="text-sm font-medium tracking-wide text-slate-700">Exclusive for Investors</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-slate-900"
+                <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight text-slate-900 drop-shadow-sm"
                     data-i18n="hero_welcome">
                     Welcome to FLIPS ID
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto" data-i18n="hero_subtitle">
+                <p class="text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto font-light"
+                    data-i18n="hero_subtitle">
                     Exclusive Rewards & Premium Privileges
                 </p>
 
@@ -389,7 +163,7 @@
     </section>
 
     <!-- Category Filter Tabs Section -->
-    <section class="py-8 relative">
+    <section class="py-8 relative reveal reveal-delay-200">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Horizontal Scroll Container with Fade Effect -->
             <div class="relative group">
@@ -468,9 +242,10 @@
 
             <!-- Load More -->
             <div class="text-center mt-12">
-                <button onclick="loadMorePrivileges()" id="loadMorePrivilegesBtn"
-                    class="px-8 py-3 rounded-xl bg-white hover:bg-primary/10 border border-gray-200 hover:border-primary text-gray-700 font-medium transition-all duration-300 hover:scale-105 shadow-sm">
-                    <i class="fas fa-plus mr-2"></i>โหลดเพิ่มเติม
+                <button id="loadMorePrivilegesBtn" onclick="loadMorePrivileges()"
+                    class="px-8 py-3 rounded-xl bg-white border border-gray-200 text-slate-600 font-medium hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
+                    data-i18n="btn_load_more">
+                    Load More
                 </button>
             </div>
         </div>
@@ -481,7 +256,7 @@
         <div class="max-w-7xl mx-auto px-4 md:px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="images/logo_new.png" alt="Flips id" class="h-8 md:h-12 w-auto ">
+                    <img src="../images/logo_new.png" alt="Flips id" class="h-8 md:h-12 w-auto ">
                 </div>
                 <p class="text-slate-500 text-xs md:text-sm text-center">© 2024 FLIPS ID Corporation. All rights
                     reserved.</p>
@@ -537,11 +312,7 @@
                 </div>
 
                 <div class="flex items-center justify-center gap-4 mb-6">
-                    <div class="flex items-center gap-1 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <span id="detailRating" class="font-medium">0</span>
-                    </div>
-                    <span id="detailReviews" class="text-white/50 text-sm">(0 reviews)</span>
+                    <!-- Rating Removed -->
                 </div>
 
                 <div class="glass-card rounded-xl p-4 mb-6">
@@ -670,6 +441,16 @@
 
                 <h2 class="text-2xl font-bold mb-6 gradient-text" data-i18n="shipping_title">Shipping Address</h2>
 
+                <!-- Product Preview -->
+                <div class="flex items-center gap-4 mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <img id="shippingProductImage" src="" alt="Product"
+                        class="w-20 h-20 rounded-lg object-cover bg-white/10">
+                    <div class="flex-1">
+                        <h3 id="shippingProductName" class="font-bold text-white mb-1">Product Name</h3>
+                        <p id="shippingProductPrice" class="text-secondary font-bold">0 RDS</p>
+                    </div>
+                </div>
+
                 <form onsubmit="submitPrivilegeShipping(event)" class="space-y-4">
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-4">
@@ -757,7 +538,7 @@
                 <div class="glass-card rounded-xl p-6 mb-6">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 rounded-full btn-gradient p-0.5">
-                            <img src="images/profile_v1.jpg" alt="Profile"
+                            <img src="../images/profile_v1.jpg" alt="Profile"
                                 class="w-full h-full rounded-full object-cover border-2 border-black">
                         </div>
                         <div>
@@ -813,154 +594,25 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
-    <script src="js/translations.js?v=2"></script>
-    <script src="js/data.js?v=2"></script>
-    <script src="js/privileges-data.js?v=2"></script>
-    <script src="js/utils.js?v=2"></script>
-    <script src="js/privileges.js?v=2"></script>
-    <script src="js/notifications.js?v=2"></script>
-    <script src="js/main.js?v=2"></script>
+    <!-- Core Scripts -->
+    <script src="../js/utils.js?v=23"></script>
+    <script src="../js/translations.js?v=23"></script>
+
+    <!-- Feature Scripts -->
+    <script src="../js/notifications.js?v=23"></script>
+    <script src="../js/wallet.js?v=23"></script>
+    <script src="../js/privileges-data.js?v=23"></script>
+    <script src="../js/privileges.js?v=23"></script>
+    <script src="../js/visual-effects.js?v=23"></script>
+    <script src="../js/index-page.js?v=23"></script>
+    <script src="../js/main.js?v=23"></script>
 
     <script>
-        // Shipping form handler for privileges page
-        let pendingShippingPackage = null;
-
-        function submitPrivilegeShipping(e) {
-            e.preventDefault();
-            if (!pendingShippingPackage) return;
-
-            const privilege = pendingShippingPackage;
-            const title = currentLanguage === 'th' ? privilege.titleTh : privilege.title;
-
-            // Calculate estimated delivery
-            const orderDate = new Date();
-            const estimatedDelivery = new Date(orderDate);
-            estimatedDelivery.setDate(estimatedDelivery.getDate() + 10);
-
-            const shippingInfo = {
-                firstName: document.getElementById('shipFirstName').value,
-                lastName: document.getElementById('shipLastName').value,
-                phone: document.getElementById('shipPhone').value,
-                address: document.getElementById('shipAddress').value,
-                notes: document.getElementById('shipNotes')?.value || ''
-            };
-
-            const voucherCode = 'PVL-' + Date.now().toString(36).toUpperCase();
-
-            // Deduct points
-            walletData.totalPoints -= privilege.price;
-            walletData.transactions.unshift({
-                type: 'spend',
-                amount: -privilege.price,
-                description: title + ' (จัดส่ง)',
-                date: new Date().toISOString().split('T')[0]
-            });
-
-            // Create order
-            const order = {
-                ...privilege,
-                code: voucherCode,
-                shippingInfo,
-                isShipped: true,
-                orderedAt: new Date().toISOString(),
-                status: 'processing',
-                type: 'privilege',
-                estimatedDelivery: estimatedDelivery.toISOString()
-            };
-
-            userVouchers.push(order);
-            localStorage.setItem('userVouchers', JSON.stringify(userVouchers));
-            localStorage.setItem('walletData', JSON.stringify(walletData));
-
-            updatePointsDisplay();
-            updatePrivilegeStats();
-            renderPrivilegeCards();
-            closeModal('shippingModal');
-
-            // Show success
-            document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} RDS สำหรับ "${title}"`;
-            window.currentVoucherCode = voucherCode;
-            window.currentVoucherName = title;
-            openModal('bookingModal');
-
-            pendingShippingPackage = null;
-        }
-
-        // Override openProfile to show redeemed privileges with shipping info
-        function openProfile() {
-            document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' RDS';
-            document.getElementById('profileVouchers').textContent = userVouchers.length;
-
-            // Render redeemed privileges
-            const container = document.getElementById('redeemedPrivilegesList');
-            if (userVouchers.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-8 text-white/50">
-                        <i class="fas fa-gift text-3xl mb-3 block"></i>
-                        <p>ยังไม่มีสิทธิพิเศษที่แลก</p>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = userVouchers.map(v => {
-                    const title = currentLanguage === 'th' && v.titleTh ? v.titleTh : v.title;
-                    const category = privilegeCategories.find(c => c.id === v.category);
-
-                    let statusBadge = '';
-                    let shippingInfo = '';
-
-                    if (v.isShipped) {
-                        const estDate = v.estimatedDelivery ? new Date(v.estimatedDelivery).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }) : 'รอการจัดส่ง';
-
-                        if (v.status === 'processing') {
-                            statusBadge = '<span class="px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs">กำลังดำเนินการ</span>';
-                        } else if (v.status === 'shipped') {
-                            statusBadge = '<span class="px-2 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs">กำลังจัดส่ง</span>';
-                        } else if (v.status === 'delivered') {
-                            statusBadge = '<span class="px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">จัดส่งแล้ว</span>';
-                        }
-
-                        shippingInfo = `
-                            <div class="mt-3 pt-3 border-t border-white/10">
-                                <div class="flex items-center gap-2 text-sm text-white/60 mb-1">
-                                    <i class="fas fa-truck text-blue-400"></i>
-                                    <span>คาดว่าจะได้รับ: ${estDate}</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-sm text-white/60">
-                                    <i class="fas fa-map-marker-alt text-blue-primary"></i>
-                                    <span class="truncate">${v.shippingInfo?.address || 'รอยืนยันที่อยู่'}</span>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        statusBadge = '<span class="px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">พร้อมใช้งาน</span>';
-                    }
-
-                    return `
-                        <div class="glass-card rounded-xl p-4">
-                            <div class="flex items-start gap-4">
-                                <div class="w-14 h-14 rounded-lg bg-gradient-to-br ${category ? category.color : 'from-primary to-secondary'} flex items-center justify-center flex-shrink-0">
-                                    <i class="fas ${category ? category.icon : 'fa-gift'} text-xl text-white"></i>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center justify-between gap-2 mb-1">
-                                        <h4 class="font-semibold truncate">${title}</h4>
-                                        ${statusBadge}
-                                    </div>
-                                    <p class="text-white/50 text-sm">${v.price.toLocaleString()} RDS</p>
-                                    <p class="text-white/40 text-xs mt-1">รหัส: ${v.code}</p>
-                                    ${shippingInfo}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            openModal('profileModal');
-        }
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', () => {
+            initTranslations();
+        });
     </script>
-
 </body>
 
 </html>

@@ -6,13 +6,13 @@
 // Explicitly handle Admin Language Toggle to ensure it works independent of utils.js quirks
 window.toggleAdminLanguage = function () {
     try {
-        console.log('Toggling Admin language...');
+
         // 1. Normalize and Toggle State
         let current = (window.currentLanguage || 'en').toLowerCase();
         window.currentLanguage = current === 'en' ? 'th' : 'en';
         localStorage.setItem('language', window.currentLanguage);
 
-        console.log('New language:', window.currentLanguage);
+
 
         // 2. Update Button Text
         const button = document.getElementById('currentLang');
@@ -44,7 +44,7 @@ window.toggleAdminLanguage = function () {
         });
 
         // 4. Force Re-render of Dynamic Admin Components
-        console.log('Re-rendering Admin Dashboard components...');
+
         renderStats();
         renderPrivilegesTable();
         renderOrdersTable();
@@ -215,7 +215,7 @@ function renderPrivilegesTable(items = allPrivileges) {
             <td class="p-6 text-white/50 font-mono text-xs">#${p.id}</td>
             <td class="p-6">
                 <div class="flex items-center gap-3">
-                    <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover bg-white/10" onerror="this.src='images/logo_v4.png'">
+                    <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover bg-white/10" onerror="this.src='../images/logo_v4.png'">
                     <div>
                         <div class="font-medium">${title}</div>
                         <div class="text-xs text-white/40">${p.subtitle || ''}</div>
@@ -400,7 +400,7 @@ function savePrivilege(e) {
         titleTh: document.getElementById('editTitleTh').value,
         category: document.getElementById('editCategory').value,
         price: parseInt(document.getElementById('editPrice').value),
-        image: document.getElementById('editImage').value || 'images/logo_v4.png',
+        image: document.getElementById('editImage').value || '../images/logo_v4.png',
         isPhysical: document.getElementById('editIsPhysical').checked,
         subtitle: 'New Item',
         rating: 5.0,

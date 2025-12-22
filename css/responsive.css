@@ -1,0 +1,135 @@
+/* ============================================
+   RESPONSIVE STYLES - Mobile & Tablet
+   ============================================ */
+
+/* ===== TABLET (max-width: 768px) ===== */
+@media (max-width: 768px) {
+
+    /* Header */
+    header nav {
+        padding: 0.75rem 1rem;
+    }
+
+    header img {
+        height: 2.5rem;
+    }
+
+    /* Hero Section */
+    .hero-pattern {
+        min-height: 50vh !important;
+        padding-top: 5rem;
+    }
+
+    .hero-pattern h1 {
+        font-size: 1.75rem !important;
+        line-height: 1.2;
+    }
+
+    .hero-pattern p {
+        font-size: 1rem !important;
+    }
+
+    /* Category Filter Buttons */
+    #categoriesGrid button {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    /* Cards Grid */
+    .privilege-card {
+        margin-bottom: 1rem;
+    }
+
+    /* Buttons */
+    .btn-gradient {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 2rem 1rem;
+    }
+
+    /* Modals */
+    .modal-overlay+div {
+        width: 95% !important;
+        max-width: 95vw !important;
+        padding: 1rem !important;
+    }
+
+    /* Wallet Card */
+    .wallet-card-bg {
+        margin: 0 -1rem;
+        border-radius: 0;
+    }
+}
+
+/* ===== MOBILE (max-width: 480px) ===== */
+@media (max-width: 480px) {
+
+    /* Header */
+    header nav {
+        padding: 0.5rem 0.75rem;
+    }
+
+    header img {
+        height: 2rem;
+    }
+
+    /* Hide wallet text on mobile */
+    .wallet-text {
+        display: none;
+    }
+
+    /* Hero */
+    .hero-pattern h1 {
+        font-size: 1.5rem !important;
+    }
+
+    /* Touch-friendly buttons */
+    button,
+    a {
+        min-height: 44px;
+    }
+
+    /* Profile icon smaller */
+    header .w-10 {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* ===== TOUCH DEVICES ===== */
+@media (hover: none) and (pointer: coarse) {
+
+    button,
+    a,
+    input,
+    select {
+        cursor: pointer;
+    }
+
+    .privilege-card:hover {
+        transform: none;
+    }
+
+    .privilege-card:hover::before {
+        opacity: 0;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+
+    header,
+    footer,
+    nav {
+        display: none !important;
+    }
+
+    .glass-card {
+        background: white !important;
+        box-shadow: none !important;
+    }
+}

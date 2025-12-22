@@ -59,6 +59,7 @@ const translations = {
         // Buttons & Labels
         btn_view_details: 'View Details',
         btn_redeem: 'Redeem',
+        btn_load_more: 'Load More',
         btn_book: 'Get Voucher',
         btn_not_enough: 'Insufficient Points',
         btn_profile: 'Profile',
@@ -239,6 +240,7 @@ const translations = {
         // Buttons & Labels
         btn_view_details: 'ดูรายละเอียด',
         btn_redeem: 'แลกรับสิทธิ์',
+        btn_load_more: 'โหลดเพิ่มเติม',
         btn_book: 'รับวอเชอร์',
         btn_not_enough: 'คะแนนไม่พอ',
         btn_profile: 'โปรไฟล์',

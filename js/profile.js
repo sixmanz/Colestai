@@ -120,7 +120,7 @@ function createDigitalCard(item) {
         <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all cursor-pointer flex flex-col"
              onclick="openQRModal('${item.code}', '${title.replace(/'/g, "\\'")}', '${item.bookedAt}')">
             <div class="h-40 relative overflow-hidden">
-                <img src="${item.image || 'images/privilege_default.jpg'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <img src="${item.image || '../images/privilege_default.jpg'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                 
                 <div class="absolute top-3 left-3 px-2 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-medium text-white">
@@ -156,7 +156,7 @@ function createPhysicalRow(item) {
             <div class="flex flex-col md:flex-row gap-6">
                 <!-- Image -->
                 <div class="w-full md:w-32 h-32 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
-                    <img src="${item.image || 'images/privilege_default.jpg'}" class="w-full h-full object-cover">
+                    <img src="${item.image || '../images/privilege_default.jpg'}" class="w-full h-full object-cover">
                 </div>
                 
                 <!-- Info -->

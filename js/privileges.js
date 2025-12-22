@@ -96,8 +96,11 @@ function renderPrivilegeCards() {
         filtered = filtered.filter(p => p.category === currentPrivilegeFilter);
     }
 
+    // Sort by Price: High to Low
+    filtered.sort((a, b) => b.price - a.price);
+
     const showing = filtered.slice(0, displayedPrivileges);
-    const t = translations[currentLanguage];
+    const t = translations[currentLanguage] || translations['en'];
 
     if (filtered.length === 0) {
         container.innerHTML = `
@@ -114,6 +117,17 @@ function renderPrivilegeCards() {
         `;
     } else {
         container.innerHTML = showing.map(renderPrivilegeCard).join('');
+
+        // Re-initialize effects for new elements
+        if (window.initTiltEffect) window.initTiltEffect();
+
+        // Manually trigger reveal for smoother UX without waiting for scroll
+        setTimeout(() => {
+            const newCards = container.querySelectorAll('.reveal');
+            newCards.forEach((card, index) => {
+                setTimeout(() => card.classList.add('active'), index * 50);
+            });
+        }, 50);
     }
 
     // Update count display
@@ -139,55 +153,54 @@ function renderPrivilegeCard(p) {
     const categoryLabel = currentLanguage === 'th' && p.categoryLabelTh ? p.categoryLabelTh : p.categoryLabel;
     const canAfford = walletData.totalPoints >= p.price;
     const category = privilegeCategories.find(c => c.id === p.category);
+    const t = translations[currentLanguage] || translations['en'];
 
     const tierBadge = p.tier === 'gold'
-        ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium"><i class="fas fa-crown mr-1"></i>Gold</span>'
+        ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium backdrop-blur-md border border-yellow-500/30"><i class="fas fa-crown mr-1"></i>Gold</span>'
         : p.tier === 'silver'
-            ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-gray-400/20 text-gray-300 text-xs font-medium"><i class="fas fa-gem mr-1"></i>Silver</span>'
+            ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-gray-400/20 text-gray-300 text-xs font-medium backdrop-blur-md border border-gray-400/30"><i class="fas fa-gem mr-1"></i>Silver</span>'
             : '';
 
     return `
         <div onclick="window.location.href='privilege-detail.html?id=${p.id}'" 
-             class="privilege-card glass-card rounded-2xl overflow-hidden group cursor-pointer hover:-translate-y-2 transition-all duration-300 border border-white/10 hover:border-primary/50 relative">
-            <div class="relative h-48 overflow-hidden">
-                <img src="${p.image}" alt="${title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="absolute inset-0 bg-primary items-center justify-center" style="display: none;">
-                    <i class="fas ${category ? category.icon : 'fa-gift'} text-6xl text-white/30"></i>
-                </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                ${tierBadge}
-                ${!canAfford ? `<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white/60"><i class="fas fa-lock mr-1"></i>${translations[currentLanguage].status_locked || 'Locked'}</div>` : ''}
-                ${p.isPhysical ? `<div class="absolute bottom-3 left-3 bg-blue-500/80 backdrop-blur-md px-2 py-1 rounded-full text-xs text-white"><i class="fas fa-truck mr-1"></i>${translations[currentLanguage].status_physical || 'Physical'}</div>` : ''}
-            </div>
-            
-            <div class="p-5">
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-xs font-medium text-blue-primary tracking-wider uppercase">${categoryLabel}</span>
-                    <div class="flex items-center gap-1 text-yellow-400 text-xs">
-                        <i class="fas fa-star"></i>
-                        <span>${p.rating}</span>
+             class="privilege-card glass-card-premium tilt-card reveal rounded-2xl overflow-visible group cursor-pointer relative h-full flex flex-col">
+            <div class="tilt-content h-full flex flex-col transform-style-3d">
+                <div class="relative h-48 overflow-hidden rounded-t-2xl flex-shrink-0">
+                    <img src="${p.image}" alt="${title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="absolute inset-0 bg-primary items-center justify-center" style="display: none;">
+                        <i class="fas ${category ? category.icon : 'fa-gift'} text-6xl text-white/30"></i>
                     </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80"></div>
+                    ${tierBadge}
+                    ${!canAfford ? `<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-white/60 border border-white/10"><i class="fas fa-lock mr-1"></i>${t.status_locked || 'Locked'}</div>` : ''}
+                    ${p.isPhysical ? `<div class="absolute bottom-3 left-3 bg-blue-500/80 backdrop-blur-md px-2 py-1 rounded-full text-xs text-white border border-blue-400/30"><i class="fas fa-truck mr-1"></i>${t.status_physical || 'Physical'}</div>` : ''}
                 </div>
                 
-                <h3 class="font-semibold text-lg mb-1 group-hover:text-blue-primary transition-colors line-clamp-2">${title}</h3>
-                <p class="text-white/50 text-sm mb-4 line-clamp-1">${subtitle}</p>
-                
-                <div class="flex items-center justify-between mt-auto">
-                    <div class="flex items-center gap-2">
-                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
-                        <span class="font-bold text-lg">${p.price.toLocaleString()}</span>
-                        <span class="text-xs text-white/50">RDS</span>
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase">${categoryLabel}</span>
                     </div>
                     
-                    <button onclick="event.stopPropagation(); redeemPrivilege(${p.id})" 
-                            class="px-4 py-2 rounded-xl ${canAfford
-            ? 'btn-gradient text-white hover:scale-105'
-            : 'bg-white/10 text-white/40 cursor-not-allowed'} transition-all duration-300 text-sm font-medium" 
-                            ${!canAfford ? 'disabled' : ''}>
-                        ${canAfford
-            ? (translations[currentLanguage].btn_redeem || (currentLanguage === 'th' ? 'แลก' : 'Redeem'))
-            : (translations[currentLanguage].btn_not_enough || (currentLanguage === 'th' ? 'คะแนนไม่พอ' : 'Not enough'))}
-                    </button>
+                    <h3 class="font-bold text-lg mb-1 group-hover:text-secondary-dark transition-colors line-clamp-2 leading-tight">${title}</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-1">${subtitle}</p>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-2">
+                            <img src="../images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain drop-shadow-sm">
+                            <span class="font-extrabold text-xl font-display text-slate-800">${p.price.toLocaleString()}</span>
+                            <span class="text-xs text-slate-400 font-bold">RDS</span>
+                        </div>
+                        
+                        <button onclick="event.stopPropagation(); redeemPrivilege(${p.id})" 
+                                class="btn-shine px-4 py-2 rounded-xl ${canAfford
+            ? 'bg-gradient-to-r from-primary to-primary-light text-white shadow-lg hover:shadow-secondary/50 hover:scale-105'
+            : 'bg-gray-100 text-gray-400 cursor-not-allowed'} transition-all duration-300 text-sm font-bold tracking-wide" 
+                                ${!canAfford ? 'disabled' : ''}>
+                            ${canAfford
+            ? (t.btn_redeem || (currentLanguage === 'th' ? 'แลกเลย' : 'Redeem'))
+            : (t.btn_not_enough || (currentLanguage === 'th' ? 'คะแนนไม่พอ' : 'Not enough'))}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -254,8 +267,11 @@ function searchPrivileges() {
 }
 
 function loadMorePrivileges() {
-    displayedPrivileges += 6;
+    displayedPrivileges = 9999;
     renderPrivilegeCards();
+    // Hide button after showing all
+    const loadMoreBtn = document.getElementById('loadMorePrivilegesBtn');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 }
 
 // ============================================
@@ -282,8 +298,7 @@ function openPrivilegeDetail(privilegeId) {
     document.getElementById('detailCategory').textContent = categoryLabel;
     document.getElementById('detailDescription').textContent = description;
     document.getElementById('detailPrice').textContent = privilege.price.toLocaleString();
-    document.getElementById('detailRating').textContent = privilege.rating;
-    document.getElementById('detailReviews').textContent = `(${privilege.reviews} ${currentLanguage === 'th' ? 'รีวิว' : 'reviews'})`;
+    // Ratings removed
 
     // Category icon
     const iconContainer = document.getElementById('detailCategoryIcon');
@@ -369,7 +384,7 @@ function redeemPrivilege(privilegeId) {
 
     if (privilege.isPhysical) {
         // Show shipping modal for physical items
-        pendingShippingPackage = privilege;
+        window.pendingShippingPackage = privilege;
         document.getElementById('shippingProductImage').src = privilege.image || '';
         document.getElementById('shippingProductName').textContent = currentLanguage === 'th' ? privilege.titleTh : privilege.title;
         document.getElementById('shippingProductPrice').textContent = privilege.price.toLocaleString() + ' RDS';

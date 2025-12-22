@@ -23,6 +23,11 @@
     <!-- QRCode.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Shared CSS Files -->
+    <link rel="stylesheet" href="../css/main.css?v=23">
+    <link rel="stylesheet" href="../css/components.css?v=23">
+    <link rel="stylesheet" href="../css/responsive.css?v=23">
+
     <script>
         tailwind.config = {
             theme: {
@@ -41,96 +46,12 @@
                         'pink-primary': '#56C4E8',
                         'dark-bg': '#F8FAFC',
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
-                    }
                 }
             }
         }
     </script>
-
-    <style>
-        body {
-            background-color: #F8FAFC;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .gradient-text {
-            background: none;
-            -webkit-background-clip: initial;
-            -webkit-text-fill-color: initial;
-            color: #002B5B;
-        }
-
-        .btn-gradient {
-            background: #003366;
-            color: white;
-        }
-
-        .btn-gradient:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 20px rgba(0, 51, 102, 0.25);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            header nav {
-                padding: 0.75rem 1rem;
-            }
-
-            header img {
-                height: 2.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header nav {
-                padding: 0.5rem 0.75rem;
-            }
-
-            header img {
-                height: 2rem;
-            }
-        }
-    </style>
 </head>
+
 
 <body class="bg-gray-50 font-thai text-slate-900 antialiased min-h-screen flex flex-col pb-16 md:pb-0">
 
@@ -139,7 +60,7 @@
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/logo_new.png" alt="Flips id"
+                    <img src="../images/logo_new.png" alt="Flips id"
                         class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
                 </a>
 
@@ -189,7 +110,7 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
+                        <img src="../images/points_icon_v2.png?v=23" alt="Points" class="w-6 h-6 object-contain">
                         <span class="text-sm font-bold text-slate-800" id="headerPoints">0</span>
                         <span class="text-slate-600 text-xs">RDS</span>
                     </a>
@@ -197,7 +118,7 @@
                     <!-- Profile Button (Active) -->
                     <a href="profile.html"
                         class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 border-2 border-white shadow-lg">
-                        <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </a>
                 </div>
             </div>
@@ -217,7 +138,7 @@
 
                 <div class="relative">
                     <div class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 btn-gradient">
-                        <img src="images/profile_v1.jpg" alt="Profile"
+                        <img src="../images/profile_v1.jpg" alt="Profile"
                             class="w-full h-full rounded-full object-cover border-4 border-white">
                     </div>
                     <div
@@ -253,7 +174,7 @@
                 <div
                     class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-primary/50 transition-all">
                     <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <img src="images/points_icon_v2.png" class="w-24 h-24">
+                        <img src="../images/points_icon_v2.png" class="w-24 h-24">
                     </div>
                     <p class="text-slate-600 mb-2" data-i18n="stat_balance">Current Balance</p>
                     <div class="flex items-baseline gap-2 mb-2">
@@ -349,7 +270,7 @@
         <div class="max-w-7xl mx-auto px-4 md:px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="images/logo_new.png" alt="Flips id" class="h-8 md:h-12 w-auto ">
+                    <img src="../images/logo_new.png" alt="Flips id" class="h-8 md:h-12 w-auto ">
                 </div>
                 <p class="text-slate-500 text-xs md:text-sm text-center">© 2024 FLIPS ID Corporation. All rights
                     reserved.</p>
@@ -434,12 +355,12 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/translations.js?v=2"></script>
-    <script src="js/data.js?v=2"></script>
-    <script src="js/privileges-data.js?v=2"></script>
-    <script src="js/utils.js?v=2"></script>
-    <script src="js/notifications.js?v=2"></script>
-    <script src="js/profile.js?v=1"></script> <!-- New Profile Logic -->
+    <script src="../js/translations.js?v=23"></script>
+    <script src="../js/data.js?v=23"></script>
+    <script src="../js/privileges-data.js?v=23"></script>
+    <script src="../js/utils.js?v=23"></script>
+    <script src="../js/notifications.js?v=23"></script>
+    <script src="../js/profile.js?v=23"></script>
 
 </body>
 

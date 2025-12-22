@@ -40,49 +40,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <style>
-        .gradient-text {
-            background: none;
-            -webkit-background-clip: initial;
-            -webkit-text-fill-color: initial;
-            background-clip: initial;
-            color: #002B5B;
-        }
-
-        .gradient-bg {
-            background: #002B5B;
-        }
-
-        .btn-gradient {
-            background: #003366;
-            color: white;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            color: #003366;
-            border-radius: 4px;
-        }
-
-        .modal-overlay {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-        }
-    </style>
+    <!-- Shared CSS Files -->
+    <link rel="stylesheet" href="../css/main.css?v=23">
+    <link rel="stylesheet" href="../css/components.css?v=23">
+    <link rel="stylesheet" href="../css/responsive.css?v=23">
 </head>
 
 <body class="bg-gray-50 font-thai text-slate-900 antialiased">
@@ -92,7 +53,7 @@
         <nav class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 group">
-                    <img src="images/logo_new.png" alt="Flips id"
+                    <img src="../images/logo_new.png" alt="Flips id"
                         class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
                 </a>
 
@@ -142,7 +103,7 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain">
+                        <img src="../images/points_icon_v2.png?v=23" alt="Points" class="w-6 h-6 object-contain">
                         <span class="text-sm font-bold text-slate-800" id="headerPoints">0</span>
                         <span class="text-slate-600 text-xs">RDS</span>
                     </a>
@@ -150,7 +111,7 @@
                     <!-- Profile Button -->
                     <a href="profile.html"
                         class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 transform shadow-lg">
-                        <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </a>
                 </div>
             </div>
@@ -172,7 +133,8 @@
             <div class="grid md:grid-cols-2 gap-8 mb-12">
                 <!-- Image/Icon Section -->
                 <div id="privilegeImageSection" class="relative rounded-2xl overflow-hidden h-80">
-                    <img id="privilegeImage" src="" alt="" class="w-full h-full object-cover"
+                    <img id="privilegeImage" src="" alt="" class="w-full h-full object-cover" style="display: none;"
+                        onload="this.style.display='block'; document.getElementById('privilegeImageFallback').style.display='none';"
                         onerror="this.style.display='none'; document.getElementById('privilegeImageFallback').style.display='flex';">
                     <div id="privilegeImageFallback"
                         class="absolute inset-0 bg-blue-primary items-center justify-center" style="display: none;">
@@ -190,13 +152,9 @@
                     <h1 id="privilegeTitle" class="text-3xl md:text-4xl font-bold mb-3 text-slate-900"></h1>
                     <p id="privilegeSubtitle" class="text-slate-600 text-lg mb-6"></p>
 
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="flex items-center gap-1 text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <span id="privilegeRating" class="font-medium">0</span>
-                        </div>
-                        <span id="privilegeReviews" class="text-slate-500 text-sm"></span>
-                    </div>
+                    <p id="privilegeSubtitle" class="text-slate-600 text-lg mb-6"></p>
+
+                    <!-- Rating Section Removed -->
 
                     <!-- Price Card -->
                     <div class="gradient-bg rounded-2xl p-6 text-center mb-6 shadow-lg">
@@ -298,7 +256,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="images/logo_new.png" alt="Flips id" class="h-12 w-auto ">
+                    <img src="../images/logo_new.png" alt="Flips id" class="h-12 w-auto ">
                 </div>
                 <p class="text-slate-500 text-sm" data-i18n="footer_rights">© 2024 FLIPS ID Corporation. All rights
                     reserved.</p>
@@ -367,7 +325,7 @@
                     <div class="flex items-center gap-4">
                         <div
                             class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center overflow-hidden">
-                            <img src="images/profile_v1.jpg" alt="Profile" class="w-full h-full object-cover">
+                            <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-slate-900">FLIPS ID User</h3>
@@ -549,11 +507,11 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="js/translations.js?v=2"></script>
-    <script src="js/data.js?v=2"></script>
-    <script src="js/privileges-data.js?v=2"></script>
-    <script src="js/utils.js?v=2"></script>
-    <script src="js/notifications.js?v=2"></script>
+    <script src="../js/translations.js?v=23"></script>
+    <script src="../js/data.js?v=23"></script>
+    <script src="../js/privileges-data.js?v=23"></script>
+    <script src="../js/utils.js?v=23"></script>
+    <script src="../js/notifications.js?v=23"></script>
     <!-- privilege-detail specific script below -->
     <script>
         let currentPrivilege = null;
@@ -619,8 +577,7 @@
             document.getElementById('privilegeCategory').textContent = currentLanguage === 'th' && p.categoryLabelTh ? p.categoryLabelTh : p.categoryLabel;
             document.getElementById('privilegeTitle').textContent = currentLanguage === 'th' && p.titleTh ? p.titleTh : p.title;
             document.getElementById('privilegeSubtitle').textContent = currentLanguage === 'th' && p.subtitleTh ? p.subtitleTh : p.subtitle;
-            document.getElementById('privilegeRating').textContent = p.rating;
-            document.getElementById('privilegeReviews').textContent = `(${p.reviews} ${currentLanguage === 'th' ? 'รีวิว' : 'reviews'})`;
+            // Ratings removed
             document.getElementById('privilegePrice').textContent = p.price.toLocaleString();
             document.getElementById('privilegeDescription').textContent = currentLanguage === 'th' && p.descriptionTh ? p.descriptionTh : p.description;
 
