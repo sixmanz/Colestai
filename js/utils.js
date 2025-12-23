@@ -91,8 +91,16 @@ function initWalletData() {
             if (!parsed.transactions) parsed.transactions = defaultWalletData.transactions;
             if (!parsed.pointsBatches) parsed.pointsBatches = defaultWalletData.pointsBatches;
             if (parsed.totalPoints === undefined) parsed.totalPoints = defaultWalletData.totalPoints;
+            if (parsed.movieTokens === undefined) parsed.movieTokens = defaultWalletData.movieTokens;
+            if (parsed.gameTokens === undefined) parsed.gameTokens = defaultWalletData.gameTokens;
+
+            // Always use default Token details to ensure latest data structure
+            parsed.movieTokenDetails = defaultWalletData.movieTokenDetails;
+            parsed.gameTokenDetails = defaultWalletData.gameTokenDetails;
 
             walletData = parsed;
+            // Save updated structure back to localStorage
+            localStorage.setItem('walletData', JSON.stringify(walletData));
         } else {
             throw new Error('No saved wallet');
         }

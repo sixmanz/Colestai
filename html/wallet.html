@@ -109,15 +109,16 @@
                     <!-- Wallet Button (Active) -->
                     <a href="wallet.html"
                         class="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 border border-primary/20 text-primary transition-all duration-300">
-                        <img src="../images/points_icon_v2.png?v=23" alt="Points" class="w-6 h-6 object-contain">
+                        <img src="../images/flips_token.png" alt="Coins" class="w-6 h-6 object-contain">
                         <span class="text-sm font-bold" id="headerPoints">0</span>
-                        <span class="text-secondary text-xs">RDS</span>
+                        <span class="text-secondary text-xs">Coins</span>
                     </a>
 
                     <!-- Profile Button -->
                     <a href="profile.html"
                         class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5">
-                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        <img src="../images/profile_v1.jpg" alt="Profile"
+                            class="w-full h-full rounded-full object-cover">
                     </a>
                 </div>
             </div>
@@ -133,34 +134,68 @@
                 <span data-i18n="wallet_modal_title">My Wallet</span>
             </h1>
 
-            <!-- Wallet Card -->
-            <div class="wallet-card-bg rounded-3xl p-8 mb-12 relative overflow-hidden shadow-2xl shadow-primary/40">
-                <div
-                    class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
-                </div>
-
-                <div
-                    class="relative text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div>
-                        <p class="text-white/80 text-lg mb-2" data-i18n="points_available">RDS Points Available</p>
-                        <div class="flex items-baseline justify-center md:justify-start gap-3">
-                            <span class="text-6xl font-bold text-white tracking-tight"
+            <!-- Wallet Card - Flips Coins -->
+            <div class="bg-gradient-to-br from-blue-50 to-sky-50 rounded-2xl p-6 mb-6 border border-blue-100">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="text-center md:text-left">
+                        <p class="text-slate-500 text-sm mb-1" data-i18n="points_available">Flips Coins Available</p>
+                        <div class="flex items-baseline justify-center md:justify-start gap-2">
+                            <span class="text-5xl font-bold text-slate-900 tracking-tight"
                                 id="walletTotalPointsHero">0</span>
-                            <span class="text-2xl font-medium text-white/60">RDS</span>
+                            <span class="text-xl font-medium text-blue-500">Flips</span>
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-3 w-full md:w-auto">
-                        <div
-                            class="bg-black/20 backdrop-blur-md rounded-xl p-4 flex items-center justify-between gap-6 border border-white/10">
-                            <div>
-                                <p class="text-xs text-white/70 mb-1" data-i18n="hero_expiring">Expiring Soon</p>
-                                <p class="font-bold text-white">0 RDS</p>
-                            </div>
-                            <i class="fas fa-clock text-yellow-400 text-xl"></i>
+                    <div class="flex items-center gap-3 px-4 py-2.5 bg-white/80 rounded-xl border border-blue-100">
+                        <i class="fas fa-clock text-amber-500"></i>
+                        <div>
+                            <p class="text-xs text-slate-500" data-i18n="hero_expiring">Expiring Soon</p>
+                            <p class="font-semibold text-slate-700">0 Flips</p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Token Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <!-- Movie Token Card -->
+                <a href="movie-tokens.html"
+                    class="bg-white rounded-2xl p-5 border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300 cursor-pointer block group">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition-colors">
+                            <i class="fas fa-film text-xl text-orange-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-slate-500 text-sm mb-0.5">Movie Token</p>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-2xl font-bold text-slate-900" id="movieTokenBalance">0</span>
+                                <span class="text-sm text-slate-400">Token</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-orange-400 transition-colors"></i>
+                    </div>
+                </a>
+
+                <!-- FULL SENSE Token Card -->
+                <a href="game-tokens.html"
+                    class="bg-white rounded-2xl p-5 border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300 cursor-pointer block group">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-orange-100 p-1 group-hover:bg-orange-50 transition-colors">
+                            <img src="../images/full_sense_token.png" alt="FULL SENSE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-slate-500 text-sm mb-0.5 font-bold">FULL SENSE Token</p>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-2xl font-bold text-slate-900" id="gameTokenBalance">0</span>
+                                <span class="text-sm text-orange-500 font-bold">FULL SENSE</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-orange-400 transition-colors"></i>
+                    </div>
+                </a>
             </div>
 
             <!-- Transaction History -->
@@ -189,6 +224,50 @@
 
         </div>
     </main>
+
+    <!-- Token Detail Modal -->
+    <div id="tokenDetailModal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTokenModal()"></div>
+
+        <!-- Modal Content -->
+        <div
+            class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Header -->
+            <div id="tokenModalHeader" class="p-6 text-white relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2">
+                </div>
+                <div class="relative flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center p-1"
+                            id="tokenModalIconContainer">
+                            <i id="tokenModalIcon" class="fas fa-film text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 id="tokenModalTitle" class="text-xl font-bold">Movie Token</h2>
+                            <p class="text-white/70 text-sm">รายละเอียดเหรียญ</p>
+                        </div>
+                    </div>
+                    <button onclick="closeTokenModal()"
+                        class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="relative mt-4 pt-4 border-t border-white/20">
+                    <div class="flex items-baseline gap-2">
+                        <span id="tokenModalTotal" class="text-4xl font-bold">0</span>
+                        <span class="text-lg text-white/60">Token รวม</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token List -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-4" id="tokenDetailList">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white py-8 md:py-12 border-t border-gray-200 mt-auto pb-24 md:pb-12">
@@ -224,11 +303,11 @@
     </nav>
 
     <!-- JavaScript -->
-    <script src="../js/translations.js?v=23"></script>
-    <script src="../js/data.js?v=23"></script>
-    <script src="../js/utils.js?v=23"></script>
-    <script src="../js/notifications.js?v=23"></script>
-    <script src="../js/wallet.js?v=23"></script>
+    <script src="../js/translations.js?v=25"></script>
+    <script src="../js/data.js?v=25"></script>
+    <script src="../js/utils.js?v=25"></script>
+    <script src="../js/notifications.js?v=25"></script>
+    <script src="../js/wallet.js?v=25"></script>
 
 </body>
 

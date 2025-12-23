@@ -103,15 +103,16 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="../images/points_icon_v2.png?v=23" alt="Points" class="w-6 h-6 object-contain">
+                        <img src="../images/flips_token.png" alt="Coins" class="w-6 h-6 object-contain">
                         <span class="text-sm font-bold text-slate-800" id="headerPoints">0</span>
-                        <span class="text-slate-600 text-xs">RDS</span>
+                        <span class="text-slate-600 text-xs">Coins</span>
                     </a>
 
                     <!-- Profile Button -->
                     <a href="profile.html"
                         class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 transform shadow-lg">
-                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        <img src="../images/profile_v1.jpg" alt="Profile"
+                            class="w-full h-full rounded-full object-cover">
                     </a>
                 </div>
             </div>
@@ -161,7 +162,7 @@
                         <p class="text-white/90 text-sm mb-2" data-i18n="label_use_points">Use Points</p>
                         <div class="flex items-baseline justify-center gap-2 text-white">
                             <span id="privilegePrice" class="text-4xl font-bold">0</span>
-                            <span class="text-lg font-medium">RDS</span>
+                            <span class="text-lg font-medium">Flips</span>
                         </div>
                     </div>
 
@@ -286,7 +287,7 @@
                 <div class="gradient-bg rounded-2xl p-6 mb-8 text-center relative overflow-hidden shadow-lg">
                     <p class="text-white/90 mb-2 text-lg" data-i18n="total_points">Total Points</p>
                     <h3 class="text-5xl font-bold mb-2 tracking-tight text-white" id="walletTotalPoints">0</h3>
-                    <p class="text-white/70 text-sm" data-i18n="points_available">RDS Points Available</p>
+                    <p class="text-white/70 text-sm" data-i18n="points_available">Flips Coins Available</p>
                 </div>
 
                 <div class="mb-6">
@@ -342,7 +343,7 @@
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="glass-card rounded-xl p-4 text-center border border-gray-100 shadow-sm">
                         <p class="text-slate-600 text-sm" data-i18n="total_points">Total Points</p>
-                        <p class="text-2xl font-bold gradient-text" id="profileBalance">0 RDS</p>
+                        <p class="text-2xl font-bold gradient-text" id="profileBalance">0 Flips</p>
                     </div>
                     <div class="glass-card rounded-xl p-4 text-center border border-gray-100 shadow-sm">
                         <p class="text-slate-600 text-sm" data-i18n="privileges_count">Privileges Redeemed</p>
@@ -635,7 +636,7 @@
             if (currentPrivilege.isPhysical) {
                 // Show shipping modal
                 document.getElementById('shippingProductName').textContent = currentLanguage === 'th' ? currentPrivilege.titleTh : currentPrivilege.title;
-                document.getElementById('shippingProductPrice').textContent = currentPrivilege.price.toLocaleString() + ' RDS';
+                document.getElementById('shippingProductPrice').textContent = currentPrivilege.price.toLocaleString() + ' Flips';
                 // Update modal title dynamically
                 const shippingTitle = document.querySelector('#shippingModal h2 span');
                 if (shippingTitle) shippingTitle.textContent = translations[currentLanguage].shipping_modal_title;
@@ -691,7 +692,7 @@
             window.currentVoucherName = title;
 
             // Show success
-            document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${p.price.toLocaleString()} RDS สำหรับ "${title}"`;
+            document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${p.price.toLocaleString()} Flips สำหรับ "${title}"`;
             closeModal('shippingModal');
             openModal('bookingModal');
         }
@@ -732,7 +733,7 @@
 
         // Override openProfile to show redeemed privileges with shipping info
         function openProfile() {
-            document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' RDS';
+            document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' Flips';
             document.getElementById('profileVouchers').textContent = userVouchers.length;
 
             // Render redeemed privileges
@@ -790,7 +791,7 @@
                                         <h4 class="font-semibold truncate">${title}</h4>
                                         ${statusBadge}
                                     </div>
-                                    <p class="text-white/50 text-sm">${v.price.toLocaleString()} RDS</p>
+                                    <p class="text-white/50 text-sm">${v.price.toLocaleString()} Flips</p>
                                     <p class="text-white/40 text-xs mt-1">รหัส: ${v.code}</p>
                                     ${shippingInfo}
                                 </div>

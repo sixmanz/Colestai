@@ -110,10 +110,9 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="../images/points_icon_v2.png?v=23" alt="Points"
-                            class="w-5 h-5 sm:w-6 sm:h-6 object-contain">
+                        <img src="../images/flips_token.png" alt="Coins" class="w-5 h-5 sm:w-6 sm:h-6 object-contain">
                         <span class="text-xs sm:text-sm font-bold text-slate-800" id="headerPoints">0</span>
-                        <span class="text-slate-600 text-xs hidden sm:inline">RDS</span>
+                        <span class="text-slate-600 text-xs hidden sm:inline">Coins</span>
                     </a>
 
                     <!-- Profile Button with Admin Badge -->
@@ -162,8 +161,108 @@
         </div>
     </section>
 
+    <!-- ============================================ -->
+    <!-- BALANCE & PAYMENT MODE SECTION -->
+    <!-- ============================================ -->
+    <section id="balanceSection" class="py-6 reveal reveal-delay-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Balance Cards -->
+            <div id="pointsBalanceCard"
+                class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 mb-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                        <img src="../images/flips_token.png" alt="Flips" class="w-7 h-7 object-contain">
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-slate-600 text-xs">เหรียญคงเหลือ</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-3xl font-bold text-slate-900" id="mainPointsBalance">0</span>
+                            <span class="text-blue-600 font-medium">Flips</span>
+                        </div>
+                    </div>
+                    <a href="wallet.html" class="text-blue-600 hover:text-blue-700 text-sm">
+                        ดูกระเป๋า <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Token Balance Cards (hidden by default) -->
+            <div id="tokenBalanceCards" class="grid grid-cols-2 gap-3 mb-4 hidden">
+                <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-film text-lg text-orange-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-600 text-xs">Movie Token</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-xl font-bold text-slate-900" id="mainMovieToken">0</span>
+                                <span class="text-orange-500 font-medium text-xs">Token</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-gradient-to-r from-orange-400/10 to-orange-600/10 rounded-xl p-4 border border-orange-200">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1 shadow-sm border border-orange-100">
+                            <img src="../images/full_sense_token.png" alt="FULL SENSE"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <p class="text-slate-600 text-xs font-bold">FULL SENSE Token</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-xl font-bold text-slate-900" id="mainGameToken">0</span>
+                                <span class="text-orange-600 font-bold text-xs">FULL SENSE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Mode Toggle -->
+            <div class="flex items-center gap-3 mb-2">
+                <span class="text-sm text-slate-600">แลกด้วย:</span>
+                <div class="flex bg-gray-100 rounded-full p-1">
+                    <button id="payModePoints" onclick="switchPaymentMode('points')"
+                        class="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-blue-primary text-white flex items-center gap-1.5">
+                        <img src="../images/flips_token.png" class="w-4 h-4 object-contain brightness-0 invert"> Flips
+                        Coins
+                    </button>
+                    <button id="payModeToken" onclick="switchPaymentMode('token')"
+                        class="px-4 py-1.5 rounded-full text-sm font-medium transition-all text-slate-500 hover:text-slate-700">
+                        <i class="fas fa-ticket-alt mr-1.5"></i>Token
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Category Tabs (Movies / Games) -->
+    <section class="pt-4 pb-2 reveal reveal-delay-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center gap-6 border-b border-gray-200">
+                <button id="movieTab" onclick="switchMainCategory('movie')"
+                    class="main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-orange-500 text-slate-900 active">
+                    <i class="fas fa-film text-orange-500"></i>
+                    <span>หนัง</span>
+                    <span id="movieCount"
+                        class="px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold"></span>
+                </button>
+                <button id="gameTab" onclick="switchMainCategory('game')"
+                    class="main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-transparent text-slate-400 hover:text-slate-600">
+                    <i class="fas fa-gamepad"></i>
+                    <span>เกมส์</span>
+                    <span id="gameCount"
+                        class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Category Filter Tabs Section -->
-    <section class="py-8 relative reveal reveal-delay-200">
+    <section class="py-4 relative reveal reveal-delay-200">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Horizontal Scroll Container with Fade Effect -->
             <div class="relative group">
@@ -174,37 +273,7 @@
 
                 <!-- Scroll Area -->
                 <div class="flex overflow-x-auto gap-3 pb-4 px-1 no-scrollbar scroll-smooth" id="categoriesGrid">
-                    <!-- Hardcoded categories with visible colors -->
-                    <button onclick="filterPrivileges('all')"
-                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
-                        style="background:#003366; color:white; border-color:#003366;">
-                        <i class="fas fa-layer-group"></i>
-                        สิทธิพิเศษทั้งหมด
-                    </button>
-                    <button onclick="filterPrivileges('movie-tickets')"
-                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
-                        style="background:white; color:#334155; border-color:#e2e8f0;">
-                        <i class="fas fa-ticket-alt"></i>
-                        บัตรชมภาพยนตร์
-                    </button>
-                    <button onclick="filterPrivileges('meet-greet')"
-                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
-                        style="background:white; color:#334155; border-color:#e2e8f0;">
-                        <i class="fas fa-users"></i>
-                        พบทีมผู้สร้างสรรค์
-                    </button>
-                    <button onclick="filterPrivileges('credits')"
-                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
-                        style="background:white; color:#334155; border-color:#e2e8f0;">
-                        <i class="fas fa-film"></i>
-                        เครดิตท้ายภาพยนตร์
-                    </button>
-                    <button onclick="filterPrivileges('merchandise')"
-                        class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2"
-                        style="background:white; color:#334155; border-color:#e2e8f0;">
-                        <i class="fas fa-gift"></i>
-                        สินค้าที่ระลึก
-                    </button>
+                    <!-- Categories will be rendered dynamically by JS -->
                 </div>
 
                 <!-- Right Fade -->
@@ -323,7 +392,7 @@
                     <p class="text-white/80 text-sm mb-2">ใช้คะแนนแลก</p>
                     <div class="flex items-baseline justify-center gap-2">
                         <span id="detailPrice" class="text-4xl font-bold">0</span>
-                        <span class="text-lg font-medium">RDS</span>
+                        <span class="text-lg font-medium">Flips</span>
                     </div>
                 </div>
 
@@ -361,7 +430,7 @@
                     </div>
                     <p class="text-white/80 mb-2 font-medium">Total Balance</p>
                     <h3 class="text-5xl font-bold mb-2 tracking-tight" id="walletTotalPoints">0</h3>
-                    <p class="text-white/60 text-sm" data-i18n="points_available">RDS Points Available</p>
+                    <p class="text-white/60 text-sm" data-i18n="points_available">Flips Coins Available</p>
                 </div>
 
                 <div class="mb-6">
@@ -447,7 +516,7 @@
                         class="w-20 h-20 rounded-lg object-cover bg-white/10">
                     <div class="flex-1">
                         <h3 id="shippingProductName" class="font-bold text-white mb-1">Product Name</h3>
-                        <p id="shippingProductPrice" class="text-secondary font-bold">0 RDS</p>
+                        <p id="shippingProductPrice" class="text-secondary font-bold">0 Flips</p>
                     </div>
                 </div>
 
@@ -555,7 +624,7 @@
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="glass-card rounded-xl p-4 text-center">
                         <p class="text-white/50 text-sm mb-1" data-i18n="points_balance">Points Balance</p>
-                        <h4 class="text-2xl font-bold gradient-text" id="profileBalance">0 RDS</h4>
+                        <h4 class="text-2xl font-bold gradient-text" id="profileBalance">0 Flips</h4>
                     </div>
                     <div class="glass-card rounded-xl p-4 text-center">
                         <p class="text-white/50 text-sm mb-1" data-i18n="privileges_redeemed">Privileges Redeemed</p>
@@ -586,6 +655,62 @@
     </div>
 
 
+    <!-- Reward Redeem Modal -->
+    <div id="redeemModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeRedeemModal()"></div>
+        <div
+            class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="font-semibold text-slate-800">ยืนยันการแลก</h3>
+                <button onclick="closeRedeemModal()" class="text-gray-400 hover:text-slate-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4">
+                <div class="flex items-center gap-4">
+                    <img id="modalRewardImage" src="" alt="" class="w-16 h-16 rounded-xl object-cover bg-gray-100">
+                    <div>
+                        <h4 id="modalRewardTitle" class="font-semibold text-slate-800"></h4>
+                        <p id="modalRewardCost" class="text-sm text-slate-500"></p>
+                    </div>
+                </div>
+                <div id="modalWarning" class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                    <div class="flex items-center gap-2 text-amber-700">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="text-sm" id="modalWarningText">จะถูกหักจากยอดคงเหลือทันที</span>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="closeRedeemModal()"
+                        class="flex-1 py-2.5 rounded-lg border border-gray-200 text-slate-600 hover:bg-gray-50 transition-colors text-sm font-medium">
+                        ยกเลิก
+                    </button>
+                    <button onclick="confirmRedeem()"
+                        class="flex-1 py-2.5 rounded-lg bg-blue-primary text-white hover:bg-blue-800 transition-colors text-sm font-medium">
+                        ยืนยันแลก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reward Success Modal -->
+    <div id="rewardSuccessModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div
+            class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-3xl text-green-500"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2">แลกสำเร็จ!</h3>
+            <p class="text-slate-500 mb-6">คุณได้รับของรางวัลแล้ว สามารถตรวจสอบได้ในหน้าโปรไฟล์</p>
+            <button onclick="closeRewardSuccessModal()"
+                class="w-full py-2.5 rounded-lg bg-blue-primary text-white hover:bg-blue-800 transition-colors font-medium">
+                ตกลง
+            </button>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div id="toast" class="fixed bottom-4 right-4 z-[200] hidden">
         <div class="glass-card rounded-xl px-6 py-4 flex items-center gap-3">
@@ -595,6 +720,7 @@
     </div>
 
     <!-- Core Scripts -->
+    <script src="../js/data.js?v=23"></script>
     <script src="../js/utils.js?v=23"></script>
     <script src="../js/translations.js?v=23"></script>
 
@@ -602,10 +728,11 @@
     <script src="../js/notifications.js?v=23"></script>
     <script src="../js/wallet.js?v=23"></script>
     <script src="../js/privileges-data.js?v=23"></script>
-    <script src="../js/privileges.js?v=23"></script>
-    <script src="../js/visual-effects.js?v=23"></script>
-    <script src="../js/index-page.js?v=23"></script>
-    <script src="../js/main.js?v=23"></script>
+    <script src="../js/privileges.js?v=25"></script>
+    <script src="../js/rewards.js?v=25"></script>
+    <script src="../js/visual-effects.js?v=25"></script>
+    <script src="../js/index-page.js?v=25"></script>
+    <script src="../js/main.js?v=25"></script>
 
     <script>
         // Initialize application

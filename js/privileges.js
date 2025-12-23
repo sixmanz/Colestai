@@ -3,6 +3,7 @@
 // ============================================
 
 let currentPrivilegeFilter = 'all';
+let currentMainCategory = 'movie'; // 'movie' or 'game'
 let displayedPrivileges = 12;
 
 // ============================================
@@ -11,12 +12,70 @@ let displayedPrivileges = 12;
 
 function initPrivilegesPage() {
     initWalletData();
+    updateMainCategoryTabs();
     renderPrivilegeCategories();
     renderPrivilegeFilters();
     renderPrivilegeCards();
     updatePrivilegeStats();
     updatePointsDisplay();
     updateContentLanguage();
+}
+
+// ============================================
+// MAIN CATEGORY SWITCHING
+// ============================================
+
+function switchMainCategory(category) {
+    currentMainCategory = category;
+    currentPrivilegeFilter = 'all'; // Reset filter when switching main category
+    displayedPrivileges = 12; // Reset pagination
+
+    updateMainCategoryTabs();
+    renderPrivilegeCategories();
+    renderPrivilegeCards();
+}
+
+function updateMainCategoryTabs() {
+    const movieTab = document.getElementById('movieTab');
+    const gameTab = document.getElementById('gameTab');
+    const movieCount = document.getElementById('movieCount');
+    const gameCount = document.getElementById('gameCount');
+
+    if (!movieTab || !gameTab) return;
+
+    // Get counts for each main category
+    const packages = typeof getActivePackages === 'function' ? getActivePackages() : privilegePackages;
+    const moviePackages = packages.filter(p => {
+        const mainCat = getMainCategoryFromCategory(p.category);
+        return mainCat === 'movie';
+    });
+    const gamePackages = packages.filter(p => {
+        const mainCat = getMainCategoryFromCategory(p.category);
+        return mainCat === 'game';
+    });
+
+    // Update counts
+    if (movieCount) movieCount.textContent = moviePackages.length;
+    if (gameCount) gameCount.textContent = gamePackages.length;
+
+    // Update styles using class manipulation for underline tabs
+    if (currentMainCategory === 'movie') {
+        movieTab.className = 'main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-orange-500 text-slate-900 active';
+        movieTab.querySelector('i').className = 'fas fa-film text-orange-500';
+        if (movieCount) movieCount.className = 'px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold';
+
+        gameTab.className = 'main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-transparent text-slate-400 hover:text-slate-600';
+        gameTab.querySelector('i').className = 'fas fa-gamepad';
+        if (gameCount) gameCount.className = 'px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold';
+    } else {
+        gameTab.className = 'main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-purple-500 text-slate-900 active';
+        gameTab.querySelector('i').className = 'fas fa-gamepad text-purple-500';
+        if (gameCount) gameCount.className = 'px-2 py-0.5 rounded-full bg-purple-100 text-purple-600 text-xs font-bold';
+
+        movieTab.className = 'main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-transparent text-slate-400 hover:text-slate-600';
+        movieTab.querySelector('i').className = 'fas fa-film';
+        if (movieCount) movieCount.className = 'px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold';
+    }
 }
 
 // ============================================
@@ -31,14 +90,26 @@ function getCategoryCounts() {
     // Initialize
     privilegeCategories.forEach(cat => counts[cat.id] = 0);
 
-    // Count
+    // Count only packages in current main category
     packages.forEach(p => {
-        if (counts[p.category] !== undefined) {
-            counts[p.category]++;
+        const pMainCat = getMainCategoryFromCategory(p.category);
+        if (currentMainCategory === 'movie' && pMainCat === 'movie') {
+            if (counts[p.category] !== undefined) {
+                counts[p.category]++;
+            }
+        } else if (currentMainCategory === 'game' && pMainCat === 'game') {
+            if (counts[p.category] !== undefined) {
+                counts[p.category]++;
+            }
         }
     });
 
-    counts['all'] = packages.length;
+    // Count 'all' for current main category
+    counts['all'] = packages.filter(p => {
+        const pMainCat = getMainCategoryFromCategory(p.category);
+        return pMainCat === currentMainCategory;
+    }).length;
+
     return counts;
 }
 
@@ -47,22 +118,31 @@ function renderPrivilegeCategories() {
     const container = document.getElementById('categoriesGrid');
     if (!container) return;
 
-    // Update existing buttons' styles based on current filter
-    const buttons = container.querySelectorAll('button');
-    buttons.forEach(btn => {
-        const categoryId = btn.getAttribute('onclick')?.match(/filterPrivileges\('(.+?)'\)/)?.[1];
-        if (categoryId) {
-            if (categoryId === currentPrivilegeFilter) {
-                btn.style.background = '#003366';
-                btn.style.color = 'white';
-                btn.style.borderColor = '#003366';
-            } else {
-                btn.style.background = 'white';
-                btn.style.color = '#334155';
-                btn.style.borderColor = '#e2e8f0';
-            }
-        }
-    });
+    const counts = getCategoryCounts();
+
+    // Filter categories by current main category
+    const filteredCategories = privilegeCategories.filter(cat =>
+        cat.mainCategory === 'all' || cat.mainCategory === currentMainCategory
+    );
+
+    // Render category buttons dynamically
+    container.innerHTML = filteredCategories.map(cat => {
+        const isActive = currentPrivilegeFilter === cat.id;
+        const label = currentLanguage === 'th' ? cat.labelTh : cat.label;
+        const count = counts[cat.id] || 0;
+
+        return `
+            <button onclick="filterPrivileges('${cat.id}')"
+                class="px-6 py-2 rounded-full border transition-all duration-300 whitespace-nowrap flex items-center gap-2 hover:scale-105"
+                style="${isActive
+                ? 'background:#003366; color:white; border-color:#003366;'
+                : 'background:white; color:#334155; border-color:#e2e8f0;'}">
+                <i class="fas ${cat.icon}"></i>
+                ${label}
+                <span class="px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-gray-100'}">${count}</span>
+            </button>
+        `;
+    }).join('');
 }
 
 
@@ -92,6 +172,14 @@ function renderPrivilegeCards() {
     if (!container) return;
 
     let filtered = getActivePackages();
+
+    // First filter by main category (movie or game)
+    filtered = filtered.filter(p => {
+        const pMainCat = getMainCategoryFromCategory(p.category);
+        return pMainCat === currentMainCategory;
+    });
+
+    // Then filter by sub-category
     if (currentPrivilegeFilter !== 'all') {
         filtered = filtered.filter(p => p.category === currentPrivilegeFilter);
     }
@@ -151,15 +239,36 @@ function renderPrivilegeCard(p) {
     const title = currentLanguage === 'th' && p.titleTh ? p.titleTh : p.title;
     const subtitle = currentLanguage === 'th' && p.subtitleTh ? p.subtitleTh : p.subtitle;
     const categoryLabel = currentLanguage === 'th' && p.categoryLabelTh ? p.categoryLabelTh : p.categoryLabel;
-    const canAfford = walletData.totalPoints >= p.price;
     const category = privilegeCategories.find(c => c.id === p.category);
     const t = translations[currentLanguage] || translations['en'];
+
+    // Check payment mode and calculate affordability
+    const payMode = typeof getPaymentMode === 'function' ? getPaymentMode() : 'points';
+    const isMovie = p.type === 'movie';
+    const tokenCost = p.tokenPrice || Math.ceil(p.price / 500);
+
+    let canAfford;
+    if (payMode === 'points') {
+        canAfford = walletData.totalPoints >= p.price;
+    } else {
+        const currentTokens = isMovie ? walletData.movieTokens : walletData.gameTokens;
+        canAfford = currentTokens >= tokenCost;
+    }
 
     const tierBadge = p.tier === 'gold'
         ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-medium backdrop-blur-md border border-yellow-500/30"><i class="fas fa-crown mr-1"></i>Gold</span>'
         : p.tier === 'silver'
             ? '<span class="absolute top-3 left-3 px-2 py-1 rounded-full bg-gray-400/20 text-gray-300 text-xs font-medium backdrop-blur-md border border-gray-400/30"><i class="fas fa-gem mr-1"></i>Silver</span>'
             : '';
+
+    // Price display based on payment mode
+    const priceDisplay = payMode === 'points'
+        ? `<img src="../images/flips_token.png" alt="Flips" class="w-6 h-6 object-contain drop-shadow-sm">
+           <span class="font-extrabold text-xl font-display text-slate-800">${p.price.toLocaleString()}</span>
+           <span class="text-xs text-slate-400 font-bold">Flips</span>`
+        : `<i class="fas fa-ticket-alt text-lg ${isMovie ? 'text-orange-500' : 'text-purple-500'}"></i>
+           <span class="font-extrabold text-xl font-display text-slate-800">${tokenCost}</span>
+           <span class="text-xs text-slate-400 font-bold">Token</span>`;
 
     return `
         <div onclick="window.location.href='privilege-detail.html?id=${p.id}'" 
@@ -186,19 +295,17 @@ function renderPrivilegeCard(p) {
                     
                     <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
                         <div class="flex items-center gap-2">
-                            <img src="../images/points_icon_v2.png?v=999" alt="Points" class="w-6 h-6 object-contain drop-shadow-sm">
-                            <span class="font-extrabold text-xl font-display text-slate-800">${p.price.toLocaleString()}</span>
-                            <span class="text-xs text-slate-400 font-bold">RDS</span>
+                            ${priceDisplay}
                         </div>
                         
-                        <button onclick="event.stopPropagation(); redeemPrivilege(${p.id})" 
+                        <button onclick="event.stopPropagation(); redeemPrivilegeWithMode ? redeemPrivilegeWithMode(${p.id}) : redeemPrivilege(${p.id})" 
                                 class="btn-shine px-4 py-2 rounded-xl ${canAfford
             ? 'bg-gradient-to-r from-primary to-primary-light text-white shadow-lg hover:shadow-secondary/50 hover:scale-105'
             : 'bg-gray-100 text-gray-400 cursor-not-allowed'} transition-all duration-300 text-sm font-bold tracking-wide" 
                                 ${!canAfford ? 'disabled' : ''}>
                             ${canAfford
-            ? (t.btn_redeem || (currentLanguage === 'th' ? 'แลกเลย' : 'Redeem'))
-            : (t.btn_not_enough || (currentLanguage === 'th' ? 'คะแนนไม่พอ' : 'Not enough'))}
+            ? (t.btn_redeem || (currentLanguage === 'th' ? 'แลก' : 'Redeem'))
+            : (t.btn_not_enough || (currentLanguage === 'th' ? 'ไม่พอ' : 'Not enough'))}
                         </button>
                     </div>
                 </div>
@@ -387,7 +494,7 @@ function redeemPrivilege(privilegeId) {
         window.pendingShippingPackage = privilege;
         document.getElementById('shippingProductImage').src = privilege.image || '';
         document.getElementById('shippingProductName').textContent = currentLanguage === 'th' ? privilege.titleTh : privilege.title;
-        document.getElementById('shippingProductPrice').textContent = privilege.price.toLocaleString() + ' RDS';
+        document.getElementById('shippingProductPrice').textContent = privilege.price.toLocaleString() + ' Flips';
         closeModal('privilegeDetailModal');
         openModal('shippingModal');
     } else {
@@ -438,8 +545,8 @@ function showRedemptionSuccess(privilege, voucherCode) {
     const title = currentLanguage === 'th' ? privilege.titleTh : privilege.title;
 
     document.getElementById('bookingMessage').textContent = currentLanguage === 'th'
-        ? `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} RDS สำหรับ "${title}"`
-        : `Success! Used ${privilege.price.toLocaleString()} RDS for "${title}"`;
+        ? `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} Flips สำหรับ "${title}"`
+        : `Success! Used ${privilege.price.toLocaleString()} Flips for "${title}"`;
 
     // Store current voucher code for QR generation
     window.currentVoucherCode = voucherCode;

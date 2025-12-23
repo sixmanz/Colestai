@@ -10,7 +10,7 @@ const translations = {
 
         hero_welcome: 'Welcome to FLIPS ID',
         hero_subtitle: 'Exclusive Rewards & Premium Privileges',
-        hero_points_balance: 'Your Points Balance',
+        hero_points_balance: 'Your Flips Coins',
         hero_expiring: 'Expiring Soon',
 
         // Profile Page
@@ -83,7 +83,7 @@ const translations = {
         premium_member: 'Premium Member',
         redeemed_privileges: 'Redeemed Privileges',
         no_redeemed_privileges: 'No privileges redeemed yet',
-        total_points: 'Total Points',
+        total_points: 'Total Flips Coins',
         privileges_count: 'Privileges Redeemed',
 
         no_vouchers: 'No vouchers yet. Start booking to get your first voucher!',
@@ -92,7 +92,7 @@ const translations = {
         shipping_to: 'Shipping to:',
         code: 'Code',
         total_balance: 'Total Balance',
-        points_available: 'RDS Points Available',
+        points_available: 'Flips Coins Available',
         points_breakdown: 'Points Breakdown',
         recent_transactions: 'Recent Transactions',
 
@@ -202,7 +202,7 @@ const translations = {
         empty_rewards_title: 'ยังไม่มีรางวัล',
         empty_rewards_desc: 'คุณยังไม่ได้แลกรางวัลในหมวดหมู่นี้',
         btn_browse_rewards: 'ดูของรางวัล',
-        hero_points_balance: 'คะแนนของคุณ',
+        hero_points_balance: 'เหรียญ Flips ของคุณ',
         hero_expiring: 'กำลังจะหมดอายุ',
 
         filter_all: 'ทั้งหมด',
@@ -264,7 +264,7 @@ const translations = {
         premium_member: 'สมาชิกพรีเมียม',
         redeemed_privileges: 'สิทธิพิเศษที่แลกแล้ว',
         no_redeemed_privileges: 'ยังไม่มีสิทธิพิเศษที่แลก',
-        total_points: 'ยอดคะแนน',
+        total_points: 'ยอดเหรียญ Flips',
         privileges_count: 'สิทธิพิเศษที่แลก',
 
         no_vouchers: 'ยังไม่มีวอเชอร์ เริ่มจองเพื่อรับวอเชอร์แรกของคุณ!',
@@ -273,7 +273,7 @@ const translations = {
         shipping_to: 'จัดส่งที่:',
         code: 'รหัส',
         total_balance: 'ยอดคงเหลือ',
-        points_available: 'คะแนน RDS ที่ใช้ได้',
+        points_available: 'เหรียญ Flips ที่ใช้ได้',
         points_breakdown: 'รายละเอียดคะแนน',
         recent_transactions: 'ธุรกรรมล่าสุด',
 
@@ -322,6 +322,11 @@ const translations = {
         your_balance: 'ยอดเงินของคุณ',
         gold_tier: 'Gold Tier',
         silver_tier: 'Silver Tier',
+
+        // Game Tokens
+        game_tokens_title: 'FULL SENSE Tokens',
+        total_game_tokens: 'FULL SENSE Tokens รวม',
+        games: 'รายการ',
 
         // Admin Dashboard
         admin_dashboard: 'แดชบอร์ด',

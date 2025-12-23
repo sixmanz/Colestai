@@ -2,7 +2,27 @@
 // PRIVILEGES DATA - Investor Privileges System
 // ============================================
 
+// Main Categories (Primary Tabs)
+const mainCategories = [
+    {
+        id: 'movie',
+        label: 'Movies',
+        labelTh: 'หนัง',
+        icon: 'fa-film',
+        color: 'from-red-500 to-orange-500'
+    },
+    {
+        id: 'game',
+        label: 'Games',
+        labelTh: 'เกมส์',
+        icon: 'fa-gamepad',
+        color: 'from-purple-500 to-pink-500'
+    }
+];
+
+// Sub-Categories for Privileges
 const privilegeCategories = [
+    // Movie Sub-Categories
     {
         id: 'all',
         label: 'All Privileges',
@@ -10,7 +30,8 @@ const privilegeCategories = [
         icon: 'fa-layer-group',
         color: 'from-primary to-secondary',
         description: 'View all available privileges',
-        descriptionTh: 'ดูสิทธิพิเศษทั้งหมด'
+        descriptionTh: 'ดูสิทธิพิเศษทั้งหมด',
+        mainCategory: 'all'
     },
     {
         id: 'movie-tickets',
@@ -19,7 +40,8 @@ const privilegeCategories = [
         icon: 'fa-ticket-alt',
         color: 'from-red-500 to-orange-500',
         description: 'Exclusive movie screening tickets',
-        descriptionTh: 'บัตรชมภาพยนตร์พิเศษ'
+        descriptionTh: 'บัตรชมภาพยนตร์พิเศษ',
+        mainCategory: 'movie'
     },
     {
         id: 'meet-greet',
@@ -28,7 +50,8 @@ const privilegeCategories = [
         icon: 'fa-users',
         color: 'from-blue-500 to-cyan-500',
         description: 'Meet producers, directors & actors',
-        descriptionTh: 'พบโปรดิวเซอร์ ผู้กำกับ นักแสดง'
+        descriptionTh: 'พบโปรดิวเซอร์ ผู้กำกับ นักแสดง',
+        mainCategory: 'movie'
     },
     {
         id: 'credits',
@@ -37,7 +60,8 @@ const privilegeCategories = [
         icon: 'fa-film',
         color: 'from-yellow-500 to-amber-500',
         description: 'Your name in movie credits',
-        descriptionTh: 'ชื่อของคุณในเครดิตท้ายภาพยนตร์'
+        descriptionTh: 'ชื่อของคุณในเครดิตท้ายภาพยนตร์',
+        mainCategory: 'movie'
     },
     {
         id: 'merchandise',
@@ -46,7 +70,8 @@ const privilegeCategories = [
         icon: 'fa-gift',
         color: 'from-green-500 to-emerald-500',
         description: 'Exclusive merchandise & collectibles',
-        descriptionTh: 'สินค้าที่ระลึกพิเศษ'
+        descriptionTh: 'สินค้าที่ระลึกพิเศษ',
+        mainCategory: 'movie'
     },
     {
         id: 'behind-scenes',
@@ -55,7 +80,8 @@ const privilegeCategories = [
         icon: 'fa-camera',
         color: 'from-primary to-primary-light',
         description: 'Set visits & behind the scenes access',
-        descriptionTh: 'เข้าชมกองถ่ายและเบื้องหลัง'
+        descriptionTh: 'เข้าชมกองถ่ายและเบื้องหลัง',
+        mainCategory: 'movie'
     },
     {
         id: 'other',
@@ -64,7 +90,59 @@ const privilegeCategories = [
         icon: 'fa-star',
         color: 'from-secondary to-secondary-light',
         description: 'More exclusive privileges',
-        descriptionTh: 'สิทธิพิเศษอื่นๆ มากมาย'
+        descriptionTh: 'สิทธิพิเศษอื่นๆ มากมาย',
+        mainCategory: 'movie'
+    },
+    // Game Sub-Categories
+    {
+        id: 'game-items',
+        label: 'In-Game Items',
+        labelTh: 'ไอเทมในเกม',
+        icon: 'fa-gem',
+        color: 'from-purple-500 to-indigo-500',
+        description: 'Exclusive in-game items',
+        descriptionTh: 'ไอเทมในเกมพิเศษ',
+        mainCategory: 'game'
+    },
+    {
+        id: 'game-credits',
+        label: 'Game Credits',
+        labelTh: 'เครดิตในเกม',
+        icon: 'fa-coins',
+        color: 'from-yellow-400 to-orange-400',
+        description: 'Your name in game credits',
+        descriptionTh: 'ชื่อของคุณในเครดิตเกม',
+        mainCategory: 'game'
+    },
+    {
+        id: 'game-meet-greet',
+        label: 'Meet Developers',
+        labelTh: 'พบนักพัฒนาเกม',
+        icon: 'fa-laptop-code',
+        color: 'from-cyan-500 to-blue-500',
+        description: 'Meet game developers',
+        descriptionTh: 'พบปะทีมพัฒนาเกม',
+        mainCategory: 'game'
+    },
+    {
+        id: 'game-merchandise',
+        label: 'Game Merchandise',
+        labelTh: 'สินค้าที่ระลึกเกม',
+        icon: 'fa-tshirt',
+        color: 'from-pink-500 to-rose-500',
+        description: 'Exclusive game merchandise',
+        descriptionTh: 'สินค้าที่ระลึกจากเกม',
+        mainCategory: 'game'
+    },
+    {
+        id: 'early-access',
+        label: 'Early Access',
+        labelTh: 'เข้าถึงก่อน',
+        icon: 'fa-rocket',
+        color: 'from-green-400 to-teal-500',
+        description: 'Early access to games',
+        descriptionTh: 'เข้าเล่นเกมก่อนเปิดตัว',
+        mainCategory: 'game'
     }
 ];
 
@@ -463,18 +541,271 @@ const privilegePackages = [
         descriptionTh: 'จดหมายข่าวรายเดือนพร้อมข้อมูลวงในและประกาศล่วงหน้า',
         conditions: ['12-month subscription', 'Digital delivery', 'Early access to news'],
         conditionsTh: ['สมัครสมาชิก 12 เดือน', 'ส่งทางดิจิตอล', 'รับข่าวก่อนใคร']
+    },
+
+    // ============================================
+    // GAME PRIVILEGES
+    // ============================================
+
+    // In-Game Items Category
+    {
+        id: 701,
+        title: 'Legendary Weapon Skin',
+        titleTh: 'สกินอาวุธระดับตำนาน',
+        subtitle: 'Exclusive rare weapon skin',
+        subtitleTh: 'สกินอาวุธหายากสุดพิเศษ',
+        category: 'game-items',
+        categoryLabel: 'In-Game Items',
+        categoryLabelTh: 'ไอเทมในเกม',
+        image: '../images/privilege_game_weapon.png',
+        price: 800,
+        rating: 4.9,
+        reviews: 234,
+        isPhysical: false,
+        tier: 'gold',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'Get an exclusive legendary weapon skin that glows with special effects.',
+        descriptionTh: 'รับสกินอาวุธระดับตำนานที่เรืองแสงพร้อมเอฟเฟกต์พิเศษ',
+        conditions: ['Account binding required', 'One-time redemption', 'Permanent unlock'],
+        conditionsTh: ['ต้องผูกบัญชี', 'แลกได้ครั้งเดียว', 'ปลดล็อคถาวร']
+    },
+    {
+        id: 702,
+        title: 'Character Bundle Pack',
+        titleTh: 'แพ็คตัวละครพิเศษ',
+        subtitle: '5 exclusive characters',
+        subtitleTh: '5 ตัวละครสุดพิเศษ',
+        category: 'game-items',
+        categoryLabel: 'In-Game Items',
+        categoryLabelTh: 'ไอเทมในเกม',
+        image: '../images/privilege_game_character.png',
+        price: 1500,
+        rating: 5.0,
+        reviews: 156,
+        isPhysical: false,
+        tier: 'gold',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'Unlock 5 exclusive playable characters with unique abilities.',
+        descriptionTh: 'ปลดล็อค 5 ตัวละครพิเศษพร้อมความสามารถเฉพาะตัว',
+        conditions: ['All characters unlocked', 'Includes special emotes', 'Cross-platform'],
+        conditionsTh: ['ได้ตัวละครทั้งหมด', 'รวมท่าทางพิเศษ', 'ใช้ได้ทุกแพลตฟอร์ม']
+    },
+
+    // Game Credits Category
+    {
+        id: 703,
+        title: 'Supporter Credit',
+        titleTh: 'เครดิต Supporter',
+        subtitle: 'Your name in game credits',
+        subtitleTh: 'ชื่อของคุณในเครดิตเกม',
+        category: 'game-credits',
+        categoryLabel: 'Game Credits',
+        categoryLabelTh: 'เครดิตในเกม',
+        image: '../images/privilege_game_credits.png',
+        price: 500,
+        rating: 4.7,
+        reviews: 89,
+        isPhysical: false,
+        tier: 'silver',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'Have your name displayed in the game credits as a Supporter.',
+        descriptionTh: 'ชื่อของคุณจะปรากฏในเครดิตเกมในฐานะ Supporter',
+        conditions: ['Permanent credit', 'Name as registered', 'Digital certificate'],
+        conditionsTh: ['เครดิตถาวร', 'ใช้ชื่อตามที่ลงทะเบียน', 'ใบประกาศดิจิตอล']
+    },
+    {
+        id: 704,
+        title: 'Executive Backer Credit',
+        titleTh: 'เครดิต Executive Backer',
+        subtitle: 'Premium credit placement',
+        subtitleTh: 'เครดิตตำแหน่งพิเศษ',
+        category: 'game-credits',
+        categoryLabel: 'Game Credits',
+        categoryLabelTh: 'เครดิตในเกม',
+        image: '../images/privilege_game_credits_exec.png',
+        price: 3000,
+        rating: 5.0,
+        reviews: 23,
+        isPhysical: false,
+        tier: 'gold',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'Get premium credit placement as Executive Backer with in-game NPC named after you.',
+        descriptionTh: 'รับเครดิตตำแหน่งพิเศษในฐานะ Executive Backer พร้อม NPC ในเกมที่ตั้งชื่อตามคุณ',
+        conditions: ['Prominent placement', 'Custom NPC', 'All games access'],
+        conditionsTh: ['ตำแหน่งเด่น', 'NPC ตั้งชื่อตามคุณ', 'เข้าถึงเกมทั้งหมด']
+    },
+
+    // Meet Developers Category
+    {
+        id: 705,
+        title: 'Developer Q&A Session',
+        titleTh: 'เซสชั่นถามตอบกับนักพัฒนา',
+        subtitle: 'Online Q&A with dev team',
+        subtitleTh: 'ถามตอบออนไลน์กับทีมพัฒนา',
+        category: 'game-meet-greet',
+        categoryLabel: 'Meet Developers',
+        categoryLabelTh: 'พบนักพัฒนาเกม',
+        image: '../images/privilege_game_qa.png',
+        price: 600,
+        rating: 4.8,
+        reviews: 67,
+        isPhysical: false,
+        tier: 'silver',
+        eventDate: '2024-10-15',
+        venue: 'Online (Zoom)',
+        description: 'Join an exclusive online Q&A session with the game development team.',
+        descriptionTh: 'ร่วมเซสชั่นถามตอบออนไลน์พิเศษกับทีมพัฒนาเกม',
+        conditions: ['90-minute session', 'Limited to 30 people', 'Recording provided'],
+        conditionsTh: ['เซสชั่น 90 นาที', 'จำกัด 30 คน', 'มีบันทึกวิดีโอให้']
+    },
+    {
+        id: 706,
+        title: 'Studio Visit',
+        titleTh: 'เยี่ยมชมสตูดิโอเกม',
+        subtitle: 'Visit the game studio',
+        subtitleTh: 'เข้าชมสตูดิโอพัฒนาเกม',
+        category: 'game-meet-greet',
+        categoryLabel: 'Meet Developers',
+        categoryLabelTh: 'พบนักพัฒนาเกม',
+        image: '../images/privilege_game_studio.png',
+        price: 2500,
+        rating: 5.0,
+        reviews: 12,
+        isPhysical: false,
+        tier: 'gold',
+        eventDate: '2024-11-20',
+        venue: 'FLIPS Game Studio Bangkok',
+        description: 'Get an exclusive tour of our game development studio and meet the team.',
+        descriptionTh: 'ทัวร์พิเศษสตูดิโอพัฒนาเกมและพบทีมงาน',
+        conditions: ['Full day experience', 'Lunch provided', 'Exclusive merchandise'],
+        conditionsTh: ['ประสบการณ์เต็มวัน', 'รวมอาหารกลางวัน', 'ของที่ระลึกพิเศษ']
+    },
+
+    // Game Merchandise Category
+    {
+        id: 707,
+        title: 'Limited Edition Figurine',
+        titleTh: 'ฟิกเกอร์ลิมิเต็ด',
+        subtitle: 'Collectible game figurine',
+        subtitleTh: 'ฟิกเกอร์สะสมจากเกม',
+        category: 'game-merchandise',
+        categoryLabel: 'Game Merchandise',
+        categoryLabelTh: 'สินค้าที่ระลึกเกม',
+        image: '../images/privilege_game_figurine.png',
+        price: 1200,
+        rating: 4.9,
+        reviews: 89,
+        isPhysical: true,
+        tier: 'gold',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'High-quality limited edition figurine of the main character.',
+        descriptionTh: 'ฟิกเกอร์คุณภาพสูงลิมิเต็ดของตัวละครหลัก',
+        conditions: ['Numbered edition', 'Certificate included', 'Premium packaging'],
+        conditionsTh: ['มีหมายเลขกำกับ', 'ใบรับรองความแท้', 'บรรจุภัณฑ์พรีเมียม']
+    },
+    {
+        id: 708,
+        title: 'Artbook & Soundtrack',
+        titleTh: 'อาร์ตบุ๊คและเพลงประกอบ',
+        subtitle: 'Game art & music collection',
+        subtitleTh: 'รวมงานศิลป์และเพลงจากเกม',
+        category: 'game-merchandise',
+        categoryLabel: 'Game Merchandise',
+        categoryLabelTh: 'สินค้าที่ระลึกเกม',
+        image: '../images/privilege_game_artbook.png',
+        price: 700,
+        rating: 4.8,
+        reviews: 134,
+        isPhysical: true,
+        tier: 'silver',
+        gameName: 'Cyber Warriors',
+        gameNameTh: 'ไซเบอร์ วอร์ริเออร์',
+        description: 'Beautiful artbook with concept art plus original soundtrack on CD.',
+        descriptionTh: 'อาร์ตบุ๊คสวยงามพร้อมภาพคอนเซ็ปต์และแผ่น CD เพลงประกอบ',
+        conditions: ['Hardcover book', '2 audio CDs', 'Developer commentary'],
+        conditionsTh: ['หนังสือปกแข็ง', 'แผ่น CD 2 แผ่น', 'คอมเมนต์จากนักพัฒนา']
+    },
+
+    // Early Access Category
+    {
+        id: 709,
+        title: 'Closed Beta Access',
+        titleTh: 'เข้าถึง Closed Beta',
+        subtitle: 'Play before everyone else',
+        subtitleTh: 'เล่นก่อนใครๆ',
+        category: 'early-access',
+        categoryLabel: 'Early Access',
+        categoryLabelTh: 'เข้าถึงก่อน',
+        image: '../images/privilege_game_beta.png',
+        price: 400,
+        rating: 4.9,
+        reviews: 256,
+        isPhysical: false,
+        tier: 'silver',
+        gameName: 'Project Nova',
+        gameNameTh: 'โปรเจค โนวา',
+        eventDate: '2025-01-15',
+        description: 'Get exclusive access to closed beta testing before public launch.',
+        descriptionTh: 'เข้าถึง Closed Beta ก่อนเปิดให้สาธารณะ',
+        conditions: ['2-week early access', 'Beta tester badge', 'Feedback channel'],
+        conditionsTh: ['เข้าถึงก่อน 2 สัปดาห์', 'แบดจ์ผู้ทดสอบ', 'ช่องทางแจ้งข้อเสนอแนะ']
+    },
+    {
+        id: 710,
+        title: 'Founder\'s Pack',
+        titleTh: 'แพ็ค Founder',
+        subtitle: 'Ultimate early supporter pack',
+        subtitleTh: 'แพ็คสุดพิเศษสำหรับผู้สนับสนุน',
+        category: 'early-access',
+        categoryLabel: 'Early Access',
+        categoryLabelTh: 'เข้าถึงก่อน',
+        image: '../images/privilege_game_founder.png',
+        price: 2000,
+        rating: 5.0,
+        reviews: 45,
+        isPhysical: false,
+        tier: 'gold',
+        gameName: 'Project Nova',
+        gameNameTh: 'โปรเจค โนวา',
+        eventDate: '2025-01-01',
+        description: 'The complete founder package with alpha access, exclusive items, and lifetime perks.',
+        descriptionTh: 'แพ็ค Founder ครบเซ็ตพร้อม Alpha access, ไอเทมพิเศษ และสิทธิประโยชน์ตลอดชีพ',
+        conditions: ['Alpha & Beta access', 'Founder title', 'All future DLC free'],
+        conditionsTh: ['เข้าถึง Alpha และ Beta', 'ยศ Founder', 'DLC ในอนาคตฟรี']
     }
 ];
 
-// Calculate category counts
-function getCategoryCounts() {
+// Helper function to get mainCategory from category id
+function getMainCategoryFromCategory(categoryId) {
+    const category = privilegeCategories.find(c => c.id === categoryId);
+    return category ? category.mainCategory : 'movie';
+}
+
+// Calculate category counts with mainCategory support
+function getCategoryCounts(mainCategoryFilter = null) {
     const counts = {};
+    const packages = typeof getActivePackages === 'function' ? getActivePackages() : privilegePackages;
+
     privilegeCategories.forEach(cat => {
         if (cat.id === 'all') {
-            counts[cat.id] = privilegePackages.length;
+            if (mainCategoryFilter && mainCategoryFilter !== 'all') {
+                // Count only packages in this main category
+                counts[cat.id] = packages.filter(p => {
+                    const pMainCat = getMainCategoryFromCategory(p.category);
+                    return pMainCat === mainCategoryFilter;
+                }).length;
+            } else {
+                counts[cat.id] = packages.length;
+            }
         } else {
-            counts[cat.id] = privilegePackages.filter(p => p.category === cat.id).length;
+            counts[cat.id] = packages.filter(p => p.category === cat.id).length;
         }
     });
     return counts;
 }
+

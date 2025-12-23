@@ -110,15 +110,16 @@
                     <!-- Wallet Button -->
                     <a href="wallet.html"
                         class="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="../images/points_icon_v2.png?v=23" alt="Points" class="w-6 h-6 object-contain">
+                        <img src="../images/flips_token.png" alt="Coins" class="w-6 h-6 object-contain">
                         <span class="text-sm font-bold text-slate-800" id="headerPoints">0</span>
-                        <span class="text-slate-600 text-xs">RDS</span>
+                        <span class="text-slate-600 text-xs">Coins</span>
                     </a>
 
                     <!-- Profile Button (Active) -->
                     <a href="profile.html"
                         class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 border-2 border-white shadow-lg">
-                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        <img src="../images/profile_v1.jpg" alt="Profile"
+                            class="w-full h-full rounded-full object-cover">
                     </a>
                 </div>
             </div>
@@ -131,88 +132,63 @@
 
             <!-- 1. Profile Bio -->
             <div
-                class="glass-card rounded-2xl p-8 mb-8 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-                <div
-                    class="absolute top-0 right-0 w-64 h-64 bg-blue-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
-                </div>
-
+                class="bg-white rounded-2xl p-6 mb-6 border border-gray-100 flex flex-col md:flex-row items-center gap-6">
                 <div class="relative">
-                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 btn-gradient">
-                        <img src="../images/profile_v1.jpg" alt="Profile"
-                            class="w-full h-full rounded-full object-cover border-4 border-white">
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-gray-100">
+                        <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div
-                        class="absolute bottom-0 right-0 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full border-2 border-black flex items-center gap-1">
-                        <i class="fas fa-crown"></i>
-                        Gold Member
+                        class="absolute -bottom-1 -right-1 bg-amber-100 text-amber-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-amber-200">
+                        Gold
                     </div>
                 </div>
 
-                <div class="text-center md:text-left">
-                    <h1 class="text-3xl font-bold mb-2 text-slate-900">FLIPS ID User</h1>
-                    <p class="text-slate-600 mb-4">Member since Jan 2024</p>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                        <span
-                            class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm text-gray-700 shadow-sm">
-                            <i class="fas fa-id-card mr-2 text-blue-primary"></i> ID: 88594032
+                <div class="text-center md:text-left flex-1">
+                    <h1 class="text-2xl font-bold mb-1 text-slate-900">FLIPS ID User</h1>
+                    <p class="text-slate-500 text-sm mb-3">Member since Jan 2024</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-600">
+                            <i class="fas fa-id-card mr-1.5 text-blue-400"></i>ID: 88594032
                         </span>
-                        <span
-                            class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm text-gray-700 shadow-sm">
-                            <i class="fas fa-phone mr-2 text-sky-primary"></i> 081-234-5678
+                        <span class="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-600">
+                            <i class="fas fa-phone mr-1.5 text-green-400"></i>081-234-5678
                         </span>
-                        <button onclick="logout()"
-                            class="px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 text-sm transition-colors">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                        </button>
                     </div>
                 </div>
+
+                <button onclick="logout()"
+                    class="px-4 py-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 text-sm transition-colors border border-transparent hover:border-red-200">
+                    <i class="fas fa-sign-out-alt mr-1.5"></i>Logout
+                </button>
             </div>
 
             <!-- 2. Wallet Stats Dashboard -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="grid grid-cols-3 gap-3 mb-8">
                 <!-- Balance (Remaining) -->
-                <div
-                    class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-primary/50 transition-all">
-                    <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <img src="../images/points_icon_v2.png" class="w-24 h-24">
-                    </div>
-                    <p class="text-slate-600 mb-2" data-i18n="stat_balance">Current Balance</p>
-                    <div class="flex items-baseline gap-2 mb-2">
-                        <span class="text-4xl font-bold text-slate-900" id="statBalance">0</span>
-                        <span class="text-sm text-slate-500">RDS</span>
-                    </div>
-                    <div class="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-                        <div class="h-full bg-primary w-[70%]"></div>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-slate-500 text-xs mb-1" data-i18n="stat_balance">Balance</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-2xl font-bold text-slate-900" id="statBalance">0</span>
+                        <span class="text-xs text-blue-500">Flips</span>
                     </div>
                 </div>
 
                 <!-- Total Earned (In) -->
-                <div
-                    class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-green-500/50 transition-all">
-                    <div class="absolute right-4 top-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-arrow-down text-6xl text-green-500"></i>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-slate-500 text-xs mb-1" data-i18n="stat_earned">Earned</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-2xl font-bold text-green-600" id="statEarned">0</span>
+                        <span class="text-xs text-slate-400">Flips</span>
                     </div>
-                    <p class="text-slate-600 mb-2" data-i18n="stat_earned">Total Earned</p>
-                    <div class="flex items-baseline gap-2 mb-2">
-                        <span class="text-4xl font-bold text-green-500" id="statEarned">0</span>
-                        <span class="text-sm text-slate-500">RDS</span>
-                    </div>
-                    <p class="text-xs text-slate-500" data-i18n="stat_lifetime">Lifetime earnings</p>
                 </div>
 
                 <!-- Total Spent (Out) -->
-                <div
-                    class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-red-500/50 transition-all">
-                    <div class="absolute right-4 top-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-arrow-up text-6xl text-red-500"></i>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-slate-500 text-xs mb-1" data-i18n="stat_spent">Spent</p>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-2xl font-bold text-red-500" id="statSpent">0</span>
+                        <span class="text-xs text-slate-400">Flips</span>
                     </div>
-                    <p class="text-slate-600 mb-2" data-i18n="stat_spent">Total Spent</p>
-                    <div class="flex items-baseline gap-2 mb-2">
-                        <span class="text-4xl font-bold text-red-500" id="statSpent">0</span>
-                        <span class="text-sm text-slate-500">RDS</span>
-                    </div>
-                    <p class="text-xs text-slate-500 text-right"><span id="statRedeemedCount">0</span> Items Redeemed
-                    </p>
                 </div>
             </div>
 
@@ -259,6 +235,47 @@
                     class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-gradient font-semibold hover:scale-105 transition-transform">
                     <i class="fas fa-search"></i>
                     <span data-i18n="btn_browse_rewards">Browse Rewards</span>
+                </a>
+            </div>
+
+            <!-- 5. Help & Support Section -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <a href="#" onclick="openHelpModal('faq')"
+                    class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-primary/50 transition-all cursor-pointer group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                        <i class="fas fa-question-circle text-xl text-blue-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-primary transition-colors">FAQ</h4>
+                        <p class="text-sm text-slate-500">คำถามที่พบบ่อย</p>
+                    </div>
+                </a>
+
+                <a href="#" onclick="openHelpModal('contact')"
+                    class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-primary/50 transition-all cursor-pointer group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                        <i class="fas fa-headset text-xl text-green-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Contact Support
+                        </h4>
+                        <p class="text-sm text-slate-500">ติดต่อฝ่ายสนับสนุน</p>
+                    </div>
+                </a>
+
+                <a href="#" onclick="openHelpModal('terms')"
+                    class="glass-card rounded-2xl p-6 flex items-center gap-4 hover:border-primary/50 transition-all cursor-pointer group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                        <i class="fas fa-file-contract text-xl text-purple-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-primary transition-colors">Terms & Privacy
+                        </h4>
+                        <p class="text-sm text-slate-500">ข้อกำหนดและความเป็นส่วนตัว</p>
+                    </div>
                 </a>
             </div>
 
@@ -338,10 +355,10 @@
                 <h3 class="text-xl font-bold mb-6" data-i18n="wallet_title">My Wallet</h3>
 
                 <div class="bg-primary/10 rounded-xl p-6 mb-6 border border-gray-200">
-                    <p class="text-white/60 text-sm mb-1" data-i18n="wallet_total_points">Total Points</p>
+                    <p class="text-white/60 text-sm mb-1" data-i18n="wallet_total_points">Total Flips Coins</p>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold text-white" id="walletTotalPoints">0</span>
-                        <span class="text-sm font-medium text-white/50">RDS</span>
+                        <span class="text-sm font-medium text-white/50">Flips</span>
                     </div>
                 </div>
 

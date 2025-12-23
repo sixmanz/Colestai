@@ -211,8 +211,8 @@ function switchTab(tabName) {
     const emptyState = document.getElementById('empty-state');
 
     // Reset classes
-    tabDigital.className = 'tab-btn px-6 py-4 text-white/50 font-medium border-b-2 border-transparent hover:text-white transition-colors flex items-center gap-2';
-    tabPhysical.className = 'tab-btn px-6 py-4 text-white/50 font-medium border-b-2 border-transparent hover:text-white transition-colors flex items-center gap-2';
+    tabDigital.className = 'tab-btn px-6 py-4 text-slate-500 font-medium border-b-2 border-transparent hover:text-primary transition-colors flex items-center gap-2';
+    tabPhysical.className = 'tab-btn px-6 py-4 text-slate-500 font-medium border-b-2 border-transparent hover:text-primary transition-colors flex items-center gap-2';
 
     contentDigital.classList.add('hidden');
     contentPhysical.classList.add('hidden');
@@ -271,4 +271,142 @@ const originalToggleLanguage = toggleLanguage;
 toggleLanguage = function () {
     originalToggleLanguage();
     renderRewards(); // Re-render to update titles
+}
+
+// ============================================
+// HELP & SUPPORT
+// ============================================
+
+function openHelpModal(type) {
+    const content = {
+        faq: {
+            title: currentLanguage === 'th' ? 'คำถามที่พบบ่อย' : 'Frequently Asked Questions',
+            icon: 'fa-question-circle',
+            color: '#3b82f6',
+            items: [
+                {
+                    q: currentLanguage === 'th' ? 'RDS Points คืออะไร?' : 'What are RDS Points?',
+                    a: currentLanguage === 'th' ? 'RDS Points คือคะแนนสะสมที่ใช้แลกสิทธิพิเศษต่างๆ จากการลงทุนในโปรเจค' : 'RDS Points are reward points earned from your investments that can be redeemed for exclusive privileges.'
+                },
+                {
+                    q: currentLanguage === 'th' ? 'Token หนังและเกมส์ต่างกันอย่างไร?' : 'What is the difference between Movie and FULL SENSE Tokens?',
+                    a: currentLanguage === 'th' ? 'Token หนังใช้แลกสิทธิพิเศษในหมวดภาพยนตร์ ส่วน FULL SENSE Token ใช้แลกสิทธิพิเศษในหมวด FULL SENSE' : 'Movie Tokens are used for film-related privileges, while FULL SENSE Tokens are for FULL SENSE privileges.'
+                },
+                {
+                    q: currentLanguage === 'th' ? 'คะแนนหมดอายุเมื่อไหร่?' : 'When do points expire?',
+                    a: currentLanguage === 'th' ? 'คะแนนจะหมดอายุตามที่ระบุในกระเป๋าเงินของคุณ โดยทั่วไปจะมีอายุ 1 ปี' : 'Points expire as shown in your wallet. Typically, points are valid for 1 year.'
+                }
+            ]
+        },
+        contact: {
+            title: currentLanguage === 'th' ? 'ติดต่อฝ่ายสนับสนุน' : 'Contact Support',
+            icon: 'fa-headset',
+            color: '#22c55e',
+            items: [
+                { label: 'Email', value: 'support@flipsid.com', icon: 'fa-envelope' },
+                { label: 'Phone', value: '02-xxx-xxxx', icon: 'fa-phone' },
+                { label: 'LINE', value: '@flipsid', icon: 'fab fa-line' },
+                { label: currentLanguage === 'th' ? 'เวลาทำการ' : 'Hours', value: currentLanguage === 'th' ? 'จันทร์-ศุกร์ 9:00-18:00' : 'Mon-Fri 9:00-18:00', icon: 'fa-clock' }
+            ]
+        },
+        terms: {
+            title: currentLanguage === 'th' ? 'ข้อกำหนดและความเป็นส่วนตัว' : 'Terms & Privacy',
+            icon: 'fa-file-contract',
+            color: '#a855f7',
+            items: [
+                { title: currentLanguage === 'th' ? 'ข้อกำหนดการใช้งาน' : 'Terms of Service', desc: currentLanguage === 'th' ? 'เงื่อนไขการใช้บริการแอปพลิเคชัน' : 'Conditions for using the application' },
+                { title: currentLanguage === 'th' ? 'นโยบายความเป็นส่วนตัว' : 'Privacy Policy', desc: currentLanguage === 'th' ? 'การเก็บรักษาและใช้ข้อมูลส่วนบุคคล' : 'How we collect and use personal data' },
+                { title: currentLanguage === 'th' ? 'นโยบายคุกกี้' : 'Cookie Policy', desc: currentLanguage === 'th' ? 'การใช้งานคุกกี้บนเว็บไซต์' : 'How we use cookies on our website' }
+            ]
+        }
+    };
+
+    const data = content[type];
+    if (!data) return;
+
+    let bodyContent = '';
+
+    if (type === 'faq') {
+        bodyContent = data.items.map((item, i) => `
+            <div class="border-b border-gray-100 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
+                <h4 class="font-bold text-slate-900 mb-2 flex items-start gap-2">
+                    <span class="text-primary">${i + 1}.</span>
+                    ${item.q}
+                </h4>
+                <p class="text-slate-600 text-sm pl-5">${item.a}</p>
+            </div>
+        `).join('');
+    } else if (type === 'contact') {
+        bodyContent = data.items.map(item => `
+            <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                    <i class="${item.icon.includes('fab') ? item.icon : 'fas ' + item.icon} text-green-500"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-slate-500">${item.label}</p>
+                    <p class="font-bold text-slate-900">${item.value}</p>
+                </div>
+            </div>
+        `).join('');
+    } else if (type === 'terms') {
+        bodyContent = data.items.map(item => `
+            <a href="#" class="block p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                <h4 class="font-bold text-slate-900 mb-1">${item.title}</h4>
+                <p class="text-sm text-slate-500">${item.desc}</p>
+            </a>
+        `).join('');
+    }
+
+    // Create dynamic modal
+    const existingModal = document.getElementById('helpModal');
+    if (existingModal) existingModal.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'helpModal';
+    modal.className = 'fixed inset-0 z-[100]';
+    modal.innerHTML = `
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeHelpModal()"></div>
+        <div class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between" style="background: linear-gradient(135deg, ${data.color}10, ${data.color}05)">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: ${data.color}20">
+                        <i class="fas ${data.icon} text-lg" style="color: ${data.color}"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-900">${data.title}</h3>
+                </div>
+                <button onclick="closeHelpModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                    <i class="fas fa-times text-gray-500"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 space-y-3">
+                ${bodyContent}
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeHelpModal() {
+    const modal = document.getElementById('helpModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+}
+
+function logout() {
+    if (confirm(currentLanguage === 'th' ? 'คุณต้องการออกจากระบบหรือไม่?' : 'Are you sure you want to logout?')) {
+        // Clear user data
+        localStorage.removeItem('walletData');
+        localStorage.removeItem('userVouchers');
+
+        showToast(currentLanguage === 'th' ? 'ออกจากระบบสำเร็จ' : 'Logged out successfully', 'success');
+
+        // Redirect to home after a short delay
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1000);
+    }
 }

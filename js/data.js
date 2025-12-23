@@ -212,7 +212,7 @@ const packagesData = {
             '../images/sunset.png',
         ],
         price: 500,
-        currency: 'RDS',
+        currency: 'Flips',
         validUntil: '30 Apr 2024',
         rating: 4.8,
         reviews: 234,
@@ -249,14 +249,14 @@ const packagesData = {
         ],
         redeemSteps: [
             { title: 'Select Your Dates', description: 'Choose your preferred check-in and check-out dates.' },
-            { title: 'Verify Points Balance', description: 'Ensure you have enough RDS points in your wallet.' },
+            { title: 'Verify Points Balance', description: 'Ensure you have enough Flips Coins in your wallet.' },
             { title: 'Confirm Booking', description: 'Review your booking details and confirm.' },
             { title: 'Receive Voucher', description: 'Your voucher will be sent to your email instantly.' },
             { title: 'Present at Hotel', description: 'Show your QR code at the reception during check-in.' },
         ],
         redeemStepsTh: [
             { title: 'เลือกวันที่', description: 'เลือกวันที่เช็คอินและเช็คเอาท์ที่คุณต้องการ' },
-            { title: 'ตรวจสอบคะแนน', description: 'ตรวจสอบให้แน่ใจว่าคุณมีคะแนน RDS เพียงพอในกระเป๋าเงิน' },
+            { title: 'ตรวจสอบคะแนน', description: 'ตรวจสอบให้แน่ใจว่าคุณมีเหรียญ Flips เพียงพอในกระเป๋าเงิน' },
             { title: 'ยืนยันการจอง', description: 'ตรวจสอบรายละเอียดการจองและยืนยัน' },
             { title: 'รับวอเชอร์', description: 'วอเชอร์จะถูกส่งไปยังอีเมลของคุณทันที' },
             { title: 'แสดงที่โรงแรม', description: 'แสดง QR code ที่แผนกต้อนรับขณะเช็คอิน' },
@@ -271,6 +271,19 @@ const packagesData = {
 
 const defaultWalletData = {
     totalPoints: 50000,
+    movieTokens: 15,
+    gameTokens: 8,
+    movieTokenDetails: [
+        { id: 1, title: 'Dark Moon Rising', titleTh: 'จันทร์มืด', tokens: 5, image: '../images/privilege_movie_premiere.png', status: 'active', earnedDate: '2024-01-15', source: 'Investment Reward', sourceTh: 'รางวัลจากการลงทุน', description: 'Gold Tier investor reward for Dark Moon Rising film project', descriptionTh: 'รางวัลสำหรับผู้ลงทุนระดับ Gold ในโปรเจคภาพยนตร์ จันทร์มืด' },
+        { id: 2, title: 'Eternal Shadows', titleTh: 'เงามืดนิรันดร์', tokens: 4, image: '../images/privilege_screening.png', status: 'active', earnedDate: '2024-02-20', source: 'Film Production Bonus', sourceTh: 'โบนัสการผลิตหนัง', description: 'Bonus tokens from film completion milestone', descriptionTh: 'โบนัสจากการผลิตหนังสำเร็จตามเป้า' },
+        { id: 3, title: 'Bangkok Heist', titleTh: 'ปล้นกรุงเทพ', tokens: 3, image: '../images/privilege_meet_director.png', status: 'active', earnedDate: '2024-03-10', source: 'Early Bird Investment', sourceTh: 'ลงทุนช่วง Early Bird', description: 'Early investor bonus for Bangkok Heist', descriptionTh: 'โบนัสผู้ลงทุนรุ่นแรกสำหรับ ปล้นกรุงเทพ' },
+        { id: 4, title: 'The Last Dynasty', titleTh: 'ราชวงศ์สุดท้าย', tokens: 3, image: '../images/privilege_bts_vip.png', status: 'active', earnedDate: '2024-04-01', source: 'Limited Promotion', sourceTh: 'โปรโมชันพิเศษ', description: 'Special promotion tokens', descriptionTh: 'โทเค็นจากโปรโมชันพิเศษ' }
+    ],
+    gameTokenDetails: [
+        { id: 1, title: 'FULL SENSE Jersey', titleTh: 'เสื้อแข่ง FULL SENSE', tokens: 10, image: '../images/privilege_game_weapon.png', status: 'active', earnedDate: '2024-02-01', source: 'Esports Investment', sourceTh: 'การลงทุนอีสปอร์ต', description: 'Official 2024 FULL SENSE Pro Kit Jersey', descriptionTh: 'เสื้อแข่งทางการ FULL SENSE ประจำปี 2024' },
+        { id: 2, title: 'Meet & Greet Ticket', titleTh: 'บัตร Meet & Greet', tokens: 5, image: '../images/privilege_game_beta.png', status: 'active', earnedDate: '2024-03-15', source: 'Fan Support Bonus', sourceTh: 'โบนัสแฟนคลับ', description: 'Exclusive access to FULL SENSE fan meet', descriptionTh: 'สิทธิ์เข้างานแฟนมีทติ้ง FULL SENSE' },
+        { id: 3, title: 'Signed Mousepad', titleTh: 'แผ่นรองเมาส์พร้อมลายเซ็น', tokens: 3, image: '../images/privilege_game_character.png', status: 'active', earnedDate: '2024-04-05', source: 'Community Event', sourceTh: 'กิจกรรมชุมชน', description: 'Limited edition mousepad signed by the team', descriptionTh: 'แผ่นรองเมาส์รุ่นลิมิเต็ดพร้อมลายเซ็นทีม' }
+    ],
     pointsBatches: [
         { id: 1, amount: 20000, source: 'Investment Reward - Gold Tier', earnedDate: '2024-01-15', expiryDate: '2025-06-15', status: 'active' },
         { id: 2, amount: 15000, source: 'Film Production Bonus', earnedDate: '2024-02-20', expiryDate: '2025-08-20', status: 'active' },

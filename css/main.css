@@ -121,3 +121,64 @@
 .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
 }
+
+/* ============================================
+   ACCESSIBILITY - High Contrast Text
+   ============================================ */
+
+/* Improve readability for light-colored text classes */
+/* Override Tailwind's light text colors with darker alternatives */
+
+/* Make slate-400 more readable */
+.text-slate-400 {
+    color: #64748b !important;
+    /* slate-500 equivalent - darker */
+}
+
+/* Make slate-500 more readable */
+.text-slate-500 {
+    color: #475569 !important;
+    /* slate-600 equivalent - darker */
+}
+
+/* Make gray-400 more readable */
+.text-gray-400 {
+    color: #6b7280 !important;
+    /* gray-500 equivalent - darker */
+}
+
+/* Make gray-500 more readable */
+.text-gray-500 {
+    color: #4b5563 !important;
+    /* gray-600 equivalent - darker */
+}
+
+/* Improve placeholder readability */
+::placeholder {
+    color: #64748b !important;
+    opacity: 1;
+}
+
+/* Improve label text */
+label {
+    color: #475569;
+}
+
+/* Better contrast for small text */
+.text-xs,
+.text-sm {
+    font-weight: 450;
+    /* Slightly bolder for small text */
+}
+
+/* Ensure main body text is readable */
+body {
+    color: #1e293b;
+    /* slate-800 - very readable */
+}
+
+/* Better contrast for muted text in cards */
+.text-muted,
+[class*="text-white/"] {
+    opacity: 0.85;
+}
