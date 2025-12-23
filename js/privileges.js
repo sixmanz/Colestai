@@ -171,6 +171,18 @@ function renderPrivilegeCards() {
     const container = document.getElementById('privilegesGrid');
     if (!container) return;
 
+    // Show Skeleton if explicitly requested or on first load (detected by empty content?)
+    // For a smoother UX, we'll assume this function is called when we want to refresh data
+    showSkeleton('privilegesGrid', 8, '350px');
+
+    // Simulate network delay for professional feel (remove this in production if real API is fast)
+    setTimeout(() => {
+        executeRenderPrivilegeCards(container);
+    }, 600);
+}
+
+function executeRenderPrivilegeCards(container) {
+
     let filtered = getActivePackages();
 
     // First filter by main category (movie or game)

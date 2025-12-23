@@ -368,7 +368,7 @@ function renderOrdersTable() {
             </td>
             <td class="px-4 py-3">
                 <div class="font-medium text-slate-700">${title}</div>
-                <div class="text-xs text-slate-400">${o.price.toLocaleString()} RDS</div>
+                <div class="text-xs text-slate-400">${o.price.toLocaleString()} Flips</div>
             </td>
             <td class="px-4 py-3">
                 <div class="text-sm text-slate-600">${o.shippingInfo ? (o.shippingInfo.firstName + ' ' + o.shippingInfo.lastName) : 'Digital'}</div>
@@ -490,7 +490,7 @@ function savePrivilege(e) {
         titleTh: document.getElementById('editTitleTh').value,
         category: document.getElementById('editCategory').value,
         price: parseInt(document.getElementById('editPrice').value),
-        image: document.getElementById('editImage').value || '../images/logo_v4.png',
+        image: document.getElementById('editImage').value || '../images/logo_new.png',
         isPhysical: document.getElementById('editIsPhysical').checked,
         subtitle: 'New Item',
         rating: 5.0,

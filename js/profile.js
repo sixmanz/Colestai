@@ -285,8 +285,8 @@ function openHelpModal(type) {
             color: '#3b82f6',
             items: [
                 {
-                    q: currentLanguage === 'th' ? 'RDS Points คืออะไร?' : 'What are RDS Points?',
-                    a: currentLanguage === 'th' ? 'RDS Points คือคะแนนสะสมที่ใช้แลกสิทธิพิเศษต่างๆ จากการลงทุนในโปรเจค' : 'RDS Points are reward points earned from your investments that can be redeemed for exclusive privileges.'
+                    q: currentLanguage === 'th' ? 'Flips Coins คืออะไร?' : 'What are Flips Coins?',
+                    a: currentLanguage === 'th' ? 'Flips Coins คือคะแนนสะสมที่ใช้แลกสิทธิพิเศษต่างๆ จากการลงทุนในโปรเจค' : 'Flips Coins are reward points earned from your investments that can be redeemed for exclusive privileges.'
                 },
                 {
                     q: currentLanguage === 'th' ? 'Token หนังและเกมส์ต่างกันอย่างไร?' : 'What is the difference between Movie and FULL SENSE Tokens?',

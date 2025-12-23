@@ -63,7 +63,7 @@ function submitPrivilegeShipping(e) {
     closeModal('shippingModal');
 
     // Show success
-    document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} RDS สำหรับ "${title}"`;
+    document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} Flips สำหรับ "${title}"`;
     window.currentVoucherCode = voucherCode;
     window.currentVoucherName = title;
     openModal('bookingModal');
@@ -75,7 +75,7 @@ function submitPrivilegeShipping(e) {
  * Open profile modal with redeemed privileges and shipping info
  */
 function openProfile() {
-    document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' RDS';
+    document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' Flips';
     document.getElementById('profileVouchers').textContent = userVouchers.length;
 
     // Render redeemed privileges
@@ -139,7 +139,7 @@ function openProfile() {
                                 <h4 class="font-semibold truncate">${title}</h4>
                                 ${statusBadge}
                             </div>
-                            <p class="text-white/50 text-sm">${v.price.toLocaleString()} RDS</p>
+                            <p class="text-white/50 text-sm">${v.price.toLocaleString()} Flips</p>
                             <p class="text-white/40 text-xs mt-1">รหัส: ${v.code}</p>
                             ${shippingInfo}
                         </div>

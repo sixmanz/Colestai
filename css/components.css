@@ -117,3 +117,49 @@
 .tab-btn:hover {
     color: #003366;
 }
+
+/* Skeleton Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton-loading {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #f6f7f8 4%, #edeef1 25%, #f6f7f8 36%);
+    background-size: 1000px 100%;
+    color: transparent !important;
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+.skeleton-loading * {
+    opacity: 0;
+}
+
+/* Skeleton Utilities */
+.skeleton-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 4px;
+}
+
+.skeleton-card {
+    min-height: 200px;
+}
+
+.skeleton-img {
+    background-color: #eee;
+}
+
+/* Touch Feedback */
+.active-touch {
+    transform: scale(0.96);
+    opacity: 0.8;
+    transition: all 0.1s ease;
+}

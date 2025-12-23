@@ -291,3 +291,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Init Wallet Data
     initWalletData();
 });
+
+// ============================================
+// UX ENHANCEMENTS - Skeleton & Feedback
+// ============================================
+
+function showSkeleton(containerId, count = 3, height = '200px') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Save original content check? No, we assume this is called before render.
+    let skeletons = '';
+    for (let i = 0; i < count; i++) {
+        skeletons += `
+            <div class="skeleton-loading rounded-xl mb-4" style="height: ${height};"></div>
+        `;
+    }
+    container.innerHTML = skeletons;
+}
+
+function hideSkeleton(containerId) {
+    // Just clear it, actual render will overwrite
+    // Or do nothing if render overwrites innerHTML
+}
+
+// Add active state to buttons on touch
+document.addEventListener('touchstart', function (e) {
+    if (e.target.closest('button') || e.target.closest('a')) {
+        e.target.closest('button, a').classList.add('active-touch');
+    }
+}, { passive: true });
+
+document.addEventListener('touchend', function (e) {
+    if (e.target.closest('button') || e.target.closest('a')) {
+        setTimeout(() => {
+            e.target.closest('button, a').classList.remove('active-touch');
+        }, 150);
+    }
+});
