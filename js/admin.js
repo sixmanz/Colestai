@@ -256,7 +256,7 @@ function renderPrivilegesTable(items = allPrivileges) {
             <td class="px-4 py-3 text-slate-400 font-mono text-xs">#${p.id}</td>
             <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
-                    <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover bg-gray-100" onerror="this.src='../images/logo_v4.png'">
+                    <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover bg-gray-100" onerror="this.src='../images/logo_new.png'">
                     <div>
                         <div class="font-medium text-slate-700">${title}</div>
                         <div class="text-xs text-slate-400">${p.subtitle || ''}</div>

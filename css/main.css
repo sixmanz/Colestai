@@ -177,8 +177,12 @@ body {
     /* slate-800 - very readable */
 }
 
-/* Better contrast for muted text in cards */
-.text-muted,
-[class*="text-white/"] {
-    opacity: 0.85;
+/* Global Smooth Scroll & Selection */
+html {
+    scroll-behavior: smooth;
+}
+
+::selection {
+    background: #003366;
+    color: white;
 }

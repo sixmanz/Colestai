@@ -148,7 +148,7 @@ function renderWallet() {
             return `
                 <div class="bg-white/5 rounded-xl p-3 flex justify-between items-center border ${isExpiring ? 'border-yellow-500/30' : 'border-white/5'}">
                     <div>
-                        <p class="font-bold">${batch.amount.toLocaleString()} RDS</p>
+                        <p class="font-bold">${batch.amount.toLocaleString()} Flips</p>
                         <p class="text-xs text-white/50">${batch.source}</p>
                     </div>
                     <div class="text-right">
@@ -172,7 +172,7 @@ function openProfile() {
 }
 
 function renderProfile() {
-    document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' RDS';
+    document.getElementById('profileBalance').textContent = walletData.totalPoints.toLocaleString() + ' Flips';
     document.getElementById('profileVouchers').textContent = userVouchers.length;
 
     const container = document.getElementById('redeemedPrivilegesList');

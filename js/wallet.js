@@ -97,7 +97,7 @@ function renderFullTransactions() {
                     <p class="font-bold text-lg ${colorClass}">
                         ${isPositive ? '+' : ''}${parseInt(t.amount).toLocaleString()}
                     </p>
-                    <p class="text-xs text-slate-400">RDS</p>
+                    <p class="text-xs text-slate-400">Flips</p>
                 </div>
             </div>
         `;
