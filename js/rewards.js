@@ -101,30 +101,60 @@ function redeemPrivilegeWithMode(privilegeId) {
     // Store selected privilege info
     window.selectedRedeemPrivilege = privilege;
 
-    const modalImage = document.getElementById('modalRewardImage');
-    const modalTitle = document.getElementById('modalRewardTitle');
-    const modalCost = document.getElementById('modalRewardCost');
-    const modalWarning = document.getElementById('modalWarningText');
+    // Use standardized Confirm Modal
+    // 1. Image & Title
+    const imgEl = document.getElementById('confirmImage');
+    const titleEl = document.getElementById('confirmTitle');
+    if (imgEl) imgEl.src = privilege.image;
+    if (titleEl) titleEl.textContent = (typeof currentLanguage !== 'undefined' && currentLanguage === 'th') ? (privilege.titleTh || privilege.title) : privilege.title;
 
-    if (modalImage) modalImage.src = privilege.image;
-    if (modalTitle) modalTitle.textContent = privilege.titleTh || privilege.title;
+    // 2. Price & Balance Calculation
+    const priceEl = document.getElementById('confirmPrice');
+    const coinNameEl = document.getElementById('confirmCoinName');
+    const balanceAfterEl = document.getElementById('confirmBalanceAfter');
 
     if (currentPaymentMode === 'points') {
-        if (modalCost) modalCost.textContent = `ใช้ ${privilege.price.toLocaleString()} Flips Coins`;
-        if (modalWarning) modalWarning.textContent = 'Flips Coins จะถูกหักจากยอดคงเหลือทันที';
+        // POINTS MODE
+        if (priceEl) priceEl.textContent = privilege.price.toLocaleString();
+        if (coinNameEl) coinNameEl.textContent = 'Flips';
+
+        const balanceAfter = (rewardsWalletData.totalPoints || 0) - privilege.price;
+        if (balanceAfterEl) balanceAfterEl.textContent = balanceAfter.toLocaleString() + ' Flips';
+
     } else {
+        // TOKEN MODE
         const isMovie = privilege.type === 'movie';
         const tokenCost = privilege.tokenPrice || Math.ceil(privilege.price / 500);
-        const tokenType = isMovie ? 'Movie Token' : 'FULL SENSE Token';
-        if (modalCost) modalCost.textContent = `ใช้ ${tokenCost} ${tokenType}`;
-        if (modalWarning) modalWarning.textContent = `${tokenType} จะถูกหักจากยอดคงเหลือทันที`;
+        const tokenType = isMovie ? 'Movie Token' : 'Game Token';
+
+        if (priceEl) priceEl.textContent = tokenCost.toLocaleString();
+        if (coinNameEl) coinNameEl.textContent = tokenType;
+
+        const currentTokens = isMovie ? (rewardsWalletData.movieTokens || 0) : (rewardsWalletData.gameTokens || 0);
+        const balanceAfter = currentTokens - tokenCost;
+        if (balanceAfterEl) balanceAfterEl.textContent = balanceAfter.toLocaleString() + ' ' + tokenType;
     }
 
-    document.getElementById('redeemModal').classList.remove('hidden');
+    // 3. Setup Confirm Button
+    const confirmBtn = document.getElementById('confirmBtn');
+    if (confirmBtn) {
+        confirmBtn.onclick = confirmRedeem;
+    }
+
+    // Show Modal
+    if (typeof openModal === 'function') {
+        openModal('confirmRedeemModal');
+    } else {
+        document.getElementById('confirmRedeemModal').classList.remove('hidden');
+    }
 }
 
 function closeRedeemModal() {
-    document.getElementById('redeemModal').classList.add('hidden');
+    if (typeof closeModal === 'function') {
+        closeModal('confirmRedeemModal');
+    } else {
+        document.getElementById('confirmRedeemModal').classList.add('hidden');
+    }
     window.selectedRedeemPrivilege = null;
 }
 
@@ -172,12 +202,30 @@ function confirmRedeem() {
     }
 
     // Add to redeemed list
-    const redeemed = JSON.parse(localStorage.getItem('redeemedRewards') || '[]');
-    redeemed.push({
+    const voucherCode = 'PVL-' + Date.now().toString(36).toUpperCase();
+    const title = (typeof currentLanguage !== 'undefined' && currentLanguage === 'th') ? (privilege.titleTh || privilege.title) : privilege.title;
+
+    // Create detailed voucher object compatible with other files
+    const newVoucher = {
         ...privilege,
+        code: voucherCode,
         paymentMode: currentPaymentMode,
-        redeemedAt: new Date().toISOString()
-    });
+        redeemedAt: new Date().toISOString(),
+        bookedAt: new Date().toISOString(), // Standardize
+        used: false,
+        type: 'privilege',
+        title: privilege.title,
+        titleTh: privilege.titleTh
+    };
+
+    // Update global userVouchers if available
+    if (typeof userVouchers !== 'undefined') {
+        userVouchers.push(newVoucher);
+        localStorage.setItem('userVouchers', JSON.stringify(userVouchers));
+    }
+
+    const redeemed = JSON.parse(localStorage.getItem('redeemedRewards') || '[]');
+    redeemed.push(newVoucher);
     localStorage.setItem('redeemedRewards', JSON.stringify(redeemed));
 
     closeRedeemModal();
@@ -187,10 +235,47 @@ function confirmRedeem() {
     if (typeof renderPrivilegeCards === 'function') {
         renderPrivilegeCards();
     }
+    if (typeof updatePointsDisplay === 'function') {
+        updatePointsDisplay();
+    }
 
-    // Show success modal
-    const successModal = document.getElementById('rewardSuccessModal');
-    if (successModal) successModal.classList.remove('hidden');
+    // Show SUCCESS using Standard Booking Modal
+    const msgEl = document.getElementById('bookingMessage');
+    if (msgEl) {
+        if (currentPaymentMode === 'points') {
+            msgEl.textContent = `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} Flips สำหรับ "${title}"`;
+        } else {
+            msgEl.textContent = `สำเร็จ! แลกรับ "${title}" ด้วย Token แล้ว`;
+        }
+    }
+
+    // Setup Success Modal Buttons (Digital vs Physical)
+    if (privilege.isPhysical) {
+        // Physical: Hide QR, Show Shipping Message
+        document.getElementById('successQrBtn').classList.add('hidden');
+        document.getElementById('successShippingInfo').classList.remove('hidden');
+    } else {
+        // Digital: Show QR, Hide Shipping Message
+        document.getElementById('successQrBtn').classList.remove('hidden');
+        document.getElementById('successShippingInfo').classList.add('hidden');
+
+        // Setup QR Logic
+        window.currentVoucherCode = voucherCode;
+        window.currentVoucherName = title;
+    }
+
+    if (typeof openModal === 'function') {
+        openModal('bookingModal');
+    } else {
+        document.getElementById('bookingModal').classList.remove('hidden');
+    }
+
+    // Confetti!
+    if (typeof confetti === 'function') {
+        confetti({
+            origin: { x: 0.5, y: 0.6 }
+        });
+    }
 }
 
 function closeRewardSuccessModal() {

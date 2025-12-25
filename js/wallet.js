@@ -17,31 +17,148 @@ function initWalletPage() {
 }
 
 function renderWalletPage() {
-    // Render Points Hero
+    // Get all wallet data
     const totalPoints = walletData.totalPoints || 0;
+    const tbfCoins = walletData.tbfCoins || 0;
+    const teamCoins = walletData.teamCoins || { phoenix: 0, shadow: 0, thunder: 0, dragon: 0 };
+    const movieTokens = walletData.movieTokens || 0;
+    const gameTokens = walletData.gameTokens || 0;
+    const movieTokenDetails = walletData.movieTokenDetails || [];
+    const gameTokenDetails = walletData.gameTokenDetails || [];
+    const pointsBatches = walletData.pointsBatches || [];
 
-    // Animate Points
+    // Calculate totals
+    const totalTeamCoins = (teamCoins.phoenix || 0) + (teamCoins.shadow || 0) + (teamCoins.thunder || 0) + (teamCoins.dragon || 0);
+    const totalAllCoins = totalPoints + tbfCoins + totalTeamCoins;
+    const totalAllTokens = movieTokens + gameTokens;
+
+    // Calculate expiring coins
+    let expiringCoins = 0;
+    pointsBatches.forEach(batch => {
+        if (batch.status === 'expiring_soon') {
+            expiringCoins += batch.amount;
+        }
+    });
+
+    // Calculate earned this month (assuming transactions have dates)
+    let earnedThisMonth = 0;
+    const now = new Date();
+    const thisMonth = now.getMonth();
+    const thisYear = now.getFullYear();
+    (walletData.transactions || []).forEach(t => {
+        const tDate = new Date(t.date);
+        if (tDate.getMonth() === thisMonth && tDate.getFullYear() === thisYear && parseInt(t.amount) > 0) {
+            earnedThisMonth += parseInt(t.amount);
+        }
+    });
+
+    // === Update Overview Stats ===
+    const totalAllCoinsEl = document.getElementById('totalAllCoins');
+    if (totalAllCoinsEl) totalAllCoinsEl.textContent = totalAllCoins.toLocaleString();
+
+    const totalAllTokensEl = document.getElementById('totalAllTokens');
+    if (totalAllTokensEl) totalAllTokensEl.textContent = totalAllTokens.toLocaleString();
+
+    const expiringCoinsEl = document.getElementById('expiringCoins');
+    if (expiringCoinsEl) expiringCoinsEl.textContent = expiringCoins.toLocaleString();
+
+    const recentSpendingEl = document.getElementById('recentSpending');
+    if (recentSpendingEl) {
+        // Calculate recent spending (last 30 days)
+        let recentSpending = 0;
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        (walletData.transactions || []).forEach(t => {
+            const tDate = new Date(t.date);
+            if (tDate >= thirtyDaysAgo && parseInt(t.amount) < 0) {
+                recentSpending += Math.abs(parseInt(t.amount));
+            }
+        });
+        recentSpendingEl.textContent = recentSpending.toLocaleString();
+    }
+
+    // === Flips Coins Main Balance ===
     const heroPointsEl = document.getElementById('walletTotalPointsHero');
-    if (heroPointsEl) {
-        heroPointsEl.textContent = totalPoints.toLocaleString();
-    }
+    if (heroPointsEl) heroPointsEl.textContent = totalPoints.toLocaleString();
 
-    // Render Token Balances
+    const expiringFlipsEl = document.getElementById('expiringFlips');
+    if (expiringFlipsEl) expiringFlipsEl.textContent = expiringCoins.toLocaleString() + ' Flips';
+
+    const earnedThisMonthEl = document.getElementById('earnedThisMonth');
+    if (earnedThisMonthEl) earnedThisMonthEl.textContent = '+' + earnedThisMonth.toLocaleString() + ' Flips';
+
+    // === TBF Coins ===
+    const tbfCoinsBalanceEl = document.getElementById('tbfCoinsBalance');
+    if (tbfCoinsBalanceEl) tbfCoinsBalanceEl.textContent = tbfCoins.toLocaleString();
+
+    // === Team Coins ===
+    const phoenixEl = document.getElementById('phoenixCoins');
+    if (phoenixEl) phoenixEl.textContent = (teamCoins.phoenix || 0).toLocaleString();
+
+    const shadowEl = document.getElementById('shadowCoins');
+    if (shadowEl) shadowEl.textContent = (teamCoins.shadow || 0).toLocaleString();
+
+    const thunderEl = document.getElementById('thunderCoins');
+    if (thunderEl) thunderEl.textContent = (teamCoins.thunder || 0).toLocaleString();
+
+    const dragonEl = document.getElementById('dragonCoins');
+    if (dragonEl) dragonEl.textContent = (teamCoins.dragon || 0).toLocaleString();
+
+    // === Token Balances ===
     const movieTokenEl = document.getElementById('movieTokenBalance');
-    if (movieTokenEl) {
-        movieTokenEl.textContent = (walletData.movieTokens || 0).toLocaleString();
-    }
+    if (movieTokenEl) movieTokenEl.textContent = movieTokens.toLocaleString();
 
     const gameTokenEl = document.getElementById('gameTokenBalance');
-    if (gameTokenEl) {
-        gameTokenEl.textContent = (walletData.gameTokens || 0).toLocaleString();
-    }
+    if (gameTokenEl) gameTokenEl.textContent = gameTokens.toLocaleString();
+
+    // Token item counts
+    const movieItemCountEl = document.getElementById('movieItemCount');
+    if (movieItemCountEl) movieItemCountEl.textContent = movieTokenDetails.length;
+
+    const gameItemCountEl = document.getElementById('gameItemCount');
+    if (gameItemCountEl) gameItemCountEl.textContent = gameTokenDetails.length;
+
+    // === Render Summary Table ===
+    renderCoinsSummaryTable(totalPoints, tbfCoins, teamCoins, movieTokens, gameTokens, expiringCoins);
 
     // Also update header points
     updatePointsDisplay();
 
     // Render Transactions
     renderFullTransactions();
+}
+
+function renderCoinsSummaryTable(totalPoints, tbfCoins, teamCoins, movieTokens, gameTokens, expiringCoins) {
+    const table = document.getElementById('coinsSummaryTable');
+    if (!table) return;
+
+    const rows = [
+        { name: 'Flips Coins', category: 'FLIPS ID', amount: totalPoints, unit: 'Flips', status: expiringCoins > 0 ? `${expiringCoins.toLocaleString()} หมดอายุเร็วๆ นี้` : 'ปกติ', statusClass: expiringCoins > 0 ? 'text-amber-500' : 'text-green-500' },
+        { name: 'TBF Coins', category: 'TBF', amount: tbfCoins, unit: 'TBF', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'Phoenix Team Coins', category: 'CTRL G', amount: teamCoins.phoenix || 0, unit: 'Coins', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'Shadow Team Coins', category: 'CTRL G', amount: teamCoins.shadow || 0, unit: 'Coins', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'Thunder Team Coins', category: 'CTRL G', amount: teamCoins.thunder || 0, unit: 'Coins', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'Dragon Team Coins', category: 'CTRL G', amount: teamCoins.dragon || 0, unit: 'Coins', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'Movie Token', category: 'Colestai', amount: movieTokens, unit: 'Token', status: 'ปกติ', statusClass: 'text-green-500' },
+        { name: 'FULL SENSE Token', category: 'CTRL G', amount: gameTokens, unit: 'Token', status: 'ปกติ', statusClass: 'text-green-500' },
+    ];
+
+    table.innerHTML = rows.map(row => `
+        <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+            <td class="py-3 px-4">
+                <span class="font-medium text-slate-700">${row.name}</span>
+            </td>
+            <td class="py-3 px-4 text-center">
+                <span class="inline-block px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-600">${row.category}</span>
+            </td>
+            <td class="py-3 px-4 text-right">
+                <span class="font-bold text-slate-900">${row.amount.toLocaleString()}</span>
+                <span class="text-xs text-slate-400 ml-1">${row.unit}</span>
+            </td>
+            <td class="py-3 px-4 text-right">
+                <span class="text-xs font-medium ${row.statusClass}">${row.status}</span>
+            </td>
+        </tr>
+    `).join('');
 }
 
 

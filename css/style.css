@@ -5,6 +5,15 @@
     box-sizing: border-box;
 }
 
+/* ===== FONT AWESOME ICON FIX ===== */
+/* Ensure Font Awesome solid icons always use correct font-weight */
+.fas,
+.fa-solid,
+i[class*="fa-"] {
+    font-weight: 900 !important;
+    font-family: "Font Awesome 6 Free" !important;
+}
+
 :root {
     /* ===== MINIMAL PALETTE - TWO COLORS ONLY ===== */
     /* Primary: Deep Navy Blue */
@@ -53,6 +62,10 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 51, 102, 0.1), 0 4px 6px -4px rgba(0, 51, 102, 0.05);
     --shadow-primary: 0 4px 20px rgba(0, 51, 102, 0.15);
     --shadow-secondary: 0 4px 20px rgba(86, 196, 232, 0.2);
+    /* 3D Deep Shadow */
+    --shadow-3d:
+        0 20px 50px -12px rgba(0, 51, 102, 0.25),
+        0 10px 20px -8px rgba(0, 0, 0, 0.1);
 
     /* Typography */
     --font-primary: 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -64,7 +77,8 @@
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
+    --spacing-2xl: 5rem;
+    --spacing-3xl: 8rem;
 
     /* Border Radius */
     --radius-sm: 8px;
@@ -75,8 +89,9 @@
 
     /* Transitions */
     --transition-fast: 0.15s ease;
-    --transition-normal: 0.25s ease;
-    --transition-slow: 0.35s ease;
+    --transition-normal: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-slow: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 body {
@@ -768,27 +783,26 @@ p {
 }
 
 /* --- Premium Glass Card Upgrade --- */
+/* --- Premium Glass Card Upgrade (3D Ready) --- */
 .glass-card-premium {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        0 10px 30px -10px rgba(0, 51, 102, 0.1),
         inset 0 0 20px rgba(255, 255, 255, 0.5);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
 }
 
 .glass-card-premium:hover {
-    transform: translateY(-5px) scale(1.01);
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04),
-        0 0 15px rgba(86, 196, 232, 0.3);
-    /* Soft Glow */
-    border-color: rgba(255, 255, 255, 1);
+    transform: perspective(1000px) translateY(-10px) scale(1.02);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow-3d), inset 0 0 20px rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.9);
+    z-index: 10;
 }
 
 /* --- 3D Tilt Container --- */
@@ -879,4 +893,296 @@ p {
 .nav-link:hover::after,
 .nav-link.active::after {
     width: 100%;
+}
+
+/* ============================================ */
+/* ===== ENHANCED FILTER & CARD EFFECTS ===== */
+/* ============================================ */
+
+/* --- Category Filter Buttons --- */
+.category-filter-btn,
+#categoriesGrid button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    font-size: 0.875rem;
+}
+
+.category-filter-btn:hover,
+#categoriesGrid button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 51, 102, 0.12);
+}
+
+/* Sliding background shine effect */
+#categoriesGrid button::before,
+.privilege-filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    transition: left 0.5s ease;
+}
+
+#categoriesGrid button:hover::before,
+.privilege-filter-btn:hover::before {
+    left: 100%;
+}
+
+/* --- Privilege Card Hover Glow --- */
+.privilege-card {
+    position: relative;
+}
+
+.privilege-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    background: linear-gradient(135deg,
+            rgba(86, 196, 232, 0.5),
+            rgba(0, 51, 102, 0.3),
+            rgba(86, 196, 232, 0.5));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+    filter: blur(8px);
+}
+
+.privilege-card:hover::before {
+    opacity: 1;
+}
+
+/* --- Staggered Card Animation Enhancement --- */
+.privilege-card.reveal {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+}
+
+.privilege-card.reveal.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Main Tab Smooth Transitions --- */
+.main-tab {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.main-tab:hover::after {
+    width: 60%;
+}
+
+.main-tab.active::after {
+    width: 0;
+}
+
+/* --- Smooth Scroll Behavior --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Mobile Touch Feedback --- */
+@media (max-width: 768px) {
+    .glass-card-premium:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    #categoriesGrid button:active {
+        transform: scale(0.95);
+    }
+}
+
+/* --- Modal Animations --- */
+@keyframes scale-up {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scale-up {
+    animation: scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* ========================================= */
+/* ===== 3D EFFECTS & UTILITIES ===== */
+/* ========================================= */
+
+.perspective-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* --- Floating Animations --- */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-15px) rotate(1deg);
+    }
+}
+
+@keyframes float-reverse {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-1deg);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float-reverse 7s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+/* --- Generic Reveal Animation --- */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ========================================= */
+/* ===== PREMIUM UI COMPONENTS ===== */
+/* ========================================= */
+
+/* --- Modern Typography --- */
+h1,
+h2,
+h3,
+h4,
+.font-display {
+    letter-spacing: -0.025em;
+    /* Tight, premium feel */
+}
+
+/* --- Premium Buttons --- */
+.btn-premium {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    overflow: hidden;
+    box-shadow:
+        0 4px 12px rgba(0, 51, 102, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-dark));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(0, 51, 102, 0.4),
+        0 0 15px rgba(86, 196, 232, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-premium:hover::before {
+    opacity: 1;
+}
+
+/* --- Floating Input --- */
+.input-floating {
+    border: 1px solid transparent;
+    background: white;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.input-floating:focus {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.1),
+        0 0 0 4px rgba(86, 196, 232, 0.15);
+    /* Soft ring */
+    border-color: rgba(86, 196, 232, 0.5);
+}
+
+/* --- Modal Polish --- */
+.modal-overlay {
+    backdrop-filter: blur(8px);
+    /* Stronger blur for focus */
+    background: rgba(0, 0, 0, 0.4);
+    /* Darker overlay */
 }

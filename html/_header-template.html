@@ -1,0 +1,75 @@
+<!-- Standard Header Template for FLIPS ID App -->
+<!-- Copy this header to all pages and update active states as needed -->
+
+<!-- Required CSS in <head>: -->
+<!-- <link rel="stylesheet" href="../css/style.css"> -->
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2 group flex-shrink-0">
+                <img src="../images/logo_new.png" alt="Flips id"
+                    class="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300">
+            </a>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link text-gray-600 hover:text-primary font-medium transition-colors"
+                    data-i18n="nav_privilege">สิทธิพิเศษ</a>
+                <a href="wallet.html" class="nav-link text-gray-600 hover:text-primary font-medium transition-colors"
+                    data-i18n="nav_wallet">กระเป๋าเงิน</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- Notification Bell -->
+                <div class="relative">
+                    <button onclick="toggleNotifications()"
+                        class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-bell text-gray-500 text-sm"></i>
+                        <span
+                            class="notif-badge hidden absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full text-[9px] flex items-center justify-center font-bold text-white">0</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div id="notificationModal"
+                        class="hidden absolute top-12 right-0 w-80 md:w-96 bg-white/95 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl z-[60] overflow-hidden transform origin-top-right transition-all">
+                        <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                            <h3 class="font-bold flex items-center gap-2">
+                                <i class="fas fa-bell text-blue-primary"></i>
+                                การแจ้งเตือน
+                            </h3>
+                            <button onclick="markAllAsRead()"
+                                class="text-xs text-slate-500 hover:text-primary transition-colors">อ่านทั้งหมด</button>
+                        </div>
+                        <div id="notificationList" class="max-h-[60vh] overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                            <!-- Items injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Switcher -->
+                <button onclick="toggleLanguage()"
+                    class="flex items-center gap-1.5 px-3 py-2 rounded-full border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all duration-300 text-sm font-medium">
+                    <i class="fas fa-globe text-blue-primary text-sm"></i>
+                    <span id="currentLang" class="text-gray-600">TH</span>
+                </button>
+
+                <!-- Wallet Button -->
+                <a href="wallet.html"
+                    class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white shadow-md hover:shadow-lg transition-shadow">
+                    <img src="../images/flips_token.png" alt="Coins" class="w-5 h-5 object-contain">
+                    <span class="text-sm font-bold" id="headerPoints">0</span>
+                    <span id="headerCoinLabel" class="text-xs opacity-80">Flips</span>
+                </a>
+
+                <!-- Profile Button -->
+                <a href="profile.html"
+                    class="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-200 hover:border-primary transition-colors">
+                    <img src="../images/profile_v1.jpg" alt="Profile" class="w-full h-full object-cover">
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>

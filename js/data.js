@@ -271,6 +271,13 @@ const packagesData = {
 
 const defaultWalletData = {
     totalPoints: 50000,
+    tbfCoins: 1500,
+    teamCoins: {
+        phoenix: 2500,
+        shadow: 1800,
+        thunder: 3200,
+        dragon: 1500
+    },
     movieTokens: 15,
     gameTokens: 8,
     movieTokenDetails: [

@@ -108,6 +108,20 @@ function renderRewards() {
     }
 }
 
+// Helper function to normalize image paths
+function normalizeImagePath(path) {
+    if (!path) return '../images/privilege_mystery.png';
+
+    // If path doesn't start with '../', fix it
+    if (path.startsWith('images/')) {
+        return '../' + path;
+    }
+    if (!path.startsWith('../') && !path.startsWith('http')) {
+        return '../images/' + path.split('/').pop();
+    }
+    return path;
+}
+
 function createDigitalCard(item) {
     // Handle bilingual title
     const title = currentLanguage === 'th' && item.titleTh ? item.titleTh : item.title;
@@ -116,25 +130,78 @@ function createDigitalCard(item) {
     // Find category for icon/color
     const category = privilegeCategories.find(c => c.id === item.category) || privilegeCategories[0];
 
+    // Normalize image path
+    const imagePath = normalizeImagePath(item.image);
+
+    // Format dates
+    const bookedDate = new Date(item.bookedAt);
+    const dateStr = bookedDate.toLocaleDateString(currentLanguage === 'th' ? 'th-TH' : 'en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+    const timeStr = bookedDate.toLocaleTimeString(currentLanguage === 'th' ? 'th-TH' : 'en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    // Usage status
+    const isUsed = item.used || false;
+    const statusBadge = isUsed
+        ? `<span class="px-2 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-medium"><i class="fas fa-check-circle mr-1"></i>ใช้งานแล้ว</span>`
+        : `<span class="px-2 py-1 rounded-full bg-green-100 text-green-600 text-xs font-medium"><i class="fas fa-clock mr-1"></i>พร้อมใช้งาน</span>`;
+
+    // Price display
+    const priceDisplay = item.price ? item.price.toLocaleString() + ' Flips' : '-';
+
     return `
-        <div class="glass-card rounded-2xl overflow-hidden group hover:border-primary/50 transition-all cursor-pointer flex flex-col"
-             onclick="openQRModal('${item.code}', '${title.replace(/'/g, "\\'")}', '${item.bookedAt}')">
-            <div class="h-40 relative overflow-hidden">
-                <img src="${item.image || '../images/privilege_default.jpg'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all cursor-pointer flex flex-col group"
+             onclick="openQRModal('${item.code}', '${title.replace(/'/g, "\\'")}', '${item.bookedAt}', ${JSON.stringify(item).replace(/"/g, '&quot;')})">
+            
+            <!-- Image Section -->
+            <div class="h-36 relative overflow-hidden">
+                <img src="${imagePath}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../images/privilege_mystery.png'">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                 
-                <div class="absolute top-3 left-3 px-2 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-medium text-white">
-                    ${categoryLabel}
+                <!-- Category Badge -->
+                <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium text-slate-700 flex items-center gap-1.5">
+                    <i class="${category?.icon || 'fas fa-gift'} text-blue-primary text-xs"></i>
+                    ${categoryLabel || 'สิทธิพิเศษ'}
+                </div>
+
+                <!-- Status Badge -->
+                <div class="absolute top-3 right-3">
+                    ${statusBadge}
                 </div>
             </div>
+            
+            <!-- Content Section -->
             <div class="p-5 flex-grow flex flex-col">
-                <h4 class="font-bold text-lg mb-1 leading-tight group-hover:text-blue-primary transition-colors">${title}</h4>
-                <p class="text-white/40 text-xs mb-4">Code: ${item.code}</p>
+                <h4 class="font-bold text-lg mb-2 leading-tight text-slate-800 group-hover:text-blue-primary transition-colors line-clamp-2">${title}</h4>
                 
+                <!-- Details Grid -->
+                <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                    <div class="bg-gray-50 rounded-lg p-2.5">
+                        <p class="text-slate-400 text-xs mb-0.5">ใช้ไป</p>
+                        <p class="font-semibold text-slate-700">${priceDisplay}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-2.5">
+                        <p class="text-slate-400 text-xs mb-0.5">รหัสวอเชอร์</p>
+                        <p class="font-mono text-xs font-semibold text-blue-primary">${item.code}</p>
+                    </div>
+                </div>
+
+                <!-- Redemption Date -->
+                <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                    <i class="fas fa-calendar-alt text-blue-primary"></i>
+                    <span>แลกเมื่อ ${dateStr} เวลา ${timeStr}</span>
+                </div>
+                
+                <!-- QR Button -->
                 <div class="mt-auto">
-                    <button class="w-full py-2 rounded-lg bg-white/5 group-hover:bg-blue-primary/20 text-white/70 group-hover:text-white text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                    <button class="w-full py-3 rounded-xl bg-gradient-to-r from-blue-primary to-secondary text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 hover:shadow-lg hover:scale-[1.02]">
                         <i class="fas fa-qrcode"></i>
-                        <span data-i18n="btn_view_qr">${currentLanguage === 'th' ? 'ดู QR Code' : 'View QR Code'}</span>
+                        <span>${currentLanguage === 'th' ? 'แสดง QR Code' : 'Show QR Code'}</span>
                     </button>
                 </div>
             </div>
@@ -144,56 +211,192 @@ function createDigitalCard(item) {
 
 function createPhysicalRow(item) {
     const title = currentLanguage === 'th' && item.titleTh ? item.titleTh : item.title;
-    const date = new Date(item.bookedAt).toLocaleDateString(currentLanguage === 'th' ? 'th-TH' : 'en-US');
+    const orderDate = new Date(item.bookedAt);
+    const orderDateStr = orderDate.toLocaleDateString(currentLanguage === 'th' ? 'th-TH' : 'en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+    });
+    const orderTimeStr = orderDate.toLocaleTimeString(currentLanguage === 'th' ? 'th-TH' : 'en-US', {
+        hour: '2-digit', minute: '2-digit'
+    });
 
-    // Mock Tracking Status based on time derived from hash of code or random
-    // For demo: Always 'Shipped' or 'Processing'
-    const status = 'shipped'; // Mock
-    const statusLabel = currentLanguage === 'th' ? 'อยู่ระหว่างจัดส่ง' : 'Shipped';
+    // Mock shipping data based on order date
+    const daysSinceOrder = Math.floor((Date.now() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
+
+    // Determine status based on days since order
+    let status, statusLabel, statusColor, statusBg, progress;
+    let shippedDate = null;
+    let deliveredDate = null;
+    let trackingNumber = 'TH' + Math.random().toString(36).substr(2, 12).toUpperCase();
+    let courier = 'Kerry Express';
+    let currentLocation = '';
+
+    if (daysSinceOrder >= 5) {
+        status = 'delivered';
+        statusLabel = 'จัดส่งสำเร็จ';
+        statusColor = 'text-green-600';
+        statusBg = 'bg-green-100';
+        progress = 100;
+        shippedDate = new Date(orderDate.getTime() + 2 * 24 * 60 * 60 * 1000);
+        deliveredDate = new Date(orderDate.getTime() + 5 * 24 * 60 * 60 * 1000);
+        currentLocation = 'ส่งถึงผู้รับเรียบร้อย';
+    } else if (daysSinceOrder >= 2) {
+        status = 'shipped';
+        statusLabel = 'กำลังจัดส่ง';
+        statusColor = 'text-blue-600';
+        statusBg = 'bg-blue-100';
+        progress = 66;
+        shippedDate = new Date(orderDate.getTime() + 2 * 24 * 60 * 60 * 1000);
+        currentLocation = 'ศูนย์กระจายสินค้า กรุงเทพฯ';
+    } else if (daysSinceOrder >= 1) {
+        status = 'processing';
+        statusLabel = 'กำลังเตรียมจัดส่ง';
+        statusColor = 'text-amber-600';
+        statusBg = 'bg-amber-100';
+        progress = 33;
+        currentLocation = 'คลังสินค้า FLIPS';
+    } else {
+        status = 'confirmed';
+        statusLabel = 'ยืนยันออเดอร์แล้ว';
+        statusColor = 'text-slate-600';
+        statusBg = 'bg-slate-100';
+        progress = 10;
+        currentLocation = 'รอดำเนินการ';
+    }
+
+    const shippedDateStr = shippedDate ? shippedDate.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }) : '-';
+    const deliveredDateStr = deliveredDate ? deliveredDate.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }) : 'กำลังจัดส่ง';
+
+    // Price display
+    const priceDisplay = item.price ? item.price.toLocaleString() + ' Flips' : '-';
+
+    // Normalize image path
+    const imagePath = normalizeImagePath(item.image);
 
     return `
-        <div class="glass-card rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all">
-            <div class="flex flex-col md:flex-row gap-6">
-                <!-- Image -->
-                <div class="w-full md:w-32 h-32 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
-                    <img src="${item.image || '../images/privilege_default.jpg'}" class="w-full h-full object-cover">
+        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all">
+            <!-- Header -->
+            <div class="p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                <div class="flex flex-wrap justify-between items-center gap-3">
+                    <div>
+                        <p class="text-xs text-slate-400 mb-1">หมายเลขคำสั่งซื้อ</p>
+                        <p class="font-mono font-bold text-slate-800">#${item.code}</p>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-full ${statusBg} ${statusColor} text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fas ${status === 'delivered' ? 'fa-check-circle' : status === 'shipped' ? 'fa-truck' : 'fa-clock'}"></i>
+                        ${statusLabel}
+                    </span>
                 </div>
-                
-                <!-- Info -->
-                <div class="flex-grow">
-                    <div class="flex flex-wrap justify-between items-start mb-2">
-                        <div>
-                            <h4 class="font-bold text-xl mb-1">${title}</h4>
-                            <p class="text-white/50 text-sm">Order ID: #${item.code}</p>
-                        </div>
-                        <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium border border-blue-500/20">
-                            ${statusLabel}
-                        </span>
+            </div>
+
+            <!-- Main Content -->
+            <div class="p-5">
+                <div class="flex flex-col md:flex-row gap-5">
+                    <!-- Image -->
+                    <div class="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+                        <img src="${imagePath}" class="w-full h-full object-cover" onerror="this.src='../images/privilege_mystery.png'">
                     </div>
                     
-                    <p class="text-white/60 text-sm mb-6">${currentLanguage === 'th' ? 'สั่งเมื่อ' : 'Ordered on'}: ${date}</p>
-                    
-                    <!-- Tracking Stepper -->
-                    <div class="relative">
-                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-white/10 rounded-full"></div>
-                        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-2/3 h-1 bg-primary rounded-full"></div>
+                    <!-- Product Info -->
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg text-slate-800 mb-2">${title}</h4>
                         
-                        <div class="relative flex justify-between text-xs font-medium">
-                            <div class="flex flex-col items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-blue-primary ring-4 ring-black"></div>
-                                <span class="text-blue-primary">Order Placed</span>
+                        <!-- Info Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-4">
+                            <div>
+                                <p class="text-slate-400 text-xs mb-0.5">ใช้ไป</p>
+                                <p class="font-semibold text-slate-700">${priceDisplay}</p>
                             </div>
-                            <div class="flex flex-col items-center gap-2">
-                                <div class="w-4 h-4 rounded-full bg-blue-primary ring-4 ring-black"></div>
-                                <span class="text-blue-primary">${statusLabel}</span>
+                            <div>
+                                <p class="text-slate-400 text-xs mb-0.5">สั่งซื้อเมื่อ</p>
+                                <p class="font-semibold text-slate-700">${orderDateStr}</p>
                             </div>
-                            <div class="flex flex-col items-center gap-2 opacity-50">
-                                <div class="w-4 h-4 rounded-full bg-white/20 ring-4 ring-black"></div>
-                                <span>Delivered</span>
+                            <div>
+                                <p class="text-slate-400 text-xs mb-0.5">จัดส่งโดย</p>
+                                <p class="font-semibold text-slate-700">${courier}</p>
                             </div>
+                            <div>
+                                <p class="text-slate-400 text-xs mb-0.5">เลขพัสดุ</p>
+                                <p class="font-mono text-xs font-semibold text-blue-primary">${trackingNumber}</p>
+                            </div>
+                        </div>
+
+                        <!-- Current Location -->
+                        <div class="flex items-center gap-2 text-sm bg-blue-50 rounded-lg px-3 py-2 mb-4">
+                            <i class="fas fa-map-marker-alt text-blue-primary"></i>
+                            <span class="text-slate-600">สถานะล่าสุด: <strong class="text-slate-800">${currentLocation}</strong></span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Tracking Timeline -->
+                <div class="mt-5 pt-5 border-t border-gray-100">
+                    <p class="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
+                        <i class="fas fa-route text-blue-primary"></i>
+                        ติดตามสถานะการจัดส่ง
+                    </p>
+                    
+                    <!-- Progress Bar -->
+                    <div class="relative mb-6">
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-2 bg-gradient-to-r from-blue-primary to-secondary rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Steps -->
+                    <div class="flex justify-between text-center">
+                        <!-- Step 1: Order Confirmed -->
+                        <div class="flex flex-col items-center w-1/4">
+                            <div class="w-10 h-10 rounded-full ${progress >= 10 ? 'bg-blue-primary' : 'bg-gray-200'} flex items-center justify-center mb-2">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <p class="text-xs font-medium ${progress >= 10 ? 'text-slate-800' : 'text-slate-400'}">ยืนยันแล้ว</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${orderDateStr}</p>
+                        </div>
+                        
+                        <!-- Step 2: Processing -->
+                        <div class="flex flex-col items-center w-1/4">
+                            <div class="w-10 h-10 rounded-full ${progress >= 33 ? 'bg-blue-primary' : 'bg-gray-200'} flex items-center justify-center mb-2">
+                                <i class="fas fa-box ${progress >= 33 ? 'text-white' : 'text-gray-400'} text-sm"></i>
+                            </div>
+                            <p class="text-xs font-medium ${progress >= 33 ? 'text-slate-800' : 'text-slate-400'}">เตรียมจัดส่ง</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${progress >= 33 ? 'ดำเนินการแล้ว' : 'รอดำเนินการ'}</p>
+                        </div>
+                        
+                        <!-- Step 3: Shipped -->
+                        <div class="flex flex-col items-center w-1/4">
+                            <div class="w-10 h-10 rounded-full ${progress >= 66 ? 'bg-blue-primary' : 'bg-gray-200'} flex items-center justify-center mb-2">
+                                <i class="fas fa-truck ${progress >= 66 ? 'text-white' : 'text-gray-400'} text-sm"></i>
+                            </div>
+                            <p class="text-xs font-medium ${progress >= 66 ? 'text-slate-800' : 'text-slate-400'}">กำลังจัดส่ง</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${shippedDateStr}</p>
+                        </div>
+                        
+                        <!-- Step 4: Delivered -->
+                        <div class="flex flex-col items-center w-1/4">
+                            <div class="w-10 h-10 rounded-full ${progress >= 100 ? 'bg-green-500' : 'bg-gray-200'} flex items-center justify-center mb-2">
+                                <i class="fas fa-home ${progress >= 100 ? 'text-white' : 'text-gray-400'} text-sm"></i>
+                            </div>
+                            <p class="text-xs font-medium ${progress >= 100 ? 'text-green-600' : 'text-slate-400'}">จัดส่งสำเร็จ</p>
+                            <p class="text-[10px] text-slate-400 mt-0.5">${deliveredDateStr}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Section (for delivered/shipped items) -->
+                ${status === 'shipped' || status === 'delivered' ? `
+                <div class="mt-5 pt-5 border-t border-gray-100">
+                    <p class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                        <i class="fas fa-map-pin text-blue-primary"></i>
+                        ที่อยู่จัดส่ง
+                    </p>
+                    <div class="bg-gray-50 rounded-xl p-4 text-sm text-slate-600">
+                        <p class="font-medium text-slate-800 mb-1">คุณ FLIPS ID User</p>
+                        <p>123/45 ถนนสุขุมวิท แขวงคลองตัน</p>
+                        <p>เขตคลองเตย กรุงเทพมหานคร 10110</p>
+                        <p class="mt-2 text-slate-500"><i class="fas fa-phone text-xs mr-1"></i> 081-234-5678</p>
+                    </div>
+                </div>
+                ` : ''}
             </div>
         </div>
     `;

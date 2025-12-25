@@ -62,11 +62,38 @@ function submitPrivilegeShipping(e) {
     renderPrivilegeCards();
     closeModal('shippingModal');
 
-    // Show success
-    document.getElementById('bookingMessage').textContent = `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} Flips สำหรับ "${title}"`;
+    // Show success - HIDE QR button, SHOW shipping info for physical items
+    document.getElementById('successQrBtn').classList.add('hidden');
+    document.getElementById('successShippingInfo').classList.remove('hidden');
+
+    document.getElementById('bookingMessage').textContent = currentLanguage === 'th'
+        ? `สำเร็จ! ใช้ ${privilege.price.toLocaleString()} Flips สำหรับ "${title}"`
+        : `Success! Used ${privilege.price.toLocaleString()} Flips for "${title}"`;
+
     window.currentVoucherCode = voucherCode;
     window.currentVoucherName = title;
+
     openModal('bookingModal');
+
+    // Trigger confetti for celebration
+    if (typeof confetti === 'function') {
+        confetti({
+            origin: { x: 0.2, y: 0.6 },
+            angle: 60,
+            spread: 55,
+            particleCount: 80,
+            colors: ['#3b82f6', '#8b5cf6', '#10b981']
+        });
+        setTimeout(() => {
+            confetti({
+                origin: { x: 0.8, y: 0.6 },
+                angle: 120,
+                spread: 55,
+                particleCount: 80,
+                colors: ['#3b82f6', '#8b5cf6', '#10b981']
+            });
+        }, 200);
+    }
 
     window.pendingShippingPackage = null;
 }

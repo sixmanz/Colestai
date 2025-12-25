@@ -10,6 +10,13 @@ window.currentLanguage = localStorage.getItem('language') || 'en';
 
 let walletData = {
     totalPoints: 0,
+    tbfCoins: 0,
+    teamCoins: {
+        phoenix: 0,
+        shadow: 0,
+        thunder: 0,
+        dragon: 0
+    },
     transactions: [],
     pointsBatches: []
 };
@@ -33,6 +40,11 @@ function toggleLanguage() {
     window.currentLanguage = window.currentLanguage === 'en' ? 'th' : 'en';
     localStorage.setItem('language', window.currentLanguage);
 
+    // Update language label in header
+    const langLabel = document.getElementById('langLabel');
+    if (langLabel) langLabel.textContent = window.currentLanguage === 'th' ? 'TH' : 'EN';
+
+    // Also update old currentLang for backwards compatibility
     const langBtn = document.getElementById('currentLang');
     if (langBtn) langBtn.textContent = window.currentLanguage.toUpperCase();
 
@@ -93,6 +105,10 @@ function initWalletData() {
             if (parsed.totalPoints === undefined) parsed.totalPoints = defaultWalletData.totalPoints;
             if (parsed.movieTokens === undefined) parsed.movieTokens = defaultWalletData.movieTokens;
             if (parsed.gameTokens === undefined) parsed.gameTokens = defaultWalletData.gameTokens;
+
+            // Handle new coin types for multi-category system
+            if (parsed.tbfCoins === undefined) parsed.tbfCoins = defaultWalletData.tbfCoins;
+            if (!parsed.teamCoins) parsed.teamCoins = defaultWalletData.teamCoins;
 
             // Always use default Token details to ensure latest data structure
             parsed.movieTokenDetails = defaultWalletData.movieTokenDetails;
@@ -280,9 +296,12 @@ function openSupport() {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Set Button Text
+    // 1. Set Language Button/Label Text
     const langBtn = document.getElementById('currentLang');
     if (langBtn) langBtn.textContent = window.currentLanguage.toUpperCase();
+
+    const langLabel = document.getElementById('langLabel');
+    if (langLabel) langLabel.textContent = window.currentLanguage === 'th' ? 'TH' : 'EN';
 
     // 2. Apply Translations
     updateContentLanguage();

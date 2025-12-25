@@ -65,11 +65,12 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <!-- Organized CSS Files -->
-    <link rel="stylesheet" href="../css/main.css?v=26">
-    <link rel="stylesheet" href="../css/components.css?v=26">
-    <link rel="stylesheet" href="../css/responsive.css?v=26">
+    <link rel="stylesheet" href="../css/main.css?v=28">
+    <link rel="stylesheet" href="../css/components.css?v=28">
+    <link rel="stylesheet" href="../css/responsive.css?v=28">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -77,30 +78,51 @@
 <body class="bg-gray-50 font-thai text-slate-900 antialiased">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
-        <nav class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="index.html" class="flex items-center gap-3 group">
+    <header
+        class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group flex-shrink-0">
                     <img src="../images/logo_new.png" alt="Flips id"
-                        class="h-16 w-auto group-hover:scale-105 transition-transform duration-300">
+                        class="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-300">
                 </a>
 
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="index.html" class="text-gray-600 hover:text-primary font-medium transition-colors"
-                        data-i18n="nav_privilege">Privileges</a>
-                    <a href="wallet.html"
-                        class="text-gray-600 hover:text-primary font-medium transition-colors cursor-pointer"
-                        data-i18n="nav_wallet">Wallet</a>
+                <!-- Main Category Tabs (Center - Desktop) -->
+                <div class="hidden md:flex items-center justify-center flex-1 px-8" id="mainCategoryTabs">
+                    <div class="flex items-center gap-1 bg-gray-50/80 rounded-full p-1 border border-gray-100">
+                        <button onclick="switchMainCategory('flipsid')" data-category="flipsid"
+                            class="main-tab flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-blue-primary text-white shadow-md active">
+                            <i class="fas fa-crown text-xs"></i>
+                            <span>FLIPS ID</span>
+                        </button>
+                        <button onclick="switchMainCategory('colestai')" data-category="colestai"
+                            class="main-tab flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-slate-500 hover:text-amber-600 hover:bg-amber-50">
+                            <i class="fas fa-film text-xs"></i>
+                            <span>Colestai</span>
+                        </button>
+                        <button onclick="switchMainCategory('ctrlg')" data-category="ctrlg"
+                            class="main-tab flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-slate-500 hover:text-purple-600 hover:bg-purple-50">
+                            <i class="fas fa-gamepad text-xs"></i>
+                            <span>CTRL G</span>
+                        </button>
+                        <button onclick="switchMainCategory('tbf')" data-category="tbf"
+                            class="main-tab flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-slate-500 hover:text-cyan-600 hover:bg-cyan-50">
+                            <i class="fas fa-ship text-xs"></i>
+                            <span>TBF</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="flex items-center gap-4">
+                <!-- Right Actions -->
+                <div class="flex items-center gap-2 md:gap-3">
                     <!-- Notification Bell -->
                     <div class="relative">
                         <button onclick="toggleNotifications()"
-                            class="w-10 h-10 rounded-xl flex items-center justify-center border border-gray-200 hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-bell text-gray-600"></i>
+                            class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-bell text-gray-500 text-sm"></i>
                             <span
-                                class="notif-badge hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold">0</span>
+                                class="notif-badge hidden absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full text-[9px] flex items-center justify-center font-bold text-white">0</span>
                         </button>
 
                         <!-- Notification Dropdown -->
@@ -122,57 +144,86 @@
                         </div>
                     </div>
 
+                    <!-- Language Toggle -->
                     <button onclick="toggleLanguage()"
-                        class="flex items-center gap-2 px-3 md:px-4 py-2 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300 text-sm font-medium">
-                        <i class="fas fa-globe text-blue-primary"></i>
-                        <span id="currentLang" class="hidden sm:inline">EN</span>
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all">
+                        <i class="fas fa-globe text-blue-primary text-sm"></i>
+                        <span class="text-sm font-medium text-gray-600" id="langLabel">TH</span>
                     </button>
 
                     <!-- Wallet Button -->
                     <a href="wallet.html"
-                        class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-xl bg-gray-100 border border-gray-200 hover:border-primary hover:bg-primary/10 transition-all duration-300">
-                        <img src="../images/flips_token.png" alt="Coins" class="w-5 h-5 sm:w-6 sm:h-6 object-contain">
-                        <span class="text-xs sm:text-sm font-bold text-slate-800" id="headerPoints">0</span>
-                        <span class="text-slate-600 text-xs hidden sm:inline">Coins</span>
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 hover:border-primary/30 hover:shadow-md transition-all duration-300">
+                        <img src="../images/flips_token.png" alt="Flips Coins" class="w-5 h-5 object-contain">
+                        <span class="text-sm font-bold text-slate-700" id="headerPoints">0</span>
+                        <span class="text-slate-400 text-xs" id="headerCoinLabel">Flips</span>
                     </a>
 
-                    <!-- Profile Button with Admin Badge -->
+                    <!-- Profile Button -->
                     <div class="relative group">
                         <a href="profile.html"
-                            class="w-10 h-10 rounded-full btn-gradient flex items-center justify-center font-bold hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5 transform">
+                            class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-primary to-secondary flex items-center justify-center hover:scale-110 transition-transform duration-300 overflow-hidden p-0.5">
                             <img src="../images/profile_v1.jpg" alt="Profile"
                                 class="w-full h-full rounded-full object-cover">
                         </a>
                         <!-- Admin Switch Badge -->
                         <a href="admin.html" title="Switch to Admin"
-                            class="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-primary rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white hover:bg-white hover:text-blue-primary transition-colors z-20 shadow-lg">
+                            class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-blue-primary rounded-full border-2 border-white flex items-center justify-center text-[8px] text-white hover:bg-white hover:text-blue-primary transition-colors z-20 shadow-md">
                             <i class="fas fa-user-shield"></i>
                         </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- Mobile Category Tabs (Below header on mobile) -->
+            <div class="md:hidden overflow-x-auto no-scrollbar py-2 -mx-4 px-4 border-t border-gray-50"
+                id="mainCategoryTabsMobile">
+                <div class="flex items-center gap-1 w-max">
+                    <button onclick="switchMainCategory('flipsid')" data-category="flipsid"
+                        class="main-tab flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 bg-blue-primary text-white shadow-sm active whitespace-nowrap">
+                        <i class="fas fa-crown text-[10px]"></i>
+                        <span>FLIPS ID</span>
+                    </button>
+                    <button onclick="switchMainCategory('colestai')" data-category="colestai"
+                        class="main-tab flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 bg-gray-100 text-slate-500 whitespace-nowrap">
+                        <i class="fas fa-film text-[10px]"></i>
+                        <span>Colestai</span>
+                    </button>
+                    <button onclick="switchMainCategory('ctrlg')" data-category="ctrlg"
+                        class="main-tab flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 bg-gray-100 text-slate-500 whitespace-nowrap">
+                        <i class="fas fa-gamepad text-[10px]"></i>
+                        <span>CTRL G</span>
+                    </button>
+                    <button onclick="switchMainCategory('tbf')" data-category="tbf"
+                        class="main-tab flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 bg-gray-100 text-slate-500 whitespace-nowrap">
+                        <i class="fas fa-ship text-[10px]"></i>
+                        <span>TBF</span>
+                    </button>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="min-h-[70vh] flex items-center pt-24 pb-12 relative overflow-hidden hero-animated-bg reveal">
+    <section
+        class="min-h-[70vh] flex items-center pt-24 pb-12 relative overflow-hidden hero-animated-bg reveal perspective-container">
         <!-- Animated Blobs -->
-        <div class="hero-blob hero-blob-1"></div>
-        <div class="hero-blob hero-blob-2"></div>
+        <div class="hero-blob hero-blob-1 depth-layer" style="transform: translateZ(-50px);"></div>
+        <div class="hero-blob hero-blob-2 depth-layer" style="transform: translateZ(-20px);"></div>
 
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 perspective-container">
             <div class="text-center mb-12">
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-premium mb-6 animate-float">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-premium mb-6 animate-float depth-layer"
+                    style="transform: translateZ(20px);">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                     <span class="text-sm font-medium tracking-wide text-slate-700">Exclusive for Investors</span>
                 </div>
-                <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight text-slate-900 drop-shadow-sm"
-                    data-i18n="hero_welcome">
+                <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight text-slate-900 drop-shadow-sm depth-layer"
+                    data-i18n="hero_welcome" style="transform: translateZ(30px);">
                     Welcome to FLIPS ID
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto font-light"
-                    data-i18n="hero_subtitle">
+                <p class="text-xl md:text-2xl text-slate-600 mb-10 max-w-2xl mx-auto font-light depth-layer"
+                    data-i18n="hero_subtitle" style="transform: translateZ(10px);">
                     Exclusive Rewards & Premium Privileges
                 </p>
 
@@ -187,97 +238,32 @@
     <!-- ============================================ -->
     <section id="balanceSection" class="py-6 reveal reveal-delay-100">
         <div class="max-w-7xl mx-auto px-6">
-            <!-- Balance Cards -->
-            <div id="pointsBalanceCard"
-                class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100 mb-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                        <img src="../images/flips_token.png" alt="Flips" class="w-7 h-7 object-contain">
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-slate-600 text-xs">เหรียญคงเหลือ</p>
-                        <div class="flex items-baseline gap-2">
-                            <span class="text-3xl font-bold text-slate-900" id="mainPointsBalance">0</span>
-                            <span class="text-blue-600 font-medium">Flips</span>
+            <!-- Dynamic Coin Balance Display -->
+            <div id="coinBalanceDisplay" class="mb-4">
+                <!-- Default: Flips Coins -->
+                <div id="flipsBalanceCard"
+                    class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <img src="../images/flips_token.png" alt="Flips Coins" class="w-7 h-7 object-contain">
                         </div>
-                    </div>
-                    <a href="wallet.html" class="text-blue-600 hover:text-blue-700 text-sm">
-                        ดูกระเป๋า <i class="fas fa-chevron-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Token Balance Cards (hidden by default) -->
-            <div id="tokenBalanceCards" class="grid grid-cols-2 gap-3 mb-4 hidden">
-                <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-100">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-film text-lg text-orange-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-slate-600 text-xs">Movie Token</p>
-                            <div class="flex items-baseline gap-1">
-                                <span class="text-xl font-bold text-slate-900" id="mainMovieToken">0</span>
-                                <span class="text-orange-500 font-medium text-xs">Token</span>
+                        <div class="flex-1">
+                            <p class="text-slate-600 text-xs">เหรียญคงเหลือ</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-bold text-slate-900" id="mainCoinBalance">0</span>
+                                <span class="text-blue-600 font-medium" id="mainCoinName">Flips</span>
                             </div>
                         </div>
+                        <a href="wallet.html" class="text-blue-600 hover:text-blue-700 text-sm">
+                            ดูกระเป๋า <i class="fas fa-chevron-right ml-1"></i>
+                        </a>
                     </div>
                 </div>
-                <div
-                    class="bg-gradient-to-r from-orange-400/10 to-orange-600/10 rounded-xl p-4 border border-orange-200">
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1 shadow-sm border border-orange-100">
-                            <img src="../images/full_sense_token.png" alt="FULL SENSE"
-                                class="w-full h-full object-contain">
-                        </div>
-                        <div>
-                            <p class="text-slate-600 text-xs font-bold">FULL SENSE Token</p>
-                            <div class="flex items-baseline gap-1">
-                                <span class="text-xl font-bold text-slate-900" id="mainGameToken">0</span>
-                                <span class="text-orange-600 font-bold text-xs">FULL SENSE</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Payment Mode Toggle -->
-            <div class="flex items-center gap-3 mb-2">
-                <span class="text-sm text-slate-600">แลกด้วย:</span>
-                <div class="flex bg-gray-100 rounded-full p-1">
-                    <button id="payModePoints" onclick="switchPaymentMode('points')"
-                        class="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-blue-primary text-white flex items-center gap-1.5">
-                        <img src="../images/flips_token.png" class="w-4 h-4 object-contain brightness-0 invert"> Flips
-                        Coins
-                    </button>
-                    <button id="payModeToken" onclick="switchPaymentMode('token')"
-                        class="px-4 py-1.5 rounded-full text-sm font-medium transition-all text-slate-500 hover:text-slate-700">
-                        <i class="fas fa-ticket-alt mr-1.5"></i>Token
-                    </button>
+                <!-- Team Coins Display (for CTRL G) -->
+                <div id="teamCoinsDisplay" class="grid grid-cols-2 gap-3 hidden">
+                    <!-- Team coins will be rendered by JS -->
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Category Tabs (Movies / Games) -->
-    <section class="pt-4 pb-2 reveal reveal-delay-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center gap-6 border-b border-gray-200">
-                <button id="movieTab" onclick="switchMainCategory('movie')"
-                    class="main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-orange-500 text-slate-900 active">
-                    <i class="fas fa-film text-orange-500"></i>
-                    <span>หนัง</span>
-                    <span id="movieCount"
-                        class="px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 text-xs font-bold"></span>
-                </button>
-                <button id="gameTab" onclick="switchMainCategory('game')"
-                    class="main-category-tab flex items-center gap-2 pb-3 font-semibold text-base transition-all duration-300 border-b-2 border-transparent text-slate-400 hover:text-slate-600">
-                    <i class="fas fa-gamepad"></i>
-                    <span>เกมส์</span>
-                    <span id="gameCount"
-                        class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold"></span>
-                </button>
             </div>
         </div>
     </section>
@@ -318,7 +304,7 @@
                 <div class="flex gap-3 w-full lg:w-auto">
                     <div class="relative flex-1 lg:w-80">
                         <input type="text" id="privilegeSearchInput" placeholder="ค้นหาสิทธิพิเศษ..."
-                            class="w-full px-4 py-3 pl-12 rounded-xl bg-white border border-gray-200 focus:border-primary outline-none text-slate-800 placeholder-gray-400 shadow-sm"
+                            class="w-full px-4 py-3 pl-12 rounded-xl input-floating outline-none text-slate-800 placeholder-gray-400"
                             oninput="searchPrivileges()">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
                     </div>
@@ -380,51 +366,197 @@
 
     <!-- Privilege Detail Modal -->
     <div id="privilegeDetailModal" class="fixed inset-0 z-[100] hidden">
-        <div class="modal-overlay absolute inset-0" onclick="closeModal('privilegeDetailModal')"></div>
+        <div class="modal-overlay absolute inset-0 transition-opacity duration-300"
+            onclick="closeModal('privilegeDetailModal')"></div>
+
+        <!-- Modal Content -->
         <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-            <div class="glass-card rounded-2xl p-8 relative overflow-hidden">
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-y-auto outline-none">
+            <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden mx-4 animate-scale-up">
+
+                <!-- Close Button -->
                 <button onclick="closeModal('privilegeDetailModal')"
-                    class="absolute top-4 right-4 text-white/50 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
+                    class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/40 transition-colors">
+                    <i class="fas fa-times"></i>
                 </button>
 
-                <div class="text-center mb-6">
-                    <div id="detailCategoryIcon"
-                        class="w-16 h-16 rounded-xl bg-primary flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-gift text-2xl text-white"></i>
+                <!-- Hero Image Section -->
+                <div class="relative h-64 md:h-80">
+                    <img id="detailImage" src="" alt="Privilege" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                    <!-- Floating Badge -->
+                    <div class="absolute top-6 left-6">
+                        <span id="detailCategoryBadge"
+                            class="px-3 py-1.5 rounded-full bg-black/10 backdrop-blur-md text-white text-xs font-semibold border border-white/20 uppercase tracking-wider shadow-sm">
+                            Category
+                        </span>
                     </div>
-                    <span id="detailCategory"
-                        class="inline-block px-3 py-1 rounded-full bg-white/10 text-xs font-medium mb-3">Category</span>
-                    <h2 id="detailTitle" class="text-2xl font-bold mb-2 leading-tight">Privilege Title</h2>
-                    <p id="detailVenue" class="text-white/50 text-sm"><i class="fas fa-map-marker-alt mr-1"></i> Venue
-                    </p>
-                </div>
 
-                <div class="flex items-center justify-center gap-4 mb-6">
-                    <!-- Rating Removed -->
-                </div>
-
-                <div class="glass-card rounded-xl p-4 mb-6">
-                    <p id="detailDescription" class="text-white/80 text-sm leading-relaxed"></p>
-                </div>
-
-                <div class="gradient-bg rounded-xl p-6 text-center mb-6">
-                    <p class="text-white/80 text-sm mb-2">ใช้คะแนนแลก</p>
-                    <div class="flex items-baseline justify-center gap-2">
-                        <span id="detailPrice" class="text-4xl font-bold">0</span>
-                        <span class="text-lg font-medium">Flips</span>
+                    <!-- Title & Venue (Bottom Left) -->
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <h2 id="detailTitle"
+                            class="text-3xl font-bold text-white mb-2 leading-tight drop-shadow-lg font-display">
+                        </h2>
+                        <div class="flex flex-wrap items-center gap-4 text-white/95 text-sm font-medium">
+                            <span id="detailVenue"
+                                class="flex items-center gap-1.5 bg-black/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+                                <i class="fas fa-map-marker-alt text-red-400 drop-shadow-sm"></i> <span
+                                    id="detailVenueValue">Venue</span>
+                            </span>
+                            <span id="detailEventDate"
+                                class="flex items-center gap-1.5 bg-black/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/10">
+                                <i class="fas fa-calendar-alt text-yellow-400 drop-shadow-sm"></i> <span
+                                    id="detailEventDateValue">Date</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                <button id="detailRedeemBtn"
-                    class="w-full py-4 btn-gradient rounded-xl font-semibold flex items-center justify-center gap-2 hover:scale-105 transition-all">
-                    <i class="fas fa-gift"></i>
-                    แลกสิทธิพิเศษนี้
-                </button>
+                <!-- Content Body -->
+                <div class="p-6 md:p-8">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Left: Description -->
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-slate-800 mb-3" data-i18n="description">รายละเอียด</h3>
+                            <p id="detailDescription" class="text-slate-600 leading-relaxed mb-6"></p>
 
-                <div class="mt-4 text-center">
-                    <p class="text-xs text-white/30" data-i18n="terms_apply">Terms & conditions apply</p>
+                            <h3 class="text-lg font-bold text-slate-800 mb-3" data-i18n="conditions">เงื่อนไข</h3>
+                            <ul id="detailConditions" class="space-y-2 text-sm text-slate-600 mb-6">
+                                <!-- List items injected via JS -->
+                            </ul>
+                        </div>
+
+                        <!-- Right: Action & Price -->
+                        <div class="w-full md:w-72 flex-shrink-0">
+                            <div class="glass-card-premium rounded-2xl p-6 text-center shadow-secondary">
+                                <p class="text-slate-500 text-sm mb-2" data-i18n="redeem_with">ใช้คะแนนแลก</p>
+                                <div class="flex items-center justify-center gap-2 mb-6">
+                                    <div id="detailCoinIcon"
+                                        class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shadow-sm">
+                                        <!-- Icon injected -->
+                                    </div>
+                                    <span id="detailPrice"
+                                        class="text-4xl font-extrabold text-slate-800 tracking-tight drop-shadow-sm">0</span>
+                                    <span id="detailCoinName" class="text-lg font-bold text-slate-400">Coins</span>
+                                </div>
+
+                                <button id="detailRedeemBtn"
+                                    class="w-full btn-premium flex items-center justify-center gap-2">
+                                    <!-- Text injected -->
+                                </button>
+                                <p class="text-xs text-slate-400 mt-4 text-center">
+                                    <i class="fas fa-shield-alt mr-1"></i> Secure Redemption
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Confirm Redeem Modal (Standardized) -->
+    <div id="confirmRedeemModal" class="fixed inset-0 z-[110] hidden">
+        <div class="modal-overlay absolute inset-0 backdrop-blur-sm bg-black/60 transition-opacity"
+            onclick="closeModal('confirmRedeemModal')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-4">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden animate-scale-up">
+                <!-- Header -->
+                <div class="bg-slate-50 p-4 border-b border-slate-100 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800" data-i18n="confirm_redemption">ยืนยันการแลก</h3>
+                    <button onclick="closeModal('confirmRedeemModal')"
+                        class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Body -->
+                <div class="p-6 text-center">
+                    <div class="w-20 h-20 mx-auto mb-4 rounded-2xl overflow-hidden shadow-md relative group">
+                        <img id="confirmImage" src="" alt="Reward" class="w-full h-full object-cover">
+                    </div>
+
+                    <h4 id="confirmTitle" class="text-lg font-bold text-slate-800 mb-1 leading-tight">Reward Title</h4>
+                    <p class="text-slate-500 text-sm mb-6">คุณตัองการแลกของรางวัลนี้ใช่หรือไม่?</p>
+
+                    <div class="bg-blue-50/50 rounded-xl p-4 mb-6 border border-blue-100">
+                        <div class="flex justify-between items-center mb-2 text-sm">
+                            <span class="text-slate-500">ราคา</span>
+                            <span class="font-bold text-slate-800"><span id="confirmPrice">0</span> <span
+                                    id="confirmCoinName" class="text-xs text-slate-400">Coins</span></span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500">คงเหลือหลังแลก</span>
+                            <span class="font-bold text-blue-600" id="confirmBalanceAfter">0</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="closeModal('confirmRedeemModal')"
+                            class="flex-1 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors">
+                            ยกเลิก
+                        </button>
+                        <button id="confirmBtn"
+                            class="flex-1 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:scale-105 transition-all">
+                            ยืนยัน
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success / Booking Modal (Celebration) -->
+    <div id="bookingModal" class="fixed inset-0 z-[120] hidden">
+        <div class="modal-overlay absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-6">
+            <div class="relative bg-white rounded-3xl shadow-2xl p-8 text-center animate-bounce-in overflow-hidden">
+                <!-- Background decorative elements -->
+                <div
+                    class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 via-blue-500 to-purple-500">
+                </div>
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 rounded-full blur-3xl opacity-50"></div>
+
+                <!-- Success Icon -->
+                <div class="relative w-20 h-20 mx-auto mb-6">
+                    <div class="absolute inset-0 bg-green-100 rounded-full animate-ping opacity-20"></div>
+                    <div
+                        class="relative w-full h-full bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-green-200">
+                        <i class="fas fa-check text-4xl text-white transform hover:rotate-12 transition-transform"></i>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-black text-slate-800 mb-2" data-i18n="booking_success_title">Congratulation!
+                </h2>
+                <p class="text-slate-500 mb-6 leading-relaxed" id="bookingMessage">You have successfully redeemed this
+                    reward.</p>
+
+                <div class="space-y-3 relative z-10">
+                    <!-- QR Button (for digital items only) -->
+                    <button id="successQrBtn"
+                        onclick="showVoucherQR({code: window.currentVoucherCode, title: window.currentVoucherName})"
+                        class="w-full py-3.5 rounded-xl bg-slate-900 text-white font-bold shadow-xl shadow-slate-200 hover:bg-slate-800 hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+                        <i class="fas fa-qrcode"></i> <span data-i18n="btn_view_qr">View QR Ticket</span>
+                    </button>
+
+                    <!-- Shipping Info (for physical items only) -->
+                    <div id="successShippingInfo"
+                        class="hidden bg-blue-50 rounded-xl p-4 text-left border border-blue-100">
+                        <div class="flex items-center gap-2 text-blue-700 mb-2">
+                            <i class="fas fa-truck"></i>
+                            <span class="font-semibold">กำลังเตรียมจัดส่ง</span>
+                        </div>
+                        <p class="text-sm text-blue-600">สินค้าจะถูกจัดส่งภายใน 7-14 วันทำการ
+                            สามารถติดตามสถานะได้ในหน้าโปรไฟล์</p>
+                    </div>
+
+                    <button onclick="closeModal('bookingModal'); window.location.reload();"
+                        class="w-full py-3.5 rounded-xl text-slate-500 font-medium hover:bg-slate-50 hover:text-slate-700 transition-colors">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -435,67 +567,38 @@
         <div class="modal-overlay absolute inset-0" onclick="closeModal('walletModal')"></div>
         <div
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-            <div class="glass-card rounded-2xl p-8">
+            <div class="bg-white rounded-2xl p-8 shadow-2xl relative">
                 <button onclick="closeModal('walletModal')"
-                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
 
-                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
-                    <i class="fas fa-wallet"></i> <span data-i18n="wallet_modal_title">My Wallet</span>
+                <h2 class="text-2xl font-bold mb-6 text-slate-800 flex items-center gap-3">
+                    <i class="fas fa-wallet text-blue-500"></i> <span data-i18n="wallet_modal_title">My Wallet</span>
                 </h2>
 
-                <div class="gradient-bg rounded-2xl p-6 mb-8 text-center relative overflow-hidden">
+                <div
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 mb-8 text-center relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-4 opacity-10">
-                        <i class="fas fa-coins text-8xl transform rotate-12"></i>
+                        <i class="fas fa-coins text-8xl transform rotate-12 text-white"></i>
                     </div>
                     <p class="text-white/80 mb-2 font-medium">Total Balance</p>
-                    <h3 class="text-5xl font-bold mb-2 tracking-tight" id="walletTotalPoints">0</h3>
-                    <p class="text-white/60 text-sm" data-i18n="points_available">Flips Coins Available</p>
+                    <h3 class="text-5xl font-bold mb-2 tracking-tight text-white" id="walletTotalPoints">0</h3>
+                    <p class="text-white/60 text-sm" data-i18n="points_available">Coins Available</p>
                 </div>
 
                 <div class="mb-6">
-                    <h3 class="font-semibold text-lg mb-4" data-i18n="points_breakdown">Points Breakdown</h3>
+                    <h3 class="font-semibold text-lg mb-4 text-slate-800" data-i18n="points_breakdown">Points Breakdown
+                    </h3>
                     <div id="pointsBreakdown" class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
                         <!-- Points batches will be inserted here -->
                     </div>
                 </div>
 
-                <div class="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-                    <i class="fas fa-history text-blue-primary mb-2 text-xl"></i>
-                    <p class="text-sm text-white/70" data-i18n="wallet_history">Transaction history available in app</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Booking Confirmation Modal -->
-    <div id="bookingModal" class="fixed inset-0 z-[100] hidden">
-        <div class="modal-overlay absolute inset-0" onclick="closeModal('bookingModal')"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-6">
-            <div class="glass-card rounded-2xl p-8">
-                <button onclick="closeModal('bookingModal')"
-                    class="absolute top-4 right-4 text-white/50 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-                <div class="text-center">
-                    <div class="w-16 h-16 rounded-full btn-gradient flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-check text-2xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold mb-2 gradient-text" data-i18n="booking_success_title">Success!</h2>
-                    <p class="text-white/70 mb-6" id="bookingMessage">Booking confirmed successfully.</p>
-                    <div class="space-y-3">
-                        <button
-                            onclick="showVoucherQR({code: window.currentVoucherCode, title: window.currentVoucherName})"
-                            class="w-full py-3 btn-gradient rounded-xl font-semibold">
-                            <i class="fas fa-qrcode mr-2"></i><span data-i18n="btn_view_qr">View QR Code</span>
-                        </button>
-                        <a href="index.html"
-                            class="w-full py-3 rounded-xl border border-white/20 hover:border-primary transition-colors block text-center"
-                            data-i18n="btn_back_home">
-                            Back to Privileges
-                        </a>
-                    </div>
+                <div class="text-center p-4 rounded-xl bg-slate-50 border border-slate-100">
+                    <i class="fas fa-history text-blue-500 mb-2 text-xl"></i>
+                    <p class="text-sm text-slate-500" data-i18n="wallet_history">Transaction history available in app
+                    </p>
                 </div>
             </div>
         </div>
@@ -505,15 +608,18 @@
     <div id="qrModal" class="fixed inset-0 z-[100] hidden">
         <div class="modal-overlay absolute inset-0" onclick="closeModal('qrModal')"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-6">
-            <div class="glass-card rounded-2xl p-8 text-center">
-                <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 text-white/50 hover:text-white">
+            <div class="bg-white rounded-2xl p-8 text-center shadow-2xl relative">
+                <button onclick="closeModal('qrModal')"
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
-                <h2 class="text-xl font-bold mb-2" data-i18n="qr_modal_title">Voucher QR Code</h2>
-                <p class="text-white/50 text-sm mb-6" id="qrVoucherName"></p>
-                <div id="qrcode" class="flex justify-center mb-6 bg-white p-4 rounded-xl inline-block mx-auto"></div>
-                <p class="text-white/50 text-sm mb-4" data-i18n="qr_instruction">Show this QR Code to redeem</p>
-                <p class="text-xs text-white/30 font-mono" id="qrVoucherCode"></p>
+                <h2 class="text-xl font-bold mb-2 text-slate-800" data-i18n="qr_modal_title">Voucher QR Code</h2>
+                <p class="text-slate-500 text-sm mb-6" id="qrVoucherName"></p>
+                <div id="qrcode"
+                    class="flex justify-center mb-6 bg-white p-4 rounded-xl inline-block mx-auto border border-slate-100">
+                </div>
+                <p class="text-slate-500 text-sm mb-4" data-i18n="qr_instruction">Show this QR Code to redeem</p>
+                <p class="text-xs text-slate-400 font-mono" id="qrVoucherCode"></p>
             </div>
         </div>
     </div>
@@ -523,21 +629,21 @@
         <div class="modal-overlay absolute inset-0" onclick="closeModal('shippingModal')"></div>
         <div
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-            <div class="glass-card rounded-2xl p-8">
+            <div class="bg-white rounded-2xl p-8 shadow-2xl relative">
                 <button onclick="closeModal('shippingModal')"
-                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
 
-                <h2 class="text-2xl font-bold mb-6 gradient-text" data-i18n="shipping_title">Shipping Address</h2>
+                <h2 class="text-2xl font-bold mb-6 text-slate-800" data-i18n="shipping_title">Shipping Address</h2>
 
                 <!-- Product Preview -->
-                <div class="flex items-center gap-4 mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                <div class="flex items-center gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
                     <img id="shippingProductImage" src="" alt="Product"
-                        class="w-20 h-20 rounded-lg object-cover bg-white/10">
+                        class="w-20 h-20 rounded-lg object-cover bg-slate-100">
                     <div class="flex-1">
-                        <h3 id="shippingProductName" class="font-bold text-white mb-1">Product Name</h3>
-                        <p id="shippingProductPrice" class="text-secondary font-bold">0 Flips</p>
+                        <h3 id="shippingProductName" class="font-bold text-slate-800 mb-1">Product Name</h3>
+                        <p id="shippingProductPrice" class="text-blue-600 font-bold">0 Flips</p>
                     </div>
                 </div>
 
@@ -545,63 +651,63 @@
                     <div class="space-y-4">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_name">First Name
+                                <label class="block text-slate-600 mb-2 text-sm" data-i18n="form_name">First Name
                                     *</label>
                                 <input type="text" id="shipFirstName" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
-                                    placeholder="First Name" data-i18n="form_name">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800"
+                                    placeholder="First Name">
                             </div>
                             <div>
-                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_lastname">Last Name
+                                <label class="block text-slate-600 mb-2 text-sm" data-i18n="form_lastname">Last Name
                                     *</label>
                                 <input type="text" id="shipLastName" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
-                                    placeholder="Last Name" data-i18n="form_lastname">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800"
+                                    placeholder="Last Name">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-white/70 mb-2 text-sm" data-i18n="form_address">Address *</label>
+                            <label class="block text-slate-600 mb-2 text-sm" data-i18n="form_address">Address *</label>
                             <input type="text" id="shipAddress" required
-                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
-                                placeholder="Shipping Address" data-i18n="form_address">
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800"
+                                placeholder="Shipping Address">
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_phone">Phone *</label>
+                                <label class="block text-slate-600 mb-2 text-sm" data-i18n="form_phone">Phone *</label>
                                 <input type="tel" id="shipPhone" required
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
-                                    placeholder="Phone Number" data-i18n="form_phone">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800"
+                                    placeholder="Phone Number">
                             </div>
                             <div>
-                                <label class="block text-white/70 mb-2 text-sm" data-i18n="form_email">Email</label>
+                                <label class="block text-slate-600 mb-2 text-sm" data-i18n="form_email">Email</label>
                                 <input type="email" id="shipEmail"
-                                    class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white"
-                                    placeholder="Email (Optional)" data-i18n="form_email">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800"
+                                    placeholder="Email (Optional)">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-white/70 mb-2 text-sm">หมายเหตุเพิ่มเติม</label>
+                            <label class="block text-slate-600 mb-2 text-sm">หมายเหตุเพิ่มเติม</label>
                             <textarea id="shipNotes"
-                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-primary outline-none text-white h-20 resize-none"
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 outline-none text-slate-800 h-20 resize-none"
                                 placeholder="คำแนะนำสำหรับการจัดส่ง"></textarea>
                         </div>
 
-                        <div class="bg-white/5 rounded-xl p-4 flex gap-3">
-                            <i class="fas fa-info-circle text-yellow-400 mt-1"></i>
+                        <div class="bg-amber-50 rounded-xl p-4 flex gap-3 border border-amber-100">
+                            <i class="fas fa-info-circle text-amber-500 mt-1"></i>
                             <div>
-                                <p class="font-medium text-yellow-400" data-i18n="section_shipping">Shipping
-                                    Information</p>
-                                <p class="text-white/70 text-sm" data-i18n="form_note">Ships within 7-14 business
-                                    days</p>
+                                <p class="font-medium text-amber-700" data-i18n="section_shipping">Shipping Information
+                                </p>
+                                <p class="text-amber-600 text-sm" data-i18n="form_note">Ships within 7-14 business days
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <button type="submit"
-                        class="w-full py-4 btn-gradient rounded-xl font-bold hover:scale-[1.02] transition-transform">
+                        class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:scale-[1.02] transition-transform shadow-lg">
                         Confirm Shipping
                     </button>
                 </form>
@@ -614,28 +720,29 @@
         <div class="modal-overlay absolute inset-0" onclick="closeModal('profileModal')"></div>
         <div
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
-            <div class="glass-card rounded-2xl p-8 relative">
+            <div class="bg-white rounded-2xl p-8 relative shadow-2xl">
                 <button onclick="closeModal('profileModal')"
-                    class="absolute top-4 right-4 text-white/50 hover:text-white">
+                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
 
-                <h2 class="text-2xl font-bold mb-6 gradient-text flex items-center gap-3">
-                    <i class="fas fa-user-circle"></i> <span data-i18n="profile_modal_title">My Profile</span>
+                <h2 class="text-2xl font-bold mb-6 text-slate-800 flex items-center gap-3">
+                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="profile_modal_title">My
+                        Profile</span>
                 </h2>
 
                 <!-- User Info -->
-                <div class="glass-card rounded-xl p-6 mb-6">
+                <div class="bg-slate-50 rounded-xl p-6 mb-6 border border-slate-100">
                     <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full btn-gradient p-0.5">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 p-0.5">
                             <img src="../images/profile_v1.jpg" alt="Profile"
-                                class="w-full h-full rounded-full object-cover border-2 border-black">
+                                class="w-full h-full rounded-full object-cover border-2 border-white">
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold">FLIPS ID User</h3>
-                            <p class="text-white/50"><span data-i18n="member_since">Member since</span> Jan 2024</p>
+                            <h3 class="text-xl font-bold text-slate-800">FLIPS ID User</h3>
+                            <p class="text-slate-500"><span data-i18n="member_since">Member since</span> Jan 2024</p>
                             <span
-                                class="px-2 py-1 rounded-full bg-blue-primary/20 text-blue-primary text-xs mt-2 inline-block"
+                                class="px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs mt-2 inline-block font-medium"
                                 data-i18n="premium_member">Premium Member</span>
                         </div>
                     </div>
@@ -643,92 +750,35 @@
 
                 <!-- Balance & Vouchers Summary -->
                 <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="glass-card rounded-xl p-4 text-center">
-                        <p class="text-white/50 text-sm mb-1" data-i18n="points_balance">Points Balance</p>
-                        <h4 class="text-2xl font-bold gradient-text" id="profileBalance">0 Flips</h4>
+                    <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                        <p class="text-slate-500 text-sm mb-1" data-i18n="points_balance">Points Balance</p>
+                        <h4 class="text-2xl font-bold text-blue-600" id="profileBalance">0 Flips</h4>
                     </div>
-                    <div class="glass-card rounded-xl p-4 text-center">
-                        <p class="text-white/50 text-sm mb-1" data-i18n="privileges_redeemed">Privileges Redeemed</p>
-                        <h4 class="text-2xl font-bold text-white" id="profileVouchers">0</h4>
+                    <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                        <p class="text-slate-500 text-sm mb-1" data-i18n="privileges_redeemed">Privileges Redeemed</p>
+                        <h4 class="text-2xl font-bold text-slate-800" id="profileVouchers">0</h4>
                     </div>
                 </div>
 
                 <!-- Redeemed Privileges List -->
                 <div class="mb-6">
-                    <h3 class="font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-history text-blue-primary"></i> <span data-i18n="redemption_history">Redemption
+                    <h3 class="font-bold mb-4 flex items-center gap-2 text-slate-800">
+                        <i class="fas fa-history text-blue-500"></i> <span data-i18n="redemption_history">Redemption
                             History</span>
                     </h3>
-                    <div id="redeemedPrivilegesList" class="space-y-3 max-h-[300px] overflow-y-auto custom-scrollbar">
+                    <div id="redeemedPrivilegesList" class="space-y-3 max-h-[300px] overflow-y-auto">
                         <!-- Items injected by JS -->
                     </div>
                 </div>
 
                 <!-- Admin Switch -->
-                <div class="pt-6 border-t border-white/10 text-center">
+                <div class="pt-6 border-t border-slate-200 text-center">
                     <button onclick="window.location.href='admin.html'"
-                        class="text-sm text-white/30 hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto">
+                        class="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center justify-center gap-2 mx-auto">
                         <i class="fas fa-user-shield"></i> Switch to Admin Account
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-
-    <!-- Reward Redeem Modal -->
-    <div id="redeemModal" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeRedeemModal()"></div>
-        <div
-            class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
-                <h3 class="font-semibold text-slate-800">ยืนยันการแลก</h3>
-                <button onclick="closeRedeemModal()" class="text-gray-400 hover:text-slate-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-5 space-y-4">
-                <div class="flex items-center gap-4">
-                    <img id="modalRewardImage" src="" alt="" class="w-16 h-16 rounded-xl object-cover bg-gray-100">
-                    <div>
-                        <h4 id="modalRewardTitle" class="font-semibold text-slate-800"></h4>
-                        <p id="modalRewardCost" class="text-sm text-slate-500"></p>
-                    </div>
-                </div>
-                <div id="modalWarning" class="p-4 bg-amber-50 rounded-xl border border-amber-100">
-                    <div class="flex items-center gap-2 text-amber-700">
-                        <i class="fas fa-info-circle"></i>
-                        <span class="text-sm" id="modalWarningText">จะถูกหักจากยอดคงเหลือทันที</span>
-                    </div>
-                </div>
-                <div class="flex gap-3">
-                    <button onclick="closeRedeemModal()"
-                        class="flex-1 py-2.5 rounded-lg border border-gray-200 text-slate-600 hover:bg-gray-50 transition-colors text-sm font-medium">
-                        ยกเลิก
-                    </button>
-                    <button onclick="confirmRedeem()"
-                        class="flex-1 py-2.5 rounded-lg bg-blue-primary text-white hover:bg-blue-800 transition-colors text-sm font-medium">
-                        ยืนยันแลก
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Reward Success Modal -->
-    <div id="rewardSuccessModal" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-        <div
-            class="absolute inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-check text-3xl text-green-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-slate-800 mb-2">แลกสำเร็จ!</h3>
-            <p class="text-slate-500 mb-6">คุณได้รับของรางวัลแล้ว สามารถตรวจสอบได้ในหน้าโปรไฟล์</p>
-            <button onclick="closeRewardSuccessModal()"
-                class="w-full py-2.5 rounded-lg bg-blue-primary text-white hover:bg-blue-800 transition-colors font-medium">
-                ตกลง
-            </button>
         </div>
     </div>
 
@@ -741,19 +791,19 @@
     </div>
 
     <!-- Core Scripts -->
-    <script src="../js/data.js?v=26"></script>
-    <script src="../js/utils.js?v=26"></script>
-    <script src="../js/translations.js?v=26"></script>
+    <script src="../js/data.js?v=28"></script>
+    <script src="../js/utils.js?v=28"></script>
+    <script src="../js/translations.js?v=28"></script>
 
     <!-- Feature Scripts -->
-    <script src="../js/notifications.js?v=26"></script>
-    <script src="../js/wallet.js?v=26"></script>
-    <script src="../js/privileges-data.js?v=26"></script>
-    <script src="../js/privileges.js?v=26"></script>
-    <script src="../js/rewards.js?v=26"></script>
-    <script src="../js/visual-effects.js?v=26"></script>
-    <script src="../js/index-page.js?v=26"></script>
-    <script src="../js/main.js?v=26"></script>
+    <script src="../js/notifications.js?v=28"></script>
+    <script src="../js/wallet.js?v=28"></script>
+    <script src="../js/privileges-data.js?v=28"></script>
+    <script src="../js/privileges.js?v=28"></script>
+    <script src="../js/rewards.js?v=28"></script>
+    <script src="../js/visual-effects.js?v=28"></script>
+    <script src="../js/index-page.js?v=28"></script>
+    <script src="../js/main.js?v=28"></script>
 
     <script>
         // Initialize application

@@ -54,16 +54,37 @@ function handleTilt(e) {
     const centerY = cardRect.height / 2;
 
     // Calculate rotation (max 15 degrees)
-    const rotateX = ((y - centerY) / centerY) * -10; // Invert Y axis for correct tilt
-    const rotateY = ((x - centerX) / centerX) * 10;
+    const rotateX = ((y - centerY) / centerY) * -15; // Increased tilt
+    const rotateY = ((x - centerX) / centerX) * 15;
 
-    // Apply transform
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    // Apply transform with stronger scale
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
 
-    // Add glare effect if it exists
+    // Dynamic Glare Effect
+    // Calculate angle for dynamic gradient
+    const angle = Math.atan2(e.clientY - cardRect.top - centerY, e.clientX - cardRect.left - centerX) * (180 / Math.PI) - 90;
+
+    // Apply glare if it exists or create one
+    let glare = card.querySelector('.glare-effect');
+    if (!glare) {
+        glare = document.createElement('div');
+        glare.className = 'glare-effect';
+        glare.style.cssText = `
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(${angle}deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 80%);
+            z-index: 2;
+            pointer-events: none;
+            border-radius: inherit;
+        `;
+        card.appendChild(glare);
+    } else {
+        glare.style.background = `linear-gradient(${angle}deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 80%)`;
+    }
+
     const content = card.querySelector('.tilt-content');
     if (content) {
-        content.style.transform = 'translateZ(30px)';
+        content.style.transform = 'translateZ(40px)'; // Increased depth
     }
 }
 
@@ -73,6 +94,12 @@ function resetTilt() {
     const content = this.querySelector('.tilt-content');
     if (content) {
         content.style.transform = 'translateZ(0px)';
+    }
+
+    const glare = this.querySelector('.glare-effect');
+    if (glare) {
+        glare.style.opacity = '0';
+        setTimeout(() => glare.remove(), 300);
     }
 }
 
