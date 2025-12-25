@@ -211,6 +211,20 @@
         <div class="hero-blob hero-blob-1 depth-layer" style="transform: translateZ(-50px);"></div>
         <div class="hero-blob hero-blob-2 depth-layer" style="transform: translateZ(-20px);"></div>
 
+        <!-- Floating Glass Decorations -->
+        <div class="absolute top-1/4 left-[10%] w-16 h-16 rounded-full glass-card-premium animate-float opacity-80 flex items-center justify-center hidden md:flex"
+            style="animation-delay: 0.5s;">
+            <i class="fas fa-crown text-blue-500 text-xl"></i>
+        </div>
+        <div class="absolute bottom-1/4 right-[10%] w-20 h-20 rounded-full glass-card-premium animate-float-delayed opacity-80 flex items-center justify-center hidden md:flex"
+            style="animation-delay: 1.5s;">
+            <i class="fas fa-gem text-secondary text-2xl"></i>
+        </div>
+        <div class="absolute top-1/3 right-[15%] w-12 h-12 rounded-full glass-card-premium animate-pulse-soft opacity-60 hidden md:block"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-1/3 left-[15%] w-10 h-10 rounded-full glass-card-premium animate-float opacity-60 hidden md:block"
+            style="animation-delay: 1s;"></div>
+
         <div class="max-w-7xl mx-auto px-6 relative z-10 perspective-container">
             <div class="text-center mb-12">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-premium mb-6 animate-float depth-layer"
@@ -236,37 +250,10 @@
     <!-- ============================================ -->
     <!-- BALANCE & PAYMENT MODE SECTION -->
     <!-- ============================================ -->
-    <section id="balanceSection" class="py-6 reveal reveal-delay-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- Dynamic Coin Balance Display -->
-            <div id="coinBalanceDisplay" class="mb-4">
-                <!-- Default: Flips Coins -->
-                <div id="flipsBalanceCard"
-                    class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                            <img src="../images/flips_token.png" alt="Flips Coins" class="w-7 h-7 object-contain">
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-slate-600 text-xs">เหรียญคงเหลือ</p>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-3xl font-bold text-slate-900" id="mainCoinBalance">0</span>
-                                <span class="text-blue-600 font-medium" id="mainCoinName">Flips</span>
-                            </div>
-                        </div>
-                        <a href="wallet.html" class="text-blue-600 hover:text-blue-700 text-sm">
-                            ดูกระเป๋า <i class="fas fa-chevron-right ml-1"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Team Coins Display (for CTRL G) -->
-                <div id="teamCoinsDisplay" class="grid grid-cols-2 gap-3 hidden">
-                    <!-- Team coins will be rendered by JS -->
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ============================================ -->
+    <!-- BALANCE & PAYMENT MODE SECTION REMOVED -->
+    <!-- ============================================ -->
+    <!-- Content removed as per user request to keep only top-right header balance -->
 
     <!-- Category Filter Tabs Section -->
     <section class="py-4 relative reveal reveal-delay-200">
