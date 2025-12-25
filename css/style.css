@@ -694,6 +694,35 @@ p {
 /* ===== NEW VISUAL EFFECTS ADDITIONS ===== */
 /* ========================================= */
 
+/* --- Custom Premium Scrollbar --- */
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.5);
+    /* Slate-400 with opacity */
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.8);
+    /* Slate-500 */
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
 /* --- Animations --- */
 @keyframes fadeInUp {
     from {
@@ -780,6 +809,19 @@ p {
 
 .reveal-delay-300 {
     transition-delay: 0.3s;
+}
+
+/* --- Stagger Animation Delays for Hub Cards --- */
+.animate-delay-100 {
+    animation-delay: 100ms;
+}
+
+.animate-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animate-delay-300 {
+    animation-delay: 300ms;
 }
 
 /* --- Premium Glass Card Upgrade --- */
