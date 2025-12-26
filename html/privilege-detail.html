@@ -825,22 +825,32 @@
         function showQRCodeFromDetail() {
             if (!window.currentVoucherCode) return;
 
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-
-            new QRCode(qrContainer, {
-                text: window.currentVoucherCode,
-                width: 180,
-                height: 180,
-                colorDark: '#000000',
-                colorLight: '#ffffff'
-            });
-
-            document.getElementById('qrVoucherName').textContent = window.currentVoucherName;
-            document.getElementById('qrVoucherCode').textContent = window.currentVoucherCode;
-
             closeModal('bookingModal');
             openModal('qrModal');
+
+            // Wait for modal to be visible before generating QR code
+            setTimeout(() => {
+                const qrContainer = document.getElementById('qrcode');
+                qrContainer.innerHTML = '';
+
+                try {
+                    new QRCode(qrContainer, {
+                        text: window.currentVoucherCode,
+                        width: 180,
+                        height: 180,
+                        colorDark: '#000000',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } catch (e) {
+                    console.error('QR Gen Error:', e);
+                    // Fallback text if QR fails
+                    qrContainer.innerHTML = `<p class="text-xs text-red-500 mt-2">Error generating QR</p>`;
+                }
+
+                document.getElementById('qrVoucherName').textContent = window.currentVoucherName;
+                document.getElementById('qrVoucherCode').textContent = window.currentVoucherCode;
+            }, 100);
         }
 
         // Override openProfile to show redeemed privileges with shipping info
